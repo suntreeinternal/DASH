@@ -118,17 +118,12 @@
                         DOB: <?php echo  date("m-d-Y", strtotime($DOB))?>
                     </td>
                     <td width="20%">
-                        Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>">
-                        <button id="update" form="phone" onclick="location.href='updatePatient.php?id=<?php echo $patientID . "&phone="?>'">Update</button>
-                        <script>
-                            var input = document.getElementById("phone");
-                            input.addEventListener("keyup", function(event) {
-                                event.preventDefault();
-                                if (event.keyCode === 13) {
-                                    document.getElementById("update").click();
-                                }
-                            });
-                        </script>
+                        <div id="id01">
+                            <form action="updatePatient.php" method="get">
+                                Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>" name="phone">
+                                <button type="submit" id="update">Update</button>
+                            </form>
+                        </div>
                     </td>
                     <td width="30%" align="right">
                         <div class="dropdown">
