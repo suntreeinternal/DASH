@@ -1,0 +1,301 @@
+@import url(http://fonts.googleapis.com/css?family=Capriola);
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+
+
+
+#cssmenu ul li a {
+
+    margin: 0;
+
+    padding: 0;
+
+    border: 0;
+
+    list-style: none;
+
+    line-height: 1;
+
+    display: block;
+
+    position: relative;
+
+    font-family: Capriola,
+    Helvetica, sans-serif;
+
+}
+
+
+#cssmenu {
+    width: auto;
+    height: 59px;
+    padding-bottom: 4px;
+}
+#cssmenu.align-right {
+    float: right;
+}
+#cssmenu.align-right ul li {
+    float: right;
+    margin-right: 0;
+    margin-left: 4px;
+}
+#cssmenu.align-right ul li:first-child,
+#cssmenu.align-right ul li:first-child > a {
+    border-bottom-right-radius: 3px;
+}
+#cssmenu #bg-one,
+#cssmenu #bg-two,
+#cssmenu #bg-three,
+#cssmenu #bg-four {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+}
+#cssmenu #bg-one {
+    height: 10px;
+    background: #4CAF50;
+}
+#cssmenu #bg-two {
+    height: 59px;
+    z-index: 2;
+}
+#cssmenu #bg-three {
+    bottom: 4px;
+    height: 55px;
+    z-index: 3;
+    background: #222222;
+    background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #222222));
+    background: -webkit-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -o-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -ms-linear-gradient(top, #555555 0%, #222222 100%);
+    background: linear-gradient(to bottom, #555555 0%, #222222 100%);
+}
+#cssmenu #bg-four {
+    bottom: 4px;
+    height: 55px;
+    z-index: 4;
+}
+#cssmenu ul {
+    height: 59px;
+    background: #000000;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+
+}
+#cssmenu ul li {
+    float: left;
+    margin-right: 4px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    z-index: 5;
+}
+#cssmenu ul li a {
+    padding: 24px 30px 20px 30px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color: #eeeeee;
+    font-size: 15px;
+    text-decoration: none;
+}
+#cssmenu ul li:first-child,
+#cssmenu ul li:first-child > a {
+    border-bottom-left-radius: 3px;
+}
+#cssmenu ul li:hover,
+#cssmenu ul li.active {
+    background: #4CAF50;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+#cssmenu ul li a:hover,
+#cssmenu ul li.active > a {
+    color: #000000;
+}
+
+#form1 #button{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100px;
+    height: 20px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+#form1{
+    padding-top: 20px;
+}
+
+#table{
+    padding-top: 30px;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    color: darkgray;
+    font-size: 18px;
+
+}
+#button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100px;
+    height: 20px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+
+
+}
+.colum {
+    align: center;
+}
+
+.button {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #4CAF50;
+    width: 96%;
+    height: 25px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.buttonTop {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+
+    background: #4CAF50;
+    width: 100px;
+    height: 20px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.dot {
+    background: #038fbf;
+    border-radius: 50%;
+    font-size: 33px;
+}
+.tbl {
+    padding-top: 10px;
+    font-size: 20;
+
+}
+.fontSize {
+    font-size: 20px;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+
+.search {
+    background: no-repeat 10px 10px;
+    width: 80%;
+    font-size: 16px;
+    padding: 12px 20px 0px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 0px;
+}
+
+.table{
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 12px;
+}
+
+.provider tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.provider tr.header, .provider tr:hover {
+    background-color: #f1f1f1;
+}
+.addButton {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #4CAF50;
+    width: 96%;
+    height: 40px;
+    border: 0;
+    color: #FFFFFF;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.tableFont{
+    font-size: 18px;
+    color: darkgray;
+    background-color: black;
+}
+.background{
+    background-color: darkgray;
+}
