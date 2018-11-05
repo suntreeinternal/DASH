@@ -18,7 +18,7 @@
     $result = mssql_query($query);
     $row = mssql_fetch_array($result);
     if (sizeof($row) == 1){
-        header('location:/NewPatient/NewPatient.php');
+        header('location:/NewPatient/NewPatient.php?last=' . $last . '&date=' . $_GET['date']);
         die();
     }
     $patientID = $row[0];
@@ -30,7 +30,6 @@
     $result = mssql_query($query);
     $encounters = '<option>Encounters</option>';
     while($row = mssql_fetch_array($result)){
-//        <a href="#">Link 1</a>
         $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '',$row['visit_date']) . '</a>';
     }
 
@@ -57,7 +56,7 @@
             }
         }
     }
-
+    $_SESSION['currentPatient'] = $patientID;
     ?>
 
 

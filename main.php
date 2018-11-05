@@ -49,6 +49,11 @@
     $denialMed = 0;
     $approvedMed = 0;
     $otherMed = 0;
+$con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+$query = 'SELECT COUNT(*) FROM TempPatient';
+$result = $con->query($query);
+$row = $result->fetch_row();
+$pendingSoap = $row[0];
 ?>
 <html>
 <head>

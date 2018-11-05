@@ -51,8 +51,25 @@
 <body style="background:darkgray;">
 <?php include "../Menu/menu.php"?>
 
-<form>
-
+<form action="submitNewPatient.php">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" name="first" placeholder="First Name">
+                </td>
+                <td>
+                    <input type="text" name="last" value="<?php echo $_GET['last']?>">
+                </td>
+                <td>
+                    <input type="date" name="birthDate" value="<?php echo $_GET['date']?>">
+                </td>
+                <td>
+                    <input type="submit" value="Create New Patient">
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </form>
 
 </body>
