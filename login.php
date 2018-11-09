@@ -14,6 +14,7 @@
                 $query = 'SELECT * FROM Referrals.Users WHERE UserName=\'' . $user . '\'';
                 $result = $con->query($query);
                 $row = $result->fetch_row();
+                $_SESSION['userID'] = $row[0];
                 $_SESSION['name'] = $row[4] . " " . $row[5];
                 $query = 'SELECT *FROM Referrals.UserGroups WHERE ID=' . $row[1];
                 $result = $con->query($query);

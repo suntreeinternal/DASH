@@ -36,10 +36,10 @@
     $approvedRecord = 0;
     $sentRecord = 0;
     $seeMe = 0;
-    $maToProvider = 0;
-    $receptionToMA = 0;
-    $providerToMA = 0;
-    $providerToReception = 0;
+    $ma = 0;
+    $reception = 0;
+    $provider = 0;
+    $records = 0;
     $rxToMa = 0;
     $rxToReception = 0;
     $pharmacyCalled = 0;
@@ -54,6 +54,27 @@ $query = 'SELECT COUNT(*) FROM TempPatient';
 $result = $con->query($query);
 $row = $result->fetch_row();
 $pendingSoap = $row[0];
+
+$query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=2';
+$result = $con->query($query);
+$row = $result->fetch_row();
+$reception = $row[0];
+
+$query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=5';
+$result = $con->query($query);
+$row = $result->fetch_row();
+$ma = $row[0];
+
+$query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=4';
+$result = $con->query($query);
+$row = $result->fetch_row();
+$referrals = $row[0];
+
+$query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=3';
+$result = $con->query($query);
+$row = $result->fetch_row();
+$provider = $row[0];
+
 ?>
 <html>
 <head>
@@ -228,32 +249,32 @@ $pendingSoap = $row[0];
                     <tr>
                         <td>
                             <a href="#" class="notification">
-                                <span>MA to Provider</span>
-                                <span class="badge"><?php echo $maToProvider?></span>
+                                <span>Provider</span>
+                                <span class="badge"><?php echo $provider?></span>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <a href="#" class="notification">
-                                <span>Reception to MA</span>
-                                <span class="badge"><?php echo $receptionToMA?></span>
+                                <span>Reception</span>
+                                <span class="badge"><?php echo $reception?></span>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <a href="#" class="notification">
-                                <span>Provider to MA</span>
-                                <span class="badge"><?php echo $providerToMA?></span>
+                                <span>MA</span>
+                                <span class="badge"><?php echo $ma?></span>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <a href="#" class="notification">
-                                <span>Provider to Reception</span>
-                                <span class="badge"><?php echo $providerToReception?></span>
+                                <span>Referrals</span>
+                                <span class="badge"><?php echo $referrals?></span>
                             </a>
                         </td>
                     </tr>

@@ -111,10 +111,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                       <h3>User Rights</h3>
+                                                       <h3>User Group</h3>
                                                     </td>
                                                     <td>
-                                                       <h3>User Group</h3>
+                                                       <h3>User Rights</h3>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -222,13 +222,14 @@
                                             }
                                             $result = $con->query($query);
                                             while ($row = $result->fetch_row()){
-                                                echo "<tr>
+                                                echo "<tr onclick=\"window.location='updateUser.php?user=" . $row[3] . "&first=" . $row[4] ."&last=" . $row[5] ."'\">
                                                         <td>" . $row[4] . "</td> 
                                                         <td>" . $row[5] . "</td>
                                                         <td>" . $row[3] . "</td>
                                                       </tr>";
                                             }
                                             ?>
+
                                     </tbody>
                                 </table>
                             </td>
