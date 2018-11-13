@@ -1,73 +1,63 @@
 <?php
-    session_start();
-    if (sizeof($_SESSION) == 0){
-        header('location:../index.html');
-    }
-    $patientName = '';
-    $DOB = '';
-    $phoneNumber = '';
-    $last = $_GET['last'];
-    $date = $_GET['date'];
-    $_SESSION['previous'] = "patientInfo/Patient.php?last=" . $last . "&date=" . $date;
-    $date = str_ireplace('-', '',$date);
-    $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
-    $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-    if (!mssql_select_db('sw_charts', $con)) {
-        die('Unable to select database!');
-    }
-    $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
-    $result = mssql_query($query);
-    $row = mssql_fetch_array($result);
-    if (sizeof($row) == 1){
-        $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName=\''. $last . '\' AND BirthDate=\''. $date . '\'';
+session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
+$patientName = '';
+$DOB = '';
+$phoneNumber = '';
+$last = $_GET['last'];
+$date = $_GET['date'];
+
+$_SESSION['previous'] = './Referral/Referral.php';
+
+
+$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+if (!mssql_select_db('sw_charts', $con)) {
+    die('Unable to select database!');
+}
+
+$query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\''. $_SESSION['currentPatient'] . '\'';
+$result = mssql_query($query);
+$row = mssql_fetch_array($result);
+$patientName = $row['first_name'] . " " . $row['last_name'];
+$DOB = $row['birthdate'];
+
+$query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY visit_date DESC ';
+$result = mssql_query($query);
+$encounters = "";
+while ($row = mssql_fetch_array($result)) {
+    $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
+}
+if($con->connect_error){
+    header('location:/index.html');
+} else {
+    $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\'';
+    $result = $conReferrals->query($query);
+    $row = $result->fetch_row();
+
+    if (sizeof($row) == 0){
+        $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $_SESSION['currentPatient'] . '\',0,\'\',0)';
         $result = $conReferrals->query($query);
-        $row = $result->fetch_row();
-        if (sizeof($row) == 0) {
-            header('location:/NewPatient/NewPatient.php?last=' . $last . '&date=' . $_GET['date']);
-            die();
-        } else {
-            $patientID = $row[0];
-            $patientName = $row[1] . " " . $row[2];
-            $DOB = $row[3];
-        }
     } else {
-        $patientID = $row[0];
-        $patientName = ($row[2] . " " . $row[1]);
-        $DOB = $row['birthdate'];
-        $phoneNumber = $row['work_phone'];
-        $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $patientID . '\' ORDER BY visit_date DESC ';
-        $result = mssql_query($query);
-        $encounters = "";
-        while ($row = mssql_fetch_array($result)) {
-            $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
-        }
-    }
+        $phoneNumber = $row[4];
+        $alert = $row[2];
 
-    if($con->connect_error){
-        header('location:/index.html');
-    } else {
-        $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $patientID . '\'';
-        $result = $conReferrals->query($query);
-        $row = $result->fetch_row();
-
-        if (sizeof($row) == 0){
-            $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $patientID . '\',0,\'\',0)';
-            $result = $conReferrals->query($query);
+        if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
+            $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
         } else {
-            $phoneNumber = $row[4];
-            $alert = $row[2];
-
-            if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
-                $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
-            } else {
-                if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
-                    $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
-                }
+            if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
+                $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
             }
         }
     }
-    $_SESSION['currentPatient'] = $patientID;
-    ?>
+
+
+}
+
+$dateTime = date("Y-m-d h:i:sa");
+?>
 
 
 <html>
@@ -198,7 +188,7 @@
                     </td>
                     <td width="20%">
                         <div id="id01">
-                            <form action="updatePatient.php" method="get">
+                            <form action="/patientInfo/updatePatient.php" method="get">
                                 Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>" name="phone">
                                 <button type="submit" id="update">Update</button>
                             </form>
@@ -276,14 +266,14 @@
         </td>
         <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
             <div style="overflow-y: scroll; height:650px">
-            <table width="100%" cellspacing="10px" cellpadding="5px" >
-                <tbody>
-                <tr>
-                    <td style="font-size: 20px; font-weight: bold" width="50%">
-                        Messages
-                    </td>
-                    <td align="right">
-                        <?php
+                <table width="100%" cellspacing="10px" cellpadding="5px" >
+                    <tbody>
+                    <tr>
+                        <td style="font-size: 20px; font-weight: bold" width="50%">
+                            Messages
+                        </td>
+                        <td align="right">
+                            <?php
                             switch ($alert){
                                 case(2):
                                     echo "Reception";
@@ -299,10 +289,10 @@
                                     break;
 
                             }
-                        ?>
-                    </td>
-                </tr>
-                <?php
+                            ?>
+                        </td>
+                    </tr>
+                    <?php
                     $query = 'SELECT * FROM MessageAboutPatient WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
@@ -336,110 +326,118 @@
                             </tr>
                         ";
                     }
-                ?>
+                    ?>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
         </td>
-        <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <table>
-                <tbody>
-                <tr>
-                    <td style="font-size: 20px; font-weight: bold">
-                        Pending Action Items
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-        <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <table>
-                <tbody>
-                <tr>
-                    <td style="font-size: 20px; font-weight: bold">
-                        Completed Action Items
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <form action='/pushNewPhoneMessage.php'>
-                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+        <td style=" width: 50%; border-radius: 10px;background-color:#FFFFFF">
+            <div style="overflow-y: scroll; height:650px">
+                <table width="100%" cellspacing="10px" cellpadding="5px" >
                     <tbody>
                     <tr>
-                        <td colspan="5" >
-                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                        <td style="font-size: 20px; font-weight: bold" width="50%">
+                            Record
                         </td>
+
+                    </tr>
+                    <tr>
+                        <table cellpadding="15px" cellspacing="15px" width="100%" >
+                            <tbody>
+                            <form action="/record/updateRecord.php">
+                                <tr>
+                                    <td width="50%">
+                                        3rd Party Requester: <select name="request">
+                                            <option>Dr Office</option>
+                                            <option>Attorney</option>
+                                            <option>Patient</option>
+                                            <option>SSI</option>
+                                            <option>Life / Health Insurance</option>
+                                        </select>
+                                    </td>
+                                    <td width="50%">
+                                        Invoice Required: <input type="checkbox" name="invoice">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Status: <select name="status">
+                                            <option>Approved</option>
+                                            <option>Waiting for Check</option>
+                                            <option>Need Approval</option>
+                                            <option>Sent</option>
+                                            <option>See Me</option>
+                                        </select>
+                                        <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Submit new record request">
+                                    </td>
+                                </tr>
+                            </form>
+                            </tbody>
+                        </table>
                     </tr>
                     <tr>
                         <td>
-                            <input type="submit" name="button" value="Add new phone conversation" class="btnOthers">
+                            <form action='/pushNewPhoneMessage.php'>
+                                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" name="button" value="Add new phone conversation" class="btnOthers">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
                         </td>
-                    </tr>
+                        <td>
+                            <form action='/pushNewMessage.php'>
+                                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr valign="center" aria-rowspan="5px">
+                                        <td valign="center">
+                                            <input type="submit" name="button" value="MA" class="btnMa">
+                                        </td>
+                                        <td>
+                                            <input type="submit" name="button" value="Reception" class="btnRec">
+                                        </td>
+                                        <td>
+                                            <input type="submit" name="button" value="Referrals" class="btnRef">
+                                        </td>
+                                        <td>
+                                            <input type="submit" name="button" value="Provider" class="btnPro">
+                                        </td>
+                                        <td>
+                                            <input type="submit" name="button" value="Clear" class="btnOthers">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </td>
                     </tbody>
                 </table>
-
-            </form>
+            </div>
         </td>
-        <td>
-            <form action='/pushNewMessage.php'>
-                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
-                    <tbody>
-                    <tr>
-                        <td colspan="5" >
-                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
-                        </td>
-                    </tr>
-                    <tr valign="center" aria-rowspan="5px">
-                        <td valign="center">
-                            <input type="submit" name="button" value="MA" class="btnMa">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Reception" class="btnRec">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Referrals" class="btnRef">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Provider" class="btnPro">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Clear" class="btnOthers">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </form>
-        </td>
-        <td valign="top">
-            <form action='/selectButton.php'>
-                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="submit" name="button" value="New Referral" class="btnOthers">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="New Rx" class="btnOthers">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="New Record" class="btnOthers">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </form>
-        </td>
-    </tr>
     </tbody>
 </table>
-
 
 </body>
 

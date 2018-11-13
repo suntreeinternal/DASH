@@ -31,6 +31,7 @@
     $newReferral = 0;
     $pendingApt = 0;
     $pendingSoap = 0;
+    $pendingDemo = 0;
     $watingCK = 0;
     $needApproval = 0;
     $approvedRecord = 0;
@@ -191,6 +192,14 @@ $provider = $row[0];
                                 <a href="#" class="notification">
                                     <span>Pending Soap</span>
                                     <span class="badge"><?php echo $pendingSoap ?></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" class="notification">
+                                    <span>Pending Demo</span>
+                                    <span class="badge"><?php echo $pendingDemo ?></span>
                                 </a>
                             </td>
                         </tr>
