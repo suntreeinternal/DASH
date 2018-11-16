@@ -1,4 +1,7 @@
 <?php
+
+    //TODO add error if patient is lost in soapware
+    //TODO lots of testing to make sure that patient is added the correct way.
     session_start();
     if (sizeof($_SESSION) == 0){
         header('location:../index.html');
@@ -10,63 +13,132 @@
     $date = $_GET['date'];
     $_SESSION['previous'] = "patientInfo/Patient.php?last=" . $last . "&date=" . $date;
     $date = str_ireplace('-', '',$date);
+
+    //connection for mssql
     $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+    //connection for sqli
     $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-    if (!mssql_select_db('sw_charts', $con)) {
-        die('Unable to select database!');
-    }
-    $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
-    $result = mssql_query($query);
-    $row = mssql_fetch_array($result);
-    if (sizeof($row) == 1){
-        $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName=\''. $last . '\' AND BirthDate=\''. $date . '\'';
-        $result = $conReferrals->query($query);
-        $row = $result->fetch_row();
-        if (sizeof($row) == 0) {
-            header('location:/NewPatient/NewPatient.php?last=' . $last . '&date=' . $_GET['date']);
-            die();
-        } else {
-            $patientID = $row[0];
-            $patientName = $row[1] . " " . $row[2];
-            $DOB = $row[3];
-        }
-    } else {
-        $patientID = $row[0];
-        $patientName = ($row[2] . " " . $row[1]);
-        $DOB = $row['birthdate'];
-        $phoneNumber = $row['work_phone'];
-        $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $patientID . '\' ORDER BY visit_date DESC ';
-        $result = mssql_query($query);
-        $encounters = "";
-        while ($row = mssql_fetch_array($result)) {
-            $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
-        }
-    }
 
     if($con->connect_error){
         header('location:/index.html');
-    } else {
-        $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $patientID . '\'';
-        $result = $conReferrals->query($query);
-        $row = $result->fetch_row();
+    }
 
-        if (sizeof($row) == 0){
-            $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $patientID . '\',0,\'\',0)';
-            $result = $conReferrals->query($query);
+    if (!mssql_select_db('sw_charts', $con)) {
+        die('Unable to select database! ');
+    }
+    $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $last . '&date=' . $_GET['date'];
+
+/**
+ * check to see if the patient exists as a temp patient
+ */
+    $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName=\''. $last . '\' AND BirthDate=\''. $date . '\'';
+    $result = $conReferrals->query($query);
+    $row = $result->fetch_row();
+    if (sizeof($row) == 0) {
+        //not temp
+        //check to see if patient exists in SW
+        $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
+        $result = mssql_query($query);
+        $row = mssql_fetch_array($result);
+        if (sizeof($row) == 1) {
+
+            //not in SW or Temp
+            header('location:/NewPatient/NewPatient.php?last=' . $last . '&date=' . $_GET['date']);
+            die();
         } else {
-            $phoneNumber = $row[4];
-            $alert = $row[2];
 
-            if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
-                $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
+            //yes is in sw not temp
+            $SwID = $row[0];
+            $patientName = ($row[2] . " " . $row[1]);
+            $DOB = $row['birthdate'];
+            $phoneNumber = $row['work_phone'];
+            $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $SwID . '\'';
+            $result = $conReferrals->query($query);
+            $row = $result->fetch_row();
+
+
+            if (sizeof($row) == 0){
+
+                $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $SwID . '\',0,\'\',0)';
+                $result = $conReferrals->query($query);
+
+                $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $SwID . '\'';
+
+                $result = $conReferrals->query($query);
+                $row = $result->fetch_row();
+                $patientID = $row[0];
             } else {
-                if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
-                    $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
+
+                $phoneNumber = $row[4];
+                $alert = $row[2];
+                $patientID = $row[0];
+
+                if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
+
+                    $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
+                } else {
+
+                    if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
+                        $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
+                    }
                 }
             }
+
+            $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $patientID . '\' ORDER BY visit_date DESC ';
+            $result = mssql_query($query);
+            $encounters = "";
+            while ($row = mssql_fetch_array($result)) {
+                $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
+            }
+        }
+    } else {
+        $patientID = $row[0];
+
+        //yes is a temp patient
+        $patientName = $row[1] . " " . $row[2];
+        $DOB = $row[3];
+        $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
+        $result = mssql_query($query);
+        $row = mssql_fetch_array($result);
+
+        if (sizeof($row) == 1) {
+
+            //not in sw yet
+            $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $patientID . '\'';
+            $result = $conReferrals->query($query);
+            $row = $result->fetch_row();
+            $patientID = $row[0];
+
+
+
+            if (sizeof($row) == 0){
+
+                $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $patientID . '\',0,\'\',0)';
+                $result = $conReferrals->query($query);
+            } else {
+
+                $phoneNumber = $row[4];
+                $alert = $row[2];
+
+                if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
+                    $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
+                } else {
+                    if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
+                        $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
+                    }
+                }
+            }
+        } else {
+
+            // in sw
+            header("location:/patientInfo/mergePatient.php?last=" . $last . "&date=" . $date );
+            die();
         }
     }
+//    echo $patientID;
     $_SESSION['currentPatient'] = $patientID;
+    $_SESSION['patientName'] = $patientName;
+    $_SESSION['patientDOB'] = $DOB;
     ?>
 
 
@@ -74,10 +146,26 @@
 <head>
     <link rel="stylesheet" href="../Menu/menu.css">
     <style>
+        .datatable table {
+            border-collapse: collapse;
+            width: 100%;
+            /*border: 0px;*/
+        }
+
+        .datatable th, td {
+            /*text-align: left;*/
+            /*padding-top: 8px;*/
+            /*padding-bottom: 8px;*/
+        }
+
+        .datatable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
         .dropbtn {
             background-color: #4CAF50;
             color: white;
-            padding: 16px;
+            /*padding: 16px;*/
             font-size: 16px;
             border: none;
         }
@@ -205,7 +293,7 @@
                         </div>
                     </td>
                     <td width="30%" align="right">
-                        <div class="dropdown">
+                        <div class="dropdown" >
                             <button class="dropbtn">Encounters</button>
                             <div class="dropdown-content">
                                 <?php echo $encounters?>
@@ -227,7 +315,7 @@
     <tr valign="top">
         <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF" >
             <div style="overflow-y: scroll; height:650px">
-                <table width="100%" cellspacing="10px" cellpadding="5px" >
+                <table width="100%" cellspacing="10px" >
                     <tbody>
                     <tr>
                         <td style="font-size: 20px; font-weight: bold" width="50%">
@@ -235,7 +323,7 @@
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM PatientPhoneMessages WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = 'SELECT * FROM PatientPhoneMessages WHERE PatientID=\'' . $patientID. '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];
@@ -303,7 +391,7 @@
                     </td>
                 </tr>
                 <?php
-                    $query = 'SELECT * FROM MessageAboutPatient WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = 'SELECT * FROM MessageAboutPatient WHERE PatientID=\'' . $patientID . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];
@@ -343,24 +431,136 @@
             </div>
         </td>
         <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <table>
+
+            <table width="100%">
                 <tbody>
-                <tr>
-                    <td style="font-size: 20px; font-weight: bold">
-                        Pending Action Items
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="font-size: 20px; font-weight: bold">
+                            Pending Action Items
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="overflow-y: scroll; height:650px">
+                                <table width="100%" class="datatable"  cellpadding="10px">
+                                    <tbody>
+                                        <tr valign="center">
+                                            <th width="33%">
+                                                Status
+                                            </th>
+                                            <th width="33%">
+                                                Provider
+                                            </th>
+                                            <th width="34%">
+                                                Date
+                                            </th>
+                                        </tr>
+                                        <?php
+                                        $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status <> \'10\'';
+
+//                                        $query = ' . $patientID . '\' AND Status <> \'10\'';
+                                        $result = $conReferrals->query($query);
+                                        while ($row = $result->fetch_row()){
+                                            echo "<tr><td>";
+                                                $tempStatus = $row[3];
+                                                switch ($tempStatus){
+                                                    case '1':
+                                                        echo "Pending Soap";
+                                                        break;
+                                                    case '2':
+                                                        echo "Pending Insurance Authorization";
+                                                        break;
+                                                    case '3':
+                                                        echo "Pending Specialist Review";
+                                                        break;
+                                                    case '4':
+                                                        echo "Pending Appointment Review";
+                                                        break;
+                                                    case '5':
+                                                        echo "Pending Couldn't  be Reached by Specialist";
+                                                        break;
+                                                    case '6':
+                                                        echo "Pending Declined by Specialist";
+                                                        break;
+                                                    case '7':
+                                                        echo "Pending Insurance doesn't cover";
+                                                        break;
+                                                    case '8':
+                                                        echo "Patient Declined Appointment";
+                                                        break;
+                                                    case '9':
+                                                        echo "Provider to Referral";
+                                                        break;
+                                                    case '10':
+                                                        echo "Completed";
+                                                        break;
+                                                    case '11':
+                                                        echo "Unsuccessful contact";
+                                                        break;
+                                                }
+                                            echo "</td><td>";
+                                            $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[1] . '\'';
+                                            $temp = $conReferrals->query($query);
+                                            $temp1 = $temp->fetch_row();
+                                            echo $temp1[1];
+                                            echo "</td><td>";
+                                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[7])->format("m/d/Y");
+                                            echo "</td></tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </td>
         <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <table>
+            <table width="100%">
                 <tbody>
-                <tr>
-                    <td style="font-size: 20px; font-weight: bold">
-                        Completed Action Items
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="font-size: 20px; font-weight: bold">
+                            Completed Action Items
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="overflow-y: scroll; height:650px">
+                                <table width="100%" class="datatable" cellpadding="10px">
+                                    <tbody>
+                                    <tr valign="center">
+                                        <th width="33%">
+                                            Item
+                                        </th>
+                                        <th width="33%">
+                                            Provider
+                                        </th>
+                                        <th width="34%">
+                                            Date
+                                        </th>
+                                    </tr>
+                                    <?php
+                                    $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status = \'10\'';
+                                    $result = $conReferrals->query($query);
+                                    while ($row = $result->fetch_row()){
+                                        echo "<tr><td>";
+                                        echo "Referral";
+                                        echo "</td><td>";
+                                        $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[1] . '\'';
+                                        $temp = $conReferrals->query($query);
+                                        $temp1 = $temp->fetch_row();
+                                        echo $temp1[1];
+                                        echo "</td><td>";
+                                        echo DateTime::createFromFormat("Y-m-d H:i:s", $row[7])->format("m/d/Y");
+                                        echo "</td></tr>";
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </td>

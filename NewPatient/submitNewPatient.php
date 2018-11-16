@@ -19,7 +19,14 @@ if($con->connect_error){
         $query = 'INSERT INTO TempPatient (FirstName, LastName, BirthDate) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\')';
         echo $query;
         $result = $con->query($query);
-        header('location:/main.php');
+        $query = "SELECT LAST_INSERT_ID()";
+        $result = $con->query($query);
+        $row = $result->fetch_row();
+        echo var_dump($row);
+
+        $query = "INSERT INTO PatientData(SW_ID, Message_alert_to_group, Note, Phone_number, temp) VALUES ('" . $row[0] ."','','','','')";
+        $result = $con->query($query);
+        header($_SESSION['previous']);
     }
 
 }

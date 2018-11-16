@@ -225,7 +225,7 @@ $dateTime = date("Y-m-d h:i:sa");
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM PatientPhoneMessages WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = ' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];
@@ -293,7 +293,7 @@ $dateTime = date("Y-m-d h:i:sa");
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM MessageAboutPatient WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = ' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];

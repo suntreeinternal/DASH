@@ -5,7 +5,6 @@
  * Date: 11/7/2018
  * Time: 9:44 AM
  */
-//TODO make show up in correct group
 
 session_start();
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -30,19 +29,19 @@ switch ($_GET['button']){
         break;
 
     default:
-        $query = 'UPDATE PatientData SET Message_alert_to_group="' . 0 .'" WHERE SW_ID="' . $_SESSION['currentPatient'] . '"';
+        $query = 'UPDATE PatientData SET Message_alert_to_group="' . 0 .'" WHERE ID="' . $_SESSION['currentPatient'] . '"';
         $result = $conReferrals->query($query);
-        header('location:/'.$_SESSION['previous']);
+        header($_SESSION['previous']);
         die();
 }
 
 if ($_GET['message'] == ''){
-    header('location:/'.$_SESSION['previous']);
+    header($_SESSION['previous']);
     die;
 } else {
-    $query = 'UPDATE PatientData SET Message_alert_to_group="' . $groupValue . '" WHERE SW_ID="' . $_SESSION['currentPatient'] . '"';
+    $query = 'UPDATE PatientData SET Message_alert_to_group="' . $groupValue . '" WHERE ID="' . $_SESSION['currentPatient'] . '"';
     $result = $conReferrals->query($query);
-    $query = 'INSERT INTO MessageAboutPatient(SW_ID, UserID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
+    $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
     $result = $conReferrals->query($query);
-    header('location:/' . $_SESSION['previous']);
+    header($_SESSION['previous']);
 }

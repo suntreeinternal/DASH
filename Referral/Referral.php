@@ -1,57 +1,35 @@
 <?php
-session_start();
-if (sizeof($_SESSION) == 0){
-    header('location:../index.html');
-}
-$patientName = '';
-$DOB = '';
-$phoneNumber = '';
-$last = $_GET['last'];
-$date = $_GET['date'];
-
-$_SESSION['previous'] = './Referral/Referral.php';
-
-
-$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
-$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-if (!mssql_select_db('sw_charts', $con)) {
-    die('Unable to select database!');
-}
-
-$query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\''. $_SESSION['currentPatient'] . '\'';
-$result = mssql_query($query);
-$row = mssql_fetch_array($result);
-$patientName = $row['first_name'] . " " . $row['last_name'];
-$DOB = $row['birthdate'];
-
-    $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY visit_date DESC ';
-    $result = mssql_query($query);
-    $encounters = "";
-    while ($row = mssql_fetch_array($result)) {
-        $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
+    session_start();
+    if (sizeof($_SESSION) == 0){
+        header('location:../index.html');
     }
-if($con->connect_error){
-    header('location:/index.html');
-} else {
-    $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\'';
+    $patientName = $_SESSION['patientName'];
+    $DOB = $_SESSION['patientDOB'];
+    $phoneNumber = '';
+
+
+
+
+    $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+    $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+    if (!mssql_select_db('sw_charts', $con)) {
+        die('Unable to select database!');
+    }
+
+    $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
+    $phoneNumber = $row[4];
+    $alert = $row[2];
 
-    if (sizeof($row) == 0){
-        $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $_SESSION['currentPatient'] . '\',0,\'\',0)';
-        $result = $conReferrals->query($query);
+    if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
+        $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
     } else {
-        $phoneNumber = $row[4];
-        $alert = $row[2];
-
-        if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
-            $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
-        } else {
-            if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
-                $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
-            }
+        if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
+            $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
         }
     }
+
     $query = 'SELECT * FROM Referrals.Provider';
     $result = $conReferrals->query($query);
     $providerList = '<select name="provider">';
@@ -60,9 +38,8 @@ if($con->connect_error){
     }
     $providerList = $providerList . '</select>';
 
-}
 
-$dateTime = date("Y-m-d h:i:sa");
+    $dateTime = date("Y-m-d h:i:sa");
 ?>
 
 
@@ -231,7 +208,7 @@ $dateTime = date("Y-m-d h:i:sa");
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM PatientPhoneMessages WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = 'SELECT * FROM PatientPhoneMessages WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];
@@ -299,7 +276,7 @@ $dateTime = date("Y-m-d h:i:sa");
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM MessageAboutPatient WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
+                    $query = 'SELECT * FROM MessageAboutPatient WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
                         $messageGroup = $row[5];
@@ -351,7 +328,7 @@ $dateTime = date("Y-m-d h:i:sa");
                         <tr>
                             <table cellpadding="15px" cellspacing="15px" width="100%" >
                                 <tbody>
-                                    <form action="updateReferral.php">
+                                    <form action="newReferral.php">
                                         <tr>
                                             <td width="50%">
                                                 Provider <?php echo $providerList?>

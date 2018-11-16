@@ -12,11 +12,10 @@
     if($con->connect_error){
         header('location:/index.html');
     } else {
-        $query = 'UPDATE Referrals.PatientData SET Phone_number=\'' . $phone . '\' WHERE SW_ID=\'' . $_SESSION['currentPatient'] . '\'';
+        $query = 'UPDATE Referrals.PatientData SET Phone_number=\'' . $phone . '\' WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
         $result = $con->query($query);
         $query = "INSERT INTO Referrals.ChangeLog(UserID, WhatChanged, ChangeLocation, DateTime) VALUES ('" . $_SESSION['userID'] ."','Some thing',' patient phone number ',' " . date("Y-m-d h:i:sa") . "')";
         $result = $con->query($query);
     }
-header('location:/'.$_SESSION['previous']);
-
-//TODO make it so it auto redirects back to previous page
+//    echo $_SESSION['currentPatient'];
+header($_SESSION['previous']);
