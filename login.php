@@ -2,12 +2,14 @@
 <?php
     session_start();
     $msg = '';
-
+    $_SESSION['username'] = 'DashLoginUser';
+    $_SESSION['password'] = 'Cr4sietd!';
     $user = $_GET['login'];
-            $con = new mysqli('localhost', $user, $_GET['password'], 'Referrals');
+            $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
             if($con->connect_error){
-                header('location:/index.html');
+//                header('location:/index.html');
                 $_SESSION['loggedIn'] = false;
+
             } else {
 
                 echo 'Welcome ';
@@ -21,8 +23,6 @@
                 $row = $result->fetch_row();
                 echo $row[1];
                 $_SESSION['valid'] = true;
-                $_SESSION['username'] = $user;
-                $_SESSION['password'] = $_GET['password'];
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['group']  = $row[1];
 

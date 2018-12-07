@@ -15,6 +15,10 @@ switch ($temp){
 
     case 'New Record':
         header("location:/record/Record.php");
+        die();
+
+    case 'New Rx':
+        header("location:/Rx/newRX.php");
 }
 echo var_dump($_GET) . "<br/>";
 echo var_dump($_SESSION);

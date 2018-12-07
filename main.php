@@ -4,7 +4,7 @@
         header('location:../index.html');
     }
     if($_SESSION['loggedIn'] == false){
-        header('location=/index.html');
+        header('location=../index.html');
     }
     $ahPhone = 0;
     $shPhone = 0;
@@ -75,7 +75,6 @@ $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=3';
 $result = $con->query($query);
 $row = $result->fetch_row();
 $provider = $row[0];
-
 ?>
 <html>
 <head>
@@ -115,7 +114,7 @@ $provider = $row[0];
     <tbody>
         <tr valign="center">
             <td>
-                <form action="patientInfo\Patient.php">
+                <form action="\patientInfo\Patient.php">
                     Last name
                     <input type="text" name="last" style="width: 180px; height: 30px">
                     Birth Date

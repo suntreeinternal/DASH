@@ -38,6 +38,14 @@
     }
     $providerList = $providerList . '</select>';
 
+    $query = 'SELECT * FROM Referrals.Specialty';
+    $result = $conReferrals->query($query);
+    $specalty = "";
+    while ($row = $result->fetch_row()){
+        $specalty = $specalty . '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+    }
+
+
 
     $dateTime = date("Y-m-d h:i:sa");
 ?>
@@ -159,162 +167,11 @@
 <table style="width: 100%" cellspacing="15" cellpadding="10">
     <tbody>
     <tr>
-        <td colspan="4">
-            <table style="font-size: 20px" width="100%">
-                <tbody>
-                <tr>
-                    <td width="20%">
-                        <?php echo $patientName?>
-                    </td>
-                    <td width="20%">
-                        DOB: <?php echo  date("m-d-Y", strtotime($DOB))?>
-                    </td>
-                    <td width="20%">
-                        <div id="id01">
-                            <form action="/patientInfo/updatePatient.php" method="get">
-                                Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>" name="phone">
-                                <button type="submit" id="update">Update</button>
-                            </form>
-                        </div>
-                    </td>
-                    <td width="30%" align="right">
-                        <div class="dropdown">
-                            <button class="dropbtn">Encounters</button>
-                            <div class="dropdown-content">
-                                <?php echo $encounters?>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <button class="dropbtn">Other Attachments</button>
-                            <div class="dropdown-content">
-                                <a href="uploadFile.php">Upload attachment</a>
-                            </div>
-                        </div>
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-        </td>
+        <?php include "../patientInfo/patientInfoHeader.php"?>
     </tr>
     <tr valign="top">
-        <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF" >
-            <div style="overflow-y: scroll; height:650px">
-                <table width="100%" cellspacing="10px" cellpadding="5px" >
-                    <tbody>
-                    <tr>
-                        <td style="font-size: 20px; font-weight: bold" width="50%">
-                            Phone Records
-                        </td>
-                    </tr>
-                    <?php
-                    $query = 'SELECT * FROM PatientPhoneMessages WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
-                    $result = $conReferrals->query($query);
-                    while ($row = $result->fetch_row()){
-                        $messageGroup = $row[5];
-                        switch ($messageGroup){
-                            case 'Admin':
-                                echo "<tr style=\"background-color: #0066ff\">";
-                                break;
-
-                            case 'Reception':
-                                echo "<tr style=\"background-color: #F4D03F\">";
-                                break;
-
-                            case 'Provider':
-                                echo "<tr style=\"background-color: #E74C3C\">";
-                                break;
-
-                            case 'Referrals':
-                                echo "<tr style=\"background-color: #BB8FCE\">";
-                                break;
-
-                            case 'MA':
-                                echo "<tr style=\"background-color: #45B39D\">";
-                                break;
-
-                        }
-                        echo "
-                                <td style=\"border-radius: 7px\">
-                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
-                                </td>
-                            </tr>
-                        ";
-                    }
-                    ?>
-
-                    </tbody>
-                </table>
-            </div>
-        </td>
-        <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <div style="overflow-y: scroll; height:650px">
-                <table width="100%" cellspacing="10px" cellpadding="5px" >
-                    <tbody>
-                    <tr>
-                        <td style="font-size: 20px; font-weight: bold" width="50%">
-                            Messages
-                        </td>
-                        <td align="right">
-                            <?php
-                            switch ($alert){
-                                case(2):
-                                    echo "Reception";
-                                    break;
-                                case(3):
-                                    echo "Provider";
-                                    break;
-                                case(4):
-                                    echo "Referrals";
-                                    break;
-                                case(5):
-                                    echo "MA";
-                                    break;
-
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                    <?php
-                    $query = 'SELECT * FROM MessageAboutPatient WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\' ORDER BY ID DESC' ;
-                    $result = $conReferrals->query($query);
-                    while ($row = $result->fetch_row()){
-                        $messageGroup = $row[5];
-                        switch ($messageGroup){
-                            case 'Admin':
-                                echo "<tr style=\"background-color: #0066ff\">";
-                                break;
-
-                            case 'Reception':
-                                echo "<tr style=\"background-color: #F4D03F\">";
-                                break;
-
-                            case 'Provider':
-                                echo "<tr style=\"background-color: #E74C3C\">";
-                                break;
-
-                            case 'Referrals':
-                                echo "<tr style=\"background-color: #BB8FCE\">";
-                                break;
-
-                            case 'MA':
-                                echo "<tr style=\"background-color: #45B39D\">";
-                                break;
-
-                        }
-                        echo "
-                                <td style=\"border-radius: 7px\" colspan='2'>
-                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
-                                </td>
-                            </tr>
-                        ";
-                    }
-                    ?>
-
-                    </tbody>
-                </table>
-            </div>
-        </td>
+        <?php include "../patientInfo/PhoneRecord.php"?>
+        <?php include "../patientInfo/Messages.php"?>
         <td style=" width: 50%; border-radius: 10px;background-color:#FFFFFF">
             <div style="overflow-y: scroll; height:650px">
                 <table width="100%" cellspacing="10px" cellpadding="5px" >
@@ -379,7 +236,9 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Specialty
+                                                Specialty: <select name="Specialty">
+                                                                <?php echo $specalty?>
+                                                           </select>
                                             </td>
                                             <td>
                                                 Specialist
