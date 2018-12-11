@@ -200,10 +200,11 @@
                                             </td>
                                             <td>
                                                 Status: <select name="status">
+                                                            <option value="0">Pending Demo</option>
                                                             <option value="1">Pending Soap</option>
                                                             <option value="2">Pending Insurance Authorization</option>
                                                             <option value="3">Pending Specialist Review</option>
-                                                            <option value="4">Pending Appointment Review</option>
+                                                            <option value="4">Pending Appointment From Specialist</option>
                                                             <option value="5">Pending Couldn't  be Reached by Specialist</option>
                                                             <option value="6">Pending Declined bt Specialist</option>
                                                             <option value="7">Pending Insurance doesn't cover</option>

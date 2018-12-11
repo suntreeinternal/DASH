@@ -39,9 +39,14 @@
                         //                                        $query = ' . $patientID . '\' AND Status <> \'10\'';
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr><td>";
+                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?ReferralID=" . $row[0] ."';\"><td>";
+
                             $tempStatus = $row[3];
                             switch ($tempStatus){
+                                case '0':
+                                    echo "Pending Demo";
+                                    break;
+
                                 case '1':
                                     echo "Pending Soap";
                                     break;
@@ -52,7 +57,7 @@
                                     echo "Pending Specialist Review";
                                     break;
                                 case '4':
-                                    echo "Pending Appointment Review";
+                                    echo "Pending Appointment From Specialist";
                                     break;
                                 case '5':
                                     echo "Pending Couldn't  be Reached by Specialist";

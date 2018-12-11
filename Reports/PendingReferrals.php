@@ -33,16 +33,16 @@ session_start();
     }
 </style>
 <!--<table width="100%">-->
-<table id="myTable2">
+<table id="pending">
     <tbody>
     <tr>
-        <th onclick="sortTable(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable(1)" width="14%">DOB</th>
-        <th onclick="sortTable(2)" width="14%">Reason</th>
-        <th onclick="sortTable(3)" width="14%">Specialist</th>
-        <th onclick="sortTable(4)" width="14%">Phone number</th>
-        <th onclick="sortTable(5)" width="14%">Specialty</th>
-        <th onclick="sortTable(6)" width="14%">Date Sent</th>
+        <th onclick="sortTable1(0)" width="16%">Patient Name</th>
+        <th onclick="sortTable1(1)" width="14%">DOB</th>
+        <th onclick="sortTable1(2)" width="14%">Reason</th>
+        <th onclick="sortTable1(3)" width="14%">Specialist</th>
+        <th onclick="sortTable1(4)" width="14%">Phone number</th>
+        <th onclick="sortTable1(5)" width="14%">Specialty</th>
+        <th onclick="sortTable1(6)" width="14%">Date Sent</th>
 
     </tr>
     <?php
@@ -106,9 +106,9 @@ session_start();
     </tbody>
 </table>
 <script>
-    function sortTable(n) {
+    function sortTable1(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("myTable2");
+        table = document.getElementById("pending");
         switching = true;
         // Set the sorting direction to ascending:
         dir = "asc";
@@ -161,4 +161,4 @@ session_start();
         }
     }
 </script>
-<!--</table>-->
+

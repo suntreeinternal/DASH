@@ -13,6 +13,20 @@ $encounters = "";
 while ($row = mssql_fetch_array($result)) {
     $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
 }
+
+$query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
+$result = $conReferrals->query($query);
+$row = $result->fetch_row();
+$phoneNumber = $row[4];
+$alert = $row[2];
+
+if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
+    $phoneNumber = "(" . substr($phoneNumber, 0, 3) .') '. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
+} else {
+    if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
+        $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
+    }
+}
 ?>
 
 <td colspan="4">

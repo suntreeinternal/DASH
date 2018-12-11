@@ -2,51 +2,166 @@
 /**
  * Created by PhpStorm.
  * User: SimInternal
- * Date: 12/6/2018
- * Time: 8:05 AM
+ * Date: 12/11/2018
+ * Time: 7:30 AM
  */
 session_start();
-
+$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+if (!mssql_select_db('sw_charts', $con)) {
+    die('Unable to select database!');
+}
 ?>
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
 
-    td, th {
-        border: 1px solid #dddddd;*/
-    border: 1px solid #a9a9a9;
+<html>
+<head>
+    <link rel="stylesheet" href="../Menu/menu.css">
+    <style>
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
 
-        text-align: left;
-        padding: 8px;
-    }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
 
-    }
-    tr:nth-child(odd) {
-        background-color: #FFFFFF;
+        .dropdown-content a {
+            color: black;
+            padding: 5px 5px;
+            text-decoration: none;
+            display: block;
+        }
 
-    }
-</style>
-<!--<table width="100%">-->
-<table id="Completed">
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+        .btnRec {
+            border-radius: 20px;
+            width: 100%;
+            height:30px;
+            background-color: #F4D03F;
+            color: black;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btnRec:hover {
+            background-color: #f1c40e;
+        }
+
+        .btnMa {
+            border-radius: 20px;
+            width: 100%;
+            height:30px;
+            background-color: #45B39D;
+            color: black;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btnMa:hover {
+            background-color: #399381;
+        }
+
+        .btnRef {
+            border-radius: 20px;
+            width: 100%;
+            height:30px;
+            background-color: #BB8FCE;
+            color: black;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btnRef:hover {
+            background-color: #a971c1;
+        }
+
+        .btnPro {
+            border-radius: 20px;
+            width: 100%;
+            height:30px;
+            background-color: #E74C3C;
+            color: black;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btnPro:hover {
+            background-color: #e3301c;
+        }
+
+        .btnOthers {
+            border-radius: 20px;
+            width: 100%;
+            height:30px;
+            background-color: #4CAF50;
+            color: black;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btnOthers:hover {
+            background-color: #3e8e41;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;*/
+        border: 1px solid #a9a9a9;
+
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+
+        }
+        tr:nth-child(odd) {
+            background-color: #FFFFFF;
+
+        }
+    </style>
+</head>
+
+<body style="background:darkgray;">
+<?php include "../Menu/menu.php"?>
+<table id="All" width="100%">
     <tbody>
     <tr>
-        <th onclick="sortTable3(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable3(1)" width="14%">DOB</th>
-        <th onclick="sortTable3(2)" width="14%">Reason</th>
-        <th onclick="sortTable3(3)" width="14%">Specialist</th>
-        <th onclick="sortTable3(4)" width="14%">Phone number</th>
-        <th onclick="sortTable3(5)" width="14%">Specialty</th>
-        <th onclick="sortTable3(6)" width="14%">Date Sent</th>
+        <th onclick="sortTable(0)" width="16%">Patient Name</th>
+        <th onclick="sortTable(1)" width="14%">DOB</th>
+        <th onclick="sortTable(2)" width="14%">Reason</th>
+        <th onclick="sortTable(3)" width="14%">Specialist</th>
+        <th onclick="sortTable(4)" width="14%">Phone number</th>
+        <th onclick="sortTable(5)" width="14%">Specialty</th>
+        <th onclick="sortTable(6)" width="14%">Date Sent</th>
 
     </tr>
     <?php
-    $query = 'SELECT * FROM Referrals.Referrals WHERE Status="10"';
+    $query = $_GET['query'];
     $result = $conReferrals->query($query);
     while ($row = $result->fetch_row()){
         $dob = null;
@@ -106,9 +221,9 @@ session_start();
     </tbody>
 </table>
 <script>
-    function sortTable3(n) {
+    function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("Completed");
+        table = document.getElementById("All");
         switching = true;
         // Set the sorting direction to ascending:
         dir = "asc";
@@ -161,3 +276,5 @@ session_start();
         }
     }
 </script>
+</body>
+</html>
