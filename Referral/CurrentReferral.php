@@ -198,7 +198,8 @@
     <tr valign="top">
         <?php include "../patientInfo/PhoneRecord.php"?>
         <?php include "../patientInfo/Messages.php"?>
-        <td style=" width: 50%; border-radius: 10px;background-color:#FFFFFF">
+        <?php include "../patientInfo/Notes.php"?>
+        <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
             <div style="overflow-y: scroll; height:650px">
                 <table width="100%" cellspacing="10px" cellpadding="5px" >
                     <tbody>
@@ -319,6 +320,25 @@
                                         </td>
                                         <td>
                                             <input type="submit" name="button" value="Clear" class="btnOthers">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </td>
+                        <td>
+                            <form action='/pushNote.php'>
+                                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr valign="center" aria-rowspan="5px">
+                                        <td valign="center">
+                                            <input type="submit" name="button" value="Add Note" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>

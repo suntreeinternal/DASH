@@ -814,756 +814,752 @@
     <table id="205" parent="2" name="MessageAboutPatient">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="206" parent="2" name="PatientData">
+    <table id="206" parent="2" name="Note"/>
+    <table id="207" parent="2" name="PatientData">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="207" parent="2" name="PatientPhoneMessages"/>
-    <table id="208" parent="2" name="Prescription"/>
-    <table id="209" parent="2" name="Priority"/>
-    <table id="210" parent="2" name="Provider">
+    <table id="208" parent="2" name="PatientPhoneMessages"/>
+    <table id="209" parent="2" name="Prescription"/>
+    <table id="210" parent="2" name="Priority"/>
+    <table id="211" parent="2" name="Provider">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="211" parent="2" name="RecordRequest"/>
-    <table id="212" parent="2" name="Referrals"/>
-    <table id="213" parent="2" name="Rx"/>
-    <table id="214" parent="2" name="Specialist">
+    <table id="212" parent="2" name="RecordRequest"/>
+    <table id="213" parent="2" name="Referrals"/>
+    <table id="214" parent="2" name="Rx"/>
+    <table id="215" parent="2" name="Specialist">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="215" parent="2" name="Specialty"/>
-    <table id="216" parent="2" name="Status"/>
-    <table id="217" parent="2" name="TempPatient">
+    <table id="216" parent="2" name="Specialty"/>
+    <table id="217" parent="2" name="Status"/>
+    <table id="218" parent="2" name="TempPatient">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="218" parent="2" name="UploadedFiles"/>
-    <table id="219" parent="2" name="UserGroups">
+    <table id="219" parent="2" name="UploadedFiles"/>
+    <table id="220" parent="2" name="UserGroups">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <table id="220" parent="2" name="UserRights"/>
-    <table id="221" parent="2" name="Users">
+    <table id="221" parent="2" name="UserRights"/>
+    <table id="222" parent="2" name="Users">
       <Collation>latin1_swedish_ci</Collation>
     </table>
-    <column id="222" parent="203" name="id">
+    <column id="223" parent="203" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="223" parent="203" name="value">
+    <column id="224" parent="203" name="value">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="224" parent="203" name="Authorization_id_uindex">
+    <index id="225" parent="203" name="Authorization_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="225" parent="203" name="PRIMARY">
+    <key id="226" parent="203" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="226" parent="203" name="Authorization_id_uindex">
+    <key id="227" parent="203" name="Authorization_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>Authorization_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="227" parent="204" name="ID">
+    <column id="228" parent="204" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="228" parent="204" name="UserID">
+    <column id="229" parent="204" name="UserID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="229" parent="204" name="WhatChanged">
+    <column id="230" parent="204" name="WhatChanged">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="230" parent="204" name="ChangeLocation">
+    <column id="231" parent="204" name="ChangeLocation">
       <Position>4</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="231" parent="204" name="DateTime">
+    <column id="232" parent="204" name="DateTime">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="232" parent="204" name="Changel=Log_ID_uindex">
+    <index id="233" parent="204" name="Changel=Log_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="233" parent="204" name="PRIMARY">
+    <key id="234" parent="204" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="234" parent="204" name="Changel=Log_ID_uindex">
+    <key id="235" parent="204" name="Changel=Log_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Changel=Log_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="235" parent="205" name="ID">
+    <column id="236" parent="205" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="205" name="PatientID">
+    <column id="237" parent="205" name="PatientID">
       <Position>2</Position>
       <DataType>varchar(75)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="237" parent="205" name="UserID">
+    <column id="238" parent="205" name="UserID">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="238" parent="205" name="TimeStamp">
+    <column id="239" parent="205" name="TimeStamp">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="205" name="Message">
+    <column id="240" parent="205" name="Message">
       <Position>5</Position>
       <DataType>varchar(300)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="205" name="UserGroup">
+    <column id="241" parent="205" name="UserGroup">
       <Position>6</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="241" parent="205" name="MessageAboutPatient_ID_uindex">
+    <index id="242" parent="205" name="MessageAboutPatient_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="242" parent="205" name="PRIMARY">
+    <key id="243" parent="205" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="243" parent="205" name="MessageAboutPatient_ID_uindex">
+    <key id="244" parent="205" name="MessageAboutPatient_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>MessageAboutPatient_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="244" parent="206" name="ID">
+    <column id="245" parent="206" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="206" name="SW_ID">
+    <column id="246" parent="206" name="ReferralID">
       <Position>2</Position>
-      <DataType>varchar(75)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="206" name="Message_alert_to_group">
+    <column id="247" parent="206" name="UserID">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="206" name="Note">
+    <column id="248" parent="206" name="TimeStamp">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="249" parent="206" name="Note">
+      <Position>5</Position>
+      <DataType>varchar(75)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="250" parent="206" name="UserGroup">
+      <Position>6</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="251" parent="206" name="Note_ID_uindex">
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="252" parent="206" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="253" parent="206" name="Note_ID_uindex">
+      <ColNames>ID</ColNames>
+      <UnderlyingIndexName>Note_ID_uindex</UnderlyingIndexName>
+    </key>
+    <column id="254" parent="207" name="ID">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="255" parent="207" name="SW_ID">
+      <Position>2</Position>
+      <DataType>varchar(75)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="256" parent="207" name="Message_alert_to_group">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="257" parent="207" name="Note">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="206" name="Phone_number">
+    <column id="258" parent="207" name="Phone_number">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="206" name="temp">
+    <column id="259" parent="207" name="temp">
       <Position>6</Position>
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="250" parent="206" name="PatientData_ID_uindex">
+    <index id="260" parent="207" name="PatientData_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="251" parent="206" name="PRIMARY">
+    <key id="261" parent="207" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="252" parent="206" name="PatientData_ID_uindex">
+    <key id="262" parent="207" name="PatientData_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>PatientData_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="253" parent="207" name="id">
+    <column id="263" parent="208" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="254" parent="207" name="PatientID">
+    <column id="264" parent="208" name="PatientID">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="207" name="User_ID">
+    <column id="265" parent="208" name="User_ID">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="207" name="TimeStamp">
+    <column id="266" parent="208" name="TimeStamp">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="207" name="Message">
+    <column id="267" parent="208" name="Message">
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="207" name="UserGroup">
+    <column id="268" parent="208" name="UserGroup">
       <Position>6</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="259" parent="207" name="PatientPhoneMessages_id_uindex">
+    <index id="269" parent="208" name="PatientPhoneMessages_id_uindex">
       <ColNames>id</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="260" parent="207" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="261" parent="207" name="PatientPhoneMessages_id_uindex">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>PatientPhoneMessages_id_uindex</UnderlyingIndexName>
-    </key>
-    <column id="262" parent="208" name="ID">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="263" parent="208" name="RxID">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="264" parent="208" name="Prescription">
-      <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="265" parent="208" name="Mg">
-      <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="266" parent="208" name="Quantity">
-      <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="267" parent="208" name="Directions">
-      <Position>6</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="268" parent="208" name="Directions2">
-      <Position>7</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="269" parent="208" name="Prescription_ID_uindex">
-      <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
     <key id="270" parent="208" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>ID</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="271" parent="208" name="Prescription_ID_uindex">
-      <ColNames>ID</ColNames>
-      <UnderlyingIndexName>Prescription_ID_uindex</UnderlyingIndexName>
+    <key id="271" parent="208" name="PatientPhoneMessages_id_uindex">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>PatientPhoneMessages_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="272" parent="209" name="id">
+    <column id="272" parent="209" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="209" name="value">
+    <column id="273" parent="209" name="RxID">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="274" parent="209" name="Prescription">
+      <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="275" parent="209" name="Mg">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="276" parent="209" name="Quantity">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="209" name="Directions">
+      <Position>6</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="209" name="Directions2">
+      <Position>7</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="279" parent="209" name="Prescription_ID_uindex">
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="280" parent="209" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="281" parent="209" name="Prescription_ID_uindex">
+      <ColNames>ID</ColNames>
+      <UnderlyingIndexName>Prescription_ID_uindex</UnderlyingIndexName>
+    </key>
+    <column id="282" parent="210" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="283" parent="210" name="value">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="274" parent="209" name="Priority_id_uindex">
+    <index id="284" parent="210" name="Priority_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="275" parent="209" name="PRIMARY">
+    <key id="285" parent="210" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="276" parent="209" name="Priority_id_uindex">
+    <key id="286" parent="210" name="Priority_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>Priority_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="277" parent="210" name="ID">
+    <column id="287" parent="211" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="210" name="ProviderName">
+    <column id="288" parent="211" name="ProviderName">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="279" parent="210" name="Provider_ID_uindex">
+    <index id="289" parent="211" name="Provider_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="280" parent="210" name="PRIMARY">
+    <key id="290" parent="211" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="281" parent="210" name="Provider_ID_uindex">
+    <key id="291" parent="211" name="Provider_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Provider_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="282" parent="211" name="ID">
+    <column id="292" parent="212" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="211" name="PatientID">
+    <column id="293" parent="212" name="PatientID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="211" name="Requester">
+    <column id="294" parent="212" name="Requester">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="211" name="Invoice">
+    <column id="295" parent="212" name="Invoice">
       <Position>4</Position>
       <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="211" name="Status">
+    <column id="296" parent="212" name="Status">
       <Position>5</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="287" parent="211" name="RecordRequest_ID_uindex">
+    <index id="297" parent="212" name="RecordRequest_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="288" parent="211" name="PRIMARY">
+    <key id="298" parent="212" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="289" parent="211" name="RecordRequest_ID_uindex">
+    <key id="299" parent="212" name="RecordRequest_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>RecordRequest_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="290" parent="212" name="ID">
+    <column id="300" parent="213" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="212" name="ProviderID">
+    <column id="301" parent="213" name="ProviderID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="212" name="PatientID">
+    <column id="302" parent="213" name="PatientID">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="212" name="Status">
+    <column id="303" parent="213" name="Status">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="212" name="Priority">
+    <column id="304" parent="213" name="Priority">
       <Position>5</Position>
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="212" name="Authorization">
+    <column id="305" parent="213" name="Authorization">
       <Position>6</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="212" name="Reason">
+    <column id="306" parent="213" name="Reason">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="212" name="Date">
+    <column id="307" parent="213" name="Date">
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="212" name="SpecaltyID">
+    <column id="308" parent="213" name="SpecaltyID">
       <Position>9</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="212" name="SpecalistID">
+    <column id="309" parent="213" name="SpecalistID">
       <Position>10</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="212" name="LastSent">
+    <column id="310" parent="213" name="LastSent">
       <Position>11</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="301" parent="212" name="Referrals_ID_uindex">
+    <index id="311" parent="213" name="Referrals_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="212" name="PRIMARY">
+    <key id="312" parent="213" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="303" parent="212" name="Referrals_ID_uindex">
+    <key id="313" parent="213" name="Referrals_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Referrals_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="304" parent="213" name="ID">
+    <column id="314" parent="214" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="213" name="PatientID">
+    <column id="315" parent="214" name="PatientID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="213" name="DateCreated">
+    <column id="316" parent="214" name="DateCreated">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="213" name="Status">
+    <column id="317" parent="214" name="Status">
       <Position>4</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="213" name="ProviderID">
+    <column id="318" parent="214" name="ProviderID">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="213" name="LastEncounter">
+    <column id="319" parent="214" name="LastEncounter">
       <Position>6</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="310" parent="213" name="Rx_ID_uindex">
+    <index id="320" parent="214" name="Rx_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="311" parent="213" name="PRIMARY">
+    <key id="321" parent="214" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="312" parent="213" name="Rx_ID_uindex">
+    <key id="322" parent="214" name="Rx_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Rx_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="313" parent="214" name="ID">
+    <column id="323" parent="215" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="314" parent="214" name="SpecialtyID">
+    <column id="324" parent="215" name="SpecialtyID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="214" name="DrName">
+    <column id="325" parent="215" name="DrName">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="316" parent="214" name="Location">
+    <column id="326" parent="215" name="Location">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="214" name="Phone">
+    <column id="327" parent="215" name="Phone">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="214" name="Fax">
+    <column id="328" parent="215" name="Fax">
       <Position>6</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="319" parent="214" name="Note">
+    <column id="329" parent="215" name="Note">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="320" parent="215" name="ID">
+    <column id="330" parent="216" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="215" name="Specialty">
+    <column id="331" parent="216" name="Specialty">
       <Position>2</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="322" parent="215" name="Specialty_ID_uindex">
+    <index id="332" parent="216" name="Specialty_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="323" parent="215" name="PRIMARY">
+    <key id="333" parent="216" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="324" parent="215" name="Specialty_ID_uindex">
+    <key id="334" parent="216" name="Specialty_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Specialty_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="325" parent="216" name="id">
+    <column id="335" parent="217" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="216" name="value">
+    <column id="336" parent="217" name="value">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="327" parent="216" name="Status_id_uindex">
+    <index id="337" parent="217" name="Status_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="328" parent="216" name="PRIMARY">
+    <key id="338" parent="217" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="329" parent="216" name="Status_id_uindex">
+    <key id="339" parent="217" name="Status_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>Status_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="330" parent="217" name="ID">
+    <column id="340" parent="218" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="217" name="FirstName">
+    <column id="341" parent="218" name="FirstName">
       <Position>2</Position>
       <DataType>varchar(40)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="332" parent="217" name="LastName">
+    <column id="342" parent="218" name="LastName">
       <Position>3</Position>
       <DataType>varchar(40)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="217" name="BirthDate">
+    <column id="343" parent="218" name="BirthDate">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="334" parent="217" name="TempPatient_ID_uindex">
+    <index id="344" parent="218" name="TempPatient_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="335" parent="217" name="PRIMARY">
+    <key id="345" parent="218" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="336" parent="217" name="TempPatient_ID_uindex">
+    <key id="346" parent="218" name="TempPatient_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>TempPatient_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="337" parent="218" name="id">
+    <column id="347" parent="219" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="218" name="SW_ID">
+    <column id="348" parent="219" name="SW_ID">
       <Position>2</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="218" name="UserID">
+    <column id="349" parent="219" name="UserID">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="218" name="DateTimeStamp">
+    <column id="350" parent="219" name="DateTimeStamp">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="218" name="FileLocation">
+    <column id="351" parent="219" name="FileLocation">
       <Position>5</Position>
       <DataType>varchar(60)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="342" parent="218" name="UploadedFiles_id_uindex">
+    <index id="352" parent="219" name="UploadedFiles_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="343" parent="218" name="PRIMARY">
+    <key id="353" parent="219" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="344" parent="218" name="UploadedFiles_id_uindex">
+    <key id="354" parent="219" name="UploadedFiles_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>UploadedFiles_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="345" parent="219" name="ID">
+    <column id="355" parent="220" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="219" name="GroupName">
+    <column id="356" parent="220" name="GroupName">
       <Position>2</Position>
       <DataType>varchar(25)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="347" parent="219" name="UserGroups_ID_uindex">
+    <index id="357" parent="220" name="UserGroups_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="348" parent="219" name="PRIMARY">
+    <key id="358" parent="220" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="349" parent="219" name="UserGroups_ID_uindex">
+    <key id="359" parent="220" name="UserGroups_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>UserGroups_ID_uindex</UnderlyingIndexName>
     </key>
-    <column id="350" parent="220" name="ID">
+    <column id="360" parent="221" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="220" name="PremissionLevel">
+    <column id="361" parent="221" name="PremissionLevel">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="352" parent="220" name="UserRights_ID_uindex">
-      <ColNames>ID</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="353" parent="220" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>ID</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="354" parent="220" name="UserRights_ID_uindex">
-      <ColNames>ID</ColNames>
-      <UnderlyingIndexName>UserRights_ID_uindex</UnderlyingIndexName>
-    </key>
-    <column id="355" parent="221" name="ID">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="356" parent="221" name="GroupID">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="357" parent="221" name="RightsID">
-      <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="358" parent="221" name="UserName">
-      <Position>4</Position>
-      <DataType>varchar(15)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="359" parent="221" name="FirstName">
-      <Position>5</Position>
-      <DataType>varchar(30)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="360" parent="221" name="LastName">
-      <Position>6</Position>
-      <DataType>varchar(35)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="361" parent="221" name="Password">
-      <Position>7</Position>
-      <DataType>varchar(30)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="362" parent="221" name="Users_ID_uindex">
+    <index id="362" parent="221" name="UserRights_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
@@ -1573,7 +1569,58 @@
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="364" parent="221" name="Users_ID_uindex">
+    <key id="364" parent="221" name="UserRights_ID_uindex">
+      <ColNames>ID</ColNames>
+      <UnderlyingIndexName>UserRights_ID_uindex</UnderlyingIndexName>
+    </key>
+    <column id="365" parent="222" name="ID">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="366" parent="222" name="GroupID">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="367" parent="222" name="RightsID">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="368" parent="222" name="UserName">
+      <Position>4</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="369" parent="222" name="FirstName">
+      <Position>5</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="370" parent="222" name="LastName">
+      <Position>6</Position>
+      <DataType>varchar(35)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="371" parent="222" name="Password">
+      <Position>7</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="372" parent="222" name="Users_ID_uindex">
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="373" parent="222" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="374" parent="222" name="Users_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>Users_ID_uindex</UnderlyingIndexName>
     </key>

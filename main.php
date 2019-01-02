@@ -26,7 +26,7 @@
     $dtRX = 0;
     $ssRX = 0;
     $ncRX = 0;
-    $refMessage = 0;
+    $ASAP = 0;
     $appMessage = 0;
     $newReferral = 0;
     $pendingApt = 0;
@@ -50,6 +50,8 @@
     $denialMed = 0;
     $approvedMed = 0;
     $otherMed = 0;
+
+
     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
     $query = 'SELECT COUNT(*) FROM TempPatient';
     $result = $con->query($query);
@@ -61,6 +63,11 @@
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingSoap += $row[0];
+
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=0';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $ASAP += $row[0];
 
     $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=2';
     $result = $con->query($query);
@@ -174,7 +181,7 @@
                                 <td>
                                     <a href="../Reports/FrontPageReport.php?querey=SOMETHING" class="notification" >
                                         <span>Messages</span>
-                                        <span class="badge"><?php echo $refMessage?></span>
+                                        <span class="badge"><?php echo $ASAP?></span>
                                     </a>
                                 </td>
                             </tr>
