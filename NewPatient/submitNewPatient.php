@@ -23,10 +23,12 @@ if($con->connect_error){
         $result = $con->query($query);
         $row = $result->fetch_row();
         echo var_dump($row);
-
         $query = "INSERT INTO PatientData(SW_ID, Message_alert_to_group, Note, Phone_number, temp) VALUES ('" . $row[0] ."','','','','')";
         $result = $con->query($query);
+        $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Patient " . $_GET['first'] . " " . $_GET['last'] . " with DOB " .  $_GET['birthDate'] . " Added as a Temporary patient who is not is SW yet', ' " . date("Y-m-d h:i:sa") . "')";
+        $result = $con->query($query);
         header($_SESSION['previous']);
+
     }
 
 }

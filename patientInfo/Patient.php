@@ -58,6 +58,7 @@
 
 
             if (sizeof($row) == 0){
+                //TODO add to Change log
 
                 $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $SwID . '\',0,\'\',0)';
                 $result = $conReferrals->query($query);
@@ -112,6 +113,7 @@
 
 
             if (sizeof($row) == 0){
+                //TODO add to Change log
 
                 $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $patientID . '\',0,\'\',0)';
                 $result = $conReferrals->query($query);
@@ -184,6 +186,7 @@
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
+            right: 0;
         }
 
         .dropdown-content a {

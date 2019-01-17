@@ -98,8 +98,12 @@ session_start();
         $tr = $temp->fetch_row();
         echo $tr[1];
         echo "</td><td>";
-        $date = date_create($row[10]);
-        echo date_format($date, "m/d/Y");
+        if ($row[10] == ""){
+            echo "Has not been sent yet";
+        } else {
+            $date = date_create($row[10]);
+            echo date_format($date, "m/d/Y");
+        }
         echo "</td></tr>";
     }
     ?>

@@ -15,7 +15,6 @@
     if (!mssql_select_db('sw_charts', $con)) {
         die('Unable to select database!');
     }
-
     $query = 'SELECT * FROM Referrals.Referrals WHERE ID=\'' . $_GET['ReferralID'] . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
@@ -87,11 +86,13 @@
             padding: 16px;
             font-size: 16px;
             border: none;
+
         }
 
         .dropdown {
             position: relative;
             display: inline-block;
+
         }
 
         .dropdown-content {
@@ -101,6 +102,7 @@
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
+            right: 0;
         }
 
         .dropdown-content a {
@@ -110,11 +112,17 @@
             display: block;
         }
 
-        .dropdown-content a:hover {background-color: #ddd;}
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
 
-        .dropdown:hover .dropdown-content {display: block;}
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
 
-        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
 
         .btnRec {
             border-radius: 20px;
@@ -200,31 +208,34 @@
         <?php include "../patientInfo/Messages.php"?>
         <?php include "../patientInfo/Notes.php"?>
         <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
-            <div style="overflow-y: scroll; height:650px">
+            <div style="height:650px">
                 <table width="100%" cellspacing="10px" cellpadding="5px" >
                     <tbody>
                     <tr>
                         <td style="font-size: 20px; font-weight: bold" width="50%">
                             Referral
                         </td>
-
                     </tr>
                     <tr>
-                        <table cellpadding="15px" cellspacing="15px" width="100%" >
+                        <table cellpadding="5px" cellspacing="15px" width="100%" >
                             <tbody>
                             <form action="updateReferral.php">
                                 <tr>
                                     <td width="50%">
-                                        Provider <?php echo $providerList?>
-                                    </td>
-                                    <td width="50%">
                                         Date created: <?php echo $dateTime?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">
+                                        Provider <?php echo $providerList?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         Reason <input name="Reason" value="<?php echo $reason?>" type="text">
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         Status: <?php echo $status?>
                                         <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
@@ -240,6 +251,8 @@
                                             <option selected="selected" value="4">Unknown</option>
                                         </select>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         Priority: <select name="priority">
                                             <option selected="selected" value="1">ASAP</option>
@@ -256,6 +269,8 @@
                                         </select>
                                         <input type="hidden" name="refID" value="<?php echo $_GET['ReferralID']?>" >
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         Specialist
                                     </td>
@@ -265,6 +280,8 @@
                                         <input type="submit" value="Update referral">
 
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
 
                                     </td>
@@ -328,7 +345,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action='/pushNote.php'>
+                            <form action='/pushNewNote.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -339,6 +356,7 @@
                                     <tr valign="center" aria-rowspan="5px">
                                         <td valign="center">
                                             <input type="submit" name="button" value="Add Note" class="btnOthers">
+                                            <input type="hidden" name="refNum" value="<?php echo $referralID?>">
                                         </td>
                                     </tr>
                                     </tbody>

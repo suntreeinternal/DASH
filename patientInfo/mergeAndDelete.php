@@ -15,22 +15,21 @@ $id = $row[0];
 $query = "UPDATE Referrals.PatientData SET SW_ID='" . $_GET['sw'] . "' WHERE ID='" . $id ."'";
 $result = $conReferrals->query($query);
 
-//$row = $result->fetch_row();
-//echo "<br/>" . $query;
-//
-//$tempId = $row[0];
-//echo "<br/>" . $query;
-//
-//$tempName = $row[1] . " " . $row[2];
-//echo "<br/>" . $query;
-//
-//$tempDob = $row[3];
-//echo "<br/>" . $query;
+$query = 'SELECT * FROM Referrals.TempPatient WHERE ID=\''. $_GET['id'] . '\'';
+$result = $conReferrals->query($query);
+$row = $result->fetch_row();
+$name = $row[1] . " " . $row[2];
+
 
 $query = 'DELETE FROM Referrals.TempPatient WHERE ID=\''. $_GET['id'] . '\'';
 echo "<br/>" . $query;
 $result = $conReferrals->query($query);
 
+$query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Temporary patient merged with patient in SW " . $name . "', '" . date("Y-m-d h:i:sa") . "')";
+
+$result = $conReferrals->query($query);
 header($_SESSION['previous']);
+
+
 
 

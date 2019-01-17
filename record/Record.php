@@ -11,6 +11,7 @@ $date = $_GET['date'];
 
 $_SESSION['previous'] = './Referral/Referral.php';
 
+echo 'asdfasdfa';
 
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -38,6 +39,8 @@ if($con->connect_error){
     $row = $result->fetch_row();
 
     if (sizeof($row) == 0){
+        //TODO add to Change log
+
         $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $_SESSION['currentPatient'] . '\',0,\'\',0)';
         $result = $conReferrals->query($query);
     } else {
@@ -319,12 +322,6 @@ $dateTime = date("Y-m-d h:i:sa");
                                 break;
 
                         }
-                        echo "
-                                <td style=\"border-radius: 7px\" colspan='2'>
-                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
-                                </td>
-                            </tr>
-                        ";
                     }
                     ?>
 

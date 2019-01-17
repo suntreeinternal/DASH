@@ -8,25 +8,12 @@ session_start();
  * Time: 11:56 AM
  */
 
-echo var_dump($_GET);
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if($con->connect_error){
     header('location:/index.html');
 } else {
     $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
-
-$destination = "";
-$query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
-$result = $con->query($query);
-
-
-while ($row = $result->fetch_row()){
-    $val = 4+$row[0];
-    $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
-}
-
-
 
 ?>
 
@@ -55,7 +42,7 @@ while ($row = $result->fetch_row()){
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
-            /*width: 100%;*/
+            width: 100%;
             border: 0;
             margin: 0 0 15px;
             padding: 15px;
@@ -139,28 +126,20 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
+        <form action="AddProvider.php" method="post" class="login-form">
             <table width="100%">
                 <tbody>
                 <tr>
-                    <td>
-                        Select Message Destination<br/><br/>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <?php echo $destination?>
+                    <td width="50%">
+                        <input type="text" name="name" placeholder="Full name with title">
                     </td>
                     <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
-                        <input type='radio' name='dest' value='0'>MA</br>
-                        <input type='radio' name='dest' value='1'>Reception</br>
-                        <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value='3'>None</br>
+                        <input type="text" name="initials" placeholder="Initials">
+                    </td>
+                    <td width='45px'>
+                        <input style="height: 45px"  type="color" name="Color">
                     </td>
                 </tr>
-
                 </tbody>
             </table>
             <button>Submit</button>

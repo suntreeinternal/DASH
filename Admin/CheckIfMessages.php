@@ -1,33 +1,38 @@
 <?php
-session_start();
-
 /**
  * Created by PhpStorm.
  * User: SimInternal
- * Date: 11/2/2018
- * Time: 11:56 AM
+ * Date: 1/14/2019
+ * Time: 11:48 AM
  */
 
-echo var_dump($_GET);
+session_start();
+
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if($con->connect_error){
     header('location:/index.html');
 } else {
-    $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
+    $query = 'SELECT * FROM Referrals.Provider';
 }
 
-$destination = "";
-$query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+$val = $_GET['providerID']+4;
+$query = 'SELECT * FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=\'' . $val . '\'';
+//echo $query;
+
 $result = $con->query($query);
+$row = $result->num_rows;
 
-
-while ($row = $result->fetch_row()){
-    $val = 4+$row[0];
-    $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
+if ($row != 0) {
+    echo 'Provider still has pending messages. Please clear all pending before making provider inactive.';
 }
 
+$query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $_GET['providerID'] . '\'';
+$result = $con->query($query);
+$row = $result->fetch_row();
 
 
+$providerName = $row[1];
+$providerID = $_GET['providerID'];
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +69,6 @@ while ($row = $result->fetch_row()){
         }
         .form button {
             font-family: "Roboto", sans-serif;
-            text-transform: uppercase;
             outline: 0;
             background: #4CAF50;
             width: 100%;
@@ -139,31 +143,9 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
-            <table width="100%">
-                <tbody>
-                <tr>
-                    <td>
-                        Select Message Destination<br/><br/>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <?php echo $destination?>
-                    </td>
-                    <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
-                        <input type='radio' name='dest' value='0'>MA</br>
-                        <input type='radio' name='dest' value='1'>Reception</br>
-                        <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value='3'>None</br>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-            <button>Submit</button>
+        <form action="MakeProviderInactive.php" method="get" class="login-form">
+            <input type="hidden" name="providerID" value="<?php echo $providerID?>">
+            <button>Are you sure you want to make <?php echo $providerName?> inactive?</button>
         </form>
     </div>
 </div>

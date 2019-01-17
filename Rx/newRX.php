@@ -7,7 +7,7 @@ $patientName = $_SESSION['patientName'];
 $DOB = $_SESSION['patientDOB'];
 $phoneNumber = '';
 
-
+echo var_dump($_SESSION);
 
 
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
@@ -165,7 +165,7 @@ $dateTime = date("Y-m-d h:i:sa");
         <?php include "../patientInfo/PhoneRecord.php"?>
         <?php include "../patientInfo/Messages.php"?>
         <td style=" width: 50%; border-radius: 10px;background-color:#FFFFFF">
-            <div style="overflow-y: scroll; height:650px">
+            <div style="height:650px">
                 <table width="100%" cellspacing="10px" cellpadding="5px" >
                     <tbody>
                     <tr>
@@ -188,7 +188,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                 </tr>
                                 <tr>
                                     <td>
-                                        Reason <input name="Reason" type="text">
+                                        Reason <input name="Reason" type="text" placeholder="Add Reason">
                                     </td>
                                     <td>
                                         Status: <select name="status">
@@ -200,6 +200,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                             <option value="6">Patient Notified</option>
                                         </select>
                                         <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
+                                        <input type="hidden" name="patientID" value="<?php echo $_SESSION['currentPatient']?>">
 
                                     </td>
                                 </tr>
@@ -213,34 +214,105 @@ $dateTime = date("Y-m-d h:i:sa");
                                             <option value="4">See me</option>
                                         </select>
                                     </td>
+                                    <td>
+                                        Note: <input type="text" name="Note" placeholder="Add Note">
+                                    </td>
                                 <tr>
                                     <td colspan="2">
                                         <table width="100%" style="border-collapse: collapse; border-spacing: 0">
-                                            <tbody>
-                                                <tr style="border: 1px solid #CCC;">
-                                                    <th style="border: 1px solid #CCC;">
-                                                        Prescription
-                                                    </th>
-                                                    <th style="border: 1px solid #CCC;">
-                                                        Mg
-                                                    </th>
-                                                    <th style="border: 1px solid #CCC;">
-                                                        Quantity
-                                                    </th>
-                                                    <th style="border: 1px solid #CCC;">
-                                                        Directions
-                                                    </th>
-                                                    <th style="border: 1px solid #CCC;">
-                                                        Directions 2
-                                                    </th>
-                                                </tr>
-                                                <tr style="border: 1px solid #CCC;">
-                                                    <td style="border: 1px solid #CCC;" contenteditable="true" id="test"></td>
-                                                    <td style="border: 1px solid #CCC;" contenteditable="true"></td>
-                                                    <td style="border: 1px solid #CCC;" contenteditable="true"></td>
-                                                    <td style="border: 1px solid #CCC;" contenteditable="true"></td>
-                                                    <td style="border: 1px solid #CCC;" contenteditable="true"></td>
-                                                </tr>
+                                            <tbody >
+                                            <tr>
+                                                <th width="25%">Prescription</th>
+                                                <th width="10%">Mg</th>
+                                                <th>Quantity</th>
+                                                <th>Directions</th>
+                                                <th>Directions 2</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="prescription1">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="mg1">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Quantity1">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir1">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir21">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="prescription2">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="mg2">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Quantity2">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir2">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir22">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="prescription3">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="mg3">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Quantity3">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir3">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir23">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="prescription4">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="mg4">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Quantity4">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir4">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir24">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="prescription5">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="mg5">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Quantity5">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir5">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="Dir25">
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
 

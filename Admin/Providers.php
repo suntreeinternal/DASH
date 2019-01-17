@@ -16,8 +16,10 @@ session_start();
                 <div style="font-size: 25px">Providers</div>
             </td>
             <td width="50%" align="right">
-                <button>Add Provider</button>
-                <input type="button" value="Edit Provider">
+                <form method="post" action="AddProviderForm.php">
+                    <input type="submit" value="Add Provider">
+                </form>
+
             </td>
         </tr>
         <tr>
@@ -25,9 +27,11 @@ session_start();
                 <br/>
                 <table width="100%" id="customers">
                     <tbody">
-                    <tr>
+                    <tr style="width: 85%;">
                         <th>Provider</th>
+                        <th>Active</th>
                     </tr>
+
                     <?php
                     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                     if($con->connect_error){
@@ -37,9 +41,12 @@ session_start();
                     }
                     $result = $con->query($query);
                     while ($row = $result->fetch_row()){
-                        echo "<tr>
-                                          <td>" . $row[1] . "</td>
-                                          </tr>";
+                        $val  = 'Yes';
+                        if ($row[3] == 0){
+                            $val = 'No';
+                        }
+//                        echo var_dump($row);
+                        echo "<tr onclick=\"window.location='../Admin/CheckIfMessages.php?providerID=" . $row[0] . "'\"><td>" . $row[1] . "</td><td>" . $val . "</td></tr>";
                     }
                     ?>
                     </tbody>

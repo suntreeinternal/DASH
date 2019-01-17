@@ -1,6 +1,7 @@
 <?php
     //TODO make certain items visible to only some groups-
     session_start();
+//    echo var_dump($_SESSION);
 ?>
 
 <html style='height: 100%'>
@@ -75,12 +76,21 @@
 <?php include "../Menu/menu.php";?>
 <table style="height: 400px" width="100%" cellpadding="10px" cellspacing="5px" >
     <tbody>
-        <tr>
-            <?php include "Users.php"?>
-            <?php include "Providers.php"?>
-            <?php include "Specialist.php"?>
-            <?php include "Specialty.php"?>
-        </tr>
+        <?php
+        if ($_SESSION['group'] == 'Admin'){
+            echo '<tr>';
+            include "Users.php";
+            include "Providers.php";
+            include "Specialist.php";
+            include "Specialty.php";
+            echo'</tr>';
+        } else {
+            echo '<tr>';
+            include "Specialist.php";
+            include "Specialty.php";
+            echo '</tr>';
+        }
+        ?>
     </tbody>
 </table>
 

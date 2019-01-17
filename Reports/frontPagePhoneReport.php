@@ -152,13 +152,10 @@ if (!mssql_select_db('sw_charts', $con)) {
 <table id="All" width="100%">
     <tbody>
     <tr>
-        <th onclick="sortTable(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable(1)" width="14%">DOB</th>
-        <th onclick="sortTable(2)" width="14%">Reason</th>
-        <th onclick="sortTable(3)" width="14%">Specialist</th>
-        <th onclick="sortTable(4)" width="14%">Phone number</th>
-        <th onclick="sortTable(5)" width="14%">Specialty</th>
-        <th onclick="sortTable(6)" width="14%">Date Sent</th>
+        <th onclick="sortTable(0)" width="12%">Patient Name</th>
+        <th onclick="sortTable(1)" width="10%">DOB</th>
+        <th onclick="sortTable(4)" width="10%">Phone number</th>
+        <th onclick="sortTable(2)" width="68%">Message</th>
 
     </tr>
     <?php
@@ -167,11 +164,12 @@ if (!mssql_select_db('sw_charts', $con)) {
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
             $dob = null;
-            echo "<tr onclick=\"window.location='../Reports/GetPatient.php?ReferralID=" . $row[0] . "';\"><td>";
-            $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[2] . '"';
+            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?ReferralID=" . $row[2] . "';\"><td>";
+            $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[1] . '"';
             $temp = $conReferrals->query($query);
             $tr = $temp->fetch_row();
             $id = "" . $tr[1];
+            $phone = $tr[4];
             $_SESSION['currentPatient'] = $tr[0];
 
 
@@ -193,86 +191,24 @@ if (!mssql_select_db('sw_charts', $con)) {
             $date = date_create($dob);
             echo date_format($date, "m/d/Y");
             echo "</td><td>";
-            echo $row[6];
-            echo "</td><td>";
-            $query = 'SELECT * FROM Referrals.Specialist WHERE ID="' . $row[9] . '"';
-            $temp = $conReferrals->query($query);
-            $tr = $temp->fetch_row();
-            echo $tr[2];
-            echo "</td><td>";
-            if (ctype_digit($tr[4]) && strlen($tr[4]) == 10) {
+            if (ctype_digit($phone) && strlen($phone) == 10) {
 
-                $tr[4] = substr($tr[4], 0, 3) . '-' . substr($tr[4], 3, 3) . '-' . substr($tr[4], 6);
+                $phone = "(" . substr($phone, 0, 3) . ') ' . substr($phone, 3, 3) . '-' . substr($phone, 6);
             } else {
 
-                if (ctype_digit($tr[4]) && strlen($tr[4]) == 7) {
-                    $tr[4] = substr($tr[4], 0, 3) . '-' . substr($tr[4], 3, 4);
+                if (ctype_digit($phone) && strlen($phone) == 7) {
+                    $phone = substr($phone, 0, 3) . '-' . substr($phone, 3, 4);
                 }
             }
-            echo $tr[4];
+
+            echo $phone;
 
             echo "</td><td>";
-            $query = 'SELECT * FROM Referrals.Specialty WHERE ID="' . $row[8] . '"';
-            $temp = $conReferrals->query($query);
-            $tr = $temp->fetch_row();
-            echo $tr[1];
-            echo "</td><td>";
-            echo $referral[0];
-            if ($row[10] == ""){
-                echo "Has not been sent yet";
-            } else {
-                $date = date_create($row[10]);
-                echo date_format($date, "m/d/Y");
-            }
+
+            echo $row[4];
+
+
             echo "</td></tr>";
-        }
-    } else {
-        $result = $conReferrals->query("SELECT * FROM TempPatient");
-        while ($row = $result->fetch_row()) {
-            $tempResult = $conReferrals->query('SELECT * FROM PatientData WHERE SW_ID="' . $row[0] . '"');
-            $temp = $tempResult->fetch_row();
-            $tempResult = $conReferrals->query('SELECT * FROM Referrals.Referrals WHERE PatientID = "' . $temp[0] . '"');
-            while ($referral = $tempResult->fetch_row()){
-                $dob = null;
-                echo "<tr onclick=\"window.location='../Reports/GetPatient.php?ReferralID=" . $referral[0] . "';\"><td>";
-                $id = "" . $temp[1];
-                $_SESSION['currentPatient'] = $temp[0];
-
-                echo $row[1] . " " . $row[2];
-                $dob = $row[3];
-
-                echo "</td><td>";
-                $date = date_create($dob);
-                echo date_format($date, "m/d/Y");
-                echo "</td><td>";
-                echo $referral[6];
-                echo "</td><td>";
-                $query = 'SELECT * FROM Referrals.Specialist WHERE ID="' . $referral[9] . '"';
-                $t = $conReferrals->query($query);
-                $tr = $t->fetch_row();
-                echo $tr[2];
-                echo "</td><td>";
-                if (ctype_digit($temp[4]) && strlen($temp[4]) == 10) {
-
-                    $temp[4] = substr($temp[4], 0, 3) . '-' . substr($temp[4], 3, 3) . '-' . substr($temp[4], 6);
-                } else {
-
-                    if (ctype_digit($temp[4]) && strlen($temp[4]) == 7) {
-                        $temp[4] = substr($temp[4], 0, 3) . '-' . substr($temp[4], 3, 4);
-                    }
-                }
-                echo $temp[4];
-
-                echo "</td><td>";
-                $query = 'SELECT * FROM Referrals.Specialty WHERE ID="' . $referral[8] . '"';
-                $t = $conReferrals->query($query);
-                $tr = $t->fetch_row();
-                echo $tr[1];
-                echo "</td><td>";
-                $date = date_create($referral[10]);
-                echo date_format($date, "m/d/Y");
-                echo "</td></tr>";
-            }
         }
     }
     ?>

@@ -23,13 +23,16 @@
                 $query = 'SELECT *FROM Referrals.UserGroups WHERE ID=' . $row[1];
                 $result = $con->query($query);
                 $row = $result->fetch_row();
-                echo $row[1];
                 $_SESSION['valid'] = true;
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['group']  = $row[1];
-
+                $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', ' " . $_SESSION['name'] . " Logged in', '"
+                    . date("Y-m-d h:i:sa") . "')";
+                $result = $con->query($query);
+                echo var_dump($_SESSION);
                 $toSend = 'location:/main.php';
                 header($toSend);
+
             } else {
                 header('location:/index.html');
             }

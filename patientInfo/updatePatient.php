@@ -12,9 +12,13 @@
     if($con->connect_error){
         header('location:/index.html');
     } else {
+        $query = "SELECT * FROM Referrals.PatientData WHERE ID='" . $_SESSION['currentPatient'] . "'";
+        $result = $con->query($query);
+        $row = $result->fetch_row();
+        $phoneOld = str_ireplace('-','',$row[4]);
         $query = 'UPDATE Referrals.PatientData SET Phone_number=\'' . $phone . '\' WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
         $result = $con->query($query);
-        $query = "INSERT INTO Referrals.ChangeLog(UserID, WhatChanged, ChangeLocation, DateTime) VALUES ('" . $_SESSION['userID'] ."','Some thing',' patient phone number ',' " . date("Y-m-d h:i:sa") . "')";
+        $query = "INSERT INTO Referrals.ChangeLog(UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] ."', 'Patient phone number Changed from " . $phoneOld . " to " . $phone . "',' " . date("Y-m-d h:i:sa") . "')";
         $result = $con->query($query);
     }
 //    echo $_SESSION['currentPatient'];

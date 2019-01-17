@@ -27,6 +27,17 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
         $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
     }
 }
+
+
+$query = 'SELECT * FROM Referrals.Uploads WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\'';
+$result = $conReferrals->query($query);
+//$row = $result->fetch_row();
+
+$files = "";
+while ($row = $result->fetch_row()){
+    $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+}
+$files .= '<a href="../patientInfo/uploadFile.php">Upload attachment</a>';
 ?>
 
 <td colspan="4">
@@ -40,9 +51,9 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
             DOB: <?php echo  date("m-d-Y", strtotime($DOB))?>
         </td>
         <td width="20%">
-            <div id="id01">
-                <form action="../patientInfo/updatePatient.php" method="get">
-                    Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>" name="phone">
+                    <div id="id01">
+                        <form action="../patientInfo/updatePatient.php" method="get">
+                            Phone Number: <input id="phone" type="tel" value="<?php echo $phoneNumber?>" name="phone">
                     <button type="submit" id="update">Update</button>
                 </form>
             </div>
@@ -56,8 +67,8 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
             </div>
             <div class="dropdown">
                 <button class="dropbtn">Other Attachments</button>
-                <div class="dropdown-content">
-                    <a href="uploadFile.php">Upload attachment</a>
+                <div class= "dropdown-content">
+                    <?php echo $files?>
                 </div>
             </div>
         </td>

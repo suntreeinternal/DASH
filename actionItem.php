@@ -53,6 +53,7 @@ if($con->connect_error){
     if (sizeof($row) == 0){
         $query = 'INSERT INTO PatientData (SW_ID, Message_alert_to_group, Note, Phone_number) VALUES (\'' . $patientID . '\',0,\'\',0)';
         $result = $conReferrals->query($query);
+
     } else {
         $phoneNumber = $row[4];
         $alert = $row[2];

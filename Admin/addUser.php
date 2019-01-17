@@ -50,6 +50,8 @@
         if ($rightsID == 1) {
             $query = "CREATE USER'" . $userName . "'@'localhost' IDENTIFIED BY '" . $password . "'";
             $result = $con->query($query);
+            //TODO add to Change log
+
             $query = "INSERT INTO Users (GroupID, RightsID, UserName, FirstName, LastName) VALUES ('" . $groupID . "','1', '" . $userName . "', '" . $_GET['first'] . "', '" . $_GET['last'] . "')";
             $result = $con->query($query);
 //        $row = $result->fetch_row();

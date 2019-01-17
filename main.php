@@ -27,7 +27,7 @@
     $ssRX = 0;
     $ncRX = 0;
     $ASAP = 0;
-    $appMessage = 0;
+    $newPatient = 0;
     $newReferral = 0;
     $pendingApt = 0;
     $pendingSoap = 0;
@@ -53,16 +53,17 @@
 
 
     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-    $query = 'SELECT COUNT(*) FROM TempPatient';
-    $result = $con->query($query);
-    $row = $result->fetch_row();
-    $pendingSoap = $row[0];
 
 
     $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
-    $pendingSoap += $row[0];
+    $pendingSoap = $row[0];
+
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE LastSent IS NULL';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $newReferral = $row[0];
 
     $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=0';
     $result = $con->query($query);
@@ -98,6 +99,38 @@
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingApt = $row[0];
+
+    $query = 'SELECT COUNT(*) FROM Referrals.TempPatient';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $newPatient = $row[0];
+
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Authorization=4';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $pendingAuth = $row[0];
+
+    $phoneStats = '';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $result = $con->query($query);
+    while ($row = $result->fetch_row()){
+//        echo var_dump($row);
+        $val = $row[0]+4;
+        $query = 'SELECT COUNT(*) FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' . $val;
+        $resultCount = $con->query($query);
+        $valCount = $resultCount->fetch_row();
+        $query = 'SELECT * FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' .$val;
+        $phoneStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="../Reports/frontPagePhoneReport.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
+    }
+
+    $RxStats = '';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $result = $con->query($query);
+    while ($row = $result->fetch_row()){
+
+        $RxStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="#" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $ahRX . '</span></a></td></tr>';
+    }
+
 ?>
 <html>
     <head>
@@ -105,8 +138,8 @@
         <title>DASH: <?php echo $_SESSION['name']?></title>
         <style>
         .notification {
-            background-color: #555;
-            color: white;
+            background-color: #2A7C46;
+            color: #001b00;
             text-decoration: none;
             padding: 15px 26px;
             position: relative;
@@ -116,7 +149,7 @@
         }
 
         .notification:hover {
-            background: red;
+            background: #b65b5b;
         }
 
         .notification .badge {
@@ -131,7 +164,7 @@
         </style>
     </head>
 
-    <body style="background:darkgray;">
+    <body style="background:#7cba92;">
     <?php include "Menu/menu.php"?>
     <table cellpadding="15px" width="100%">
         <tbody>
@@ -164,7 +197,7 @@
                 <h2>Rx</h2>
             </th>
             <th>
-                <h2>Meds</h2>
+                <h2>Meds Auth</h2>
             </th>
             <th>
                 <h2>Phone Stats</h2>
@@ -187,15 +220,15 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="#" class="notification">
-                                        <span>Apples Message</span>
-                                        <span class="badge"><?php echo $appMessage?></span>
+                                    <a href="../Reports/FrontPageReport.php?query=temp" class="notification">
+                                        <span>New Patient</span>
+                                        <span class="badge"><?php echo $newPatient?></span>
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="#" class="notification">
+                                    <a href="../Reports/FrontPageReport.php?query=SELECT * FROM Referrals.Referrals WHERE LastSent IS NULL" class="notification">
                                         <span>New</span>
                                         <span class="badge"><?php echo $newReferral?></span>
                                     </a>
@@ -222,6 +255,14 @@
                                     <a href="../Reports/FrontPageReport.php?query=SELECT * FROM Referrals.Referrals WHERE Status='0'" class="notification">
                                         <span>Pending Demo</span>
                                         <span class="badge"><?php echo $pendingDemo ?></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="../Reports/FrontPageReport.php?query=SELECT * FROM Referrals.Referrals WHERE Authorization='4'" class="notification">
+                                        <span>Pending Authorization</span>
+                                        <span class="badge"><?php echo $pendingAuth ?></span>
                                     </a>
                                 </td>
                             </tr>
@@ -356,7 +397,7 @@
                         <tr>
                             <td>
                                 <a href="#" class="notification">
-                                    <span>New</span>
+                                    <span >New</span>
                                     <span class="badge"><?php echo $newMed?></span>
                                 </a>
                             </td>
@@ -399,172 +440,14 @@
                 <td valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>AH</span>
-                                    <span class="badge"><?php echo $ahPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SH</span>
-                                    <span class="badge"><?php echo $shPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>EC</span>
-                                    <span class="badge"><?php echo $ecPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>GH</span>
-                                    <span class="badge"><?php echo $ghPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>AB</span>
-                                    <span class="badge"><?php echo $abPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SK</span>
-                                    <span class="badge"><?php echo $skPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>JS</span>
-                                    <span class="badge"><?php echo $jsPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>DT</span>
-                                    <span class="badge"><?php echo $dtPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SS</span>
-                                    <span class="badge"><?php echo $ssPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>NC</span>
-                                    <span class="badge"><?php echo $ncPhone?></span>
-                                </a>
-                            </td>
-                        </tr>
+                        <?php echo $phoneStats?>
                         </tbody>
                     </table>
                 </td>
                 <td valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>AH</span>
-                                    <span class="badge"><?php echo $ahRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SH</span>
-                                    <span class="badge"><?php echo $shRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>EC</span>
-                                    <span class="badge"><?php echo $ecRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>GH</span>
-                                    <span class="badge"><?php echo $ghRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>AB</span>
-                                    <span class="badge"><?php echo $abRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SK</span>
-                                    <span class="badge"><?php echo $skRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>JS</span>
-                                    <span class="badge"><?php echo $jsRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>DT</span>
-                                    <span class="badge"><?php echo $dtRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>SS</span>
-                                    <span class="badge"><?php echo $ssRX?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
-                                    <span>NC</span>
-                                    <span class="badge"><?php echo $ncRX?></span>
-                                </a>
-                            </td>
-                        </tr>
+                        <?php echo $RxStats?>
                         </tbody>
                     </table>
                 </td>

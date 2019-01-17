@@ -16,41 +16,41 @@ session_start();
                     Referral Notes
                 </td>
             </tr>
-<!--            --><?php
-//            $query = 'SELECT * FROM Note WHERE ActionItemID=\'' . $_SESSION['referralID'] . '\' ORDER BY ID DESC' ;
-//            $result = $conReferrals->query($query);
-//            while ($row = $result->fetch_row()){
-//                $messageGroup = $row[5];
-//                switch ($messageGroup){
-//                    case 'Admin':
-//                        echo "<tr style=\"background-color: #0066ff\">";
-//                        break;
-//
-//                    case 'Reception':
-//                        echo "<tr style=\"background-color: #F4D03F\">";
-//                        break;
-//
-//                    case 'Provider':
-//                        echo "<tr style=\"background-color: #E74C3C\">";
-//                        break;
-//
-//                    case 'Referrals':
-//                        echo "<tr style=\"background-color: #BB8FCE\">";
-//                        break;
-//
-//                    case 'MA':
-//                        echo "<tr style=\"background-color: #45B39D\">";
-//                        break;
-//
-//                }
-//                echo "
-//                                <td style=\"border-radius: 7px\" colspan='2'>
-//                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
-//                                </td>
-//                            </tr>
-//                        ";
-//            }
-//            ?>
+                <?php
+            $query = 'SELECT * FROM Note WHERE ReferralID=\'' . $_GET['ReferralID'] . '\' ORDER BY ID DESC' ;
+            $result = $conReferrals->query($query);
+            while ($row = $result->fetch_row()){
+                $messageGroup = $row[5];
+                switch ($messageGroup){
+                    case 'Admin':
+                        echo "<tr style=\"background-color: #0066ff\">";
+                        break;
+
+                    case 'Reception':
+                        echo "<tr style=\"background-color: #F4D03F\">";
+                        break;
+
+                    case 'Provider':
+                        echo "<tr style=\"background-color: #E74C3C\">";
+                        break;
+
+                    case 'Referrals':
+                        echo "<tr style=\"background-color: #BB8FCE\">";
+                        break;
+
+                    case 'MA':
+                        echo "<tr style=\"background-color: #45B39D\">";
+                        break;
+
+                }
+                echo "
+                                <td style=\"border-radius: 7px\" colspan='2'>
+                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
+                                </td>
+                            </tr>
+                        ";
+            }
+                ?>
 
             </tbody>
         </table>

@@ -154,6 +154,8 @@ session_start();
                     }
                     $result = $con->query($query);
                     while ($row = $result->fetch_row()){
+                        //TODO add to Change log
+
                         echo "<tr onclick=\"window.location='updateUser.php?user=" . $row[3] . "&first=" . $row[4] ."&last=" . $row[5] ."'\">
                                                         <td>" . $row[4] . "</td> 
                                                         <td>" . $row[5] . "</td>

@@ -29,7 +29,9 @@ switch ($_GET['button']){
         break;
 
     default:
-        $query = 'UPDATE PatientData SET Message_alert_to_group="' . 0 .'" WHERE ID="' . $_SESSION['currentPatient'] . '"';
+        //TODO add to Change log
+
+    $query = 'UPDATE PatientData SET Message_alert_to_group="' . 0 .'" WHERE ID="' . $_SESSION['currentPatient'] . '"';
         $result = $conReferrals->query($query);
         header($_SESSION['previous']);
         die();
@@ -39,6 +41,8 @@ if ($_GET['message'] == ''){
     header($_SESSION['previous']);
     die;
 } else {
+    //TODO add to Change log
+
     $query = 'UPDATE PatientData SET Message_alert_to_group="' . $groupValue . '" WHERE ID="' . $_SESSION['currentPatient'] . '"';
     $result = $conReferrals->query($query);
     $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';

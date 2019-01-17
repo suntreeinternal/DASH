@@ -282,10 +282,7 @@
     height: 40px;
     border: 0;
     color: #FFFFFF;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-radius: 3px;
     font-size: 14px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
@@ -294,7 +291,7 @@
 .tableFont{
     font-size: 18px;
     color: darkgray;
-    background-color: black;
+    background-color: #001b00;
 }
 .background{
     background-color: darkgray;
