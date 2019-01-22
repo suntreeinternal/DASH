@@ -11,7 +11,7 @@ $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['swID'] 
 $result = mssql_query($query);
 $encounters = "";
 while ($row = mssql_fetch_array($result)) {
-    $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
+    $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '&dob=' . $_SESSION['patientDOB'] . '&dos=' . $row['visit_date'] .'&first=' . $first . '&last=' . $last . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
 }
 
 $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';

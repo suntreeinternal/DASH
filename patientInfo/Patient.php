@@ -50,6 +50,8 @@
             //yes is in sw not temp
             $SwID = $row[0];
             $patientName = ($row[2] . " " . $row[1]);
+            $first = $row[2];
+            $last = $row[1];
             $DOB = $row['birthdate'];
             $phoneNumber = $row['work_phone'];
             $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $SwID . '\'';
@@ -97,6 +99,7 @@
 
         //yes is a temp patient
         $patientName = $row[1] . " " . $row[2];
+
         $DOB = $row[3];
         $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
         $result = mssql_query($query);
