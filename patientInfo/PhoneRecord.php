@@ -43,9 +43,11 @@
                                 break;
 
                         }
+                        $date = date_create($row[3]);
+
                         echo "
                                 <td style=\"border-radius: 7px\">
-                                    " . $row[2] . " " . $row[3] . " <br/> " . $row[4] . "
+                                    " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> " . $row[4] . "
                                 </td>
                             </tr>
                         ";

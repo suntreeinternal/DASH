@@ -14,7 +14,7 @@ switch ($temp){
         die();
 
     case 'New Record':
-        header("location:/record/Record.php");
+        header("location:/RecordRequest/RecordRequest.php");
         die();
 
     case 'New Rx':

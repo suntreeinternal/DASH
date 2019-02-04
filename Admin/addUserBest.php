@@ -135,24 +135,23 @@ $access = $row[2];
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="../Admin/updateUserPush.php" method="get" class="login-form">
+        <form action="../Admin/newUser.php" method="get" class="login-form">
             <table width="100%">
                 <tbody>
                 <tr>
                     <td width="50%">
-                        First Name: <?php echo $_GET['first']?>
+                        First Name: <input type="text" name="first">
                     </td>
                     <td width="50%">
-                        Last Name: <?php echo $_GET['last']?>
+                        Last Name: <input type="text" name="last">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        User Name: <?php echo $_GET['user']?>
+                        User Name: <input type="text" name="user">
                     </td>
                     <td>
-                        <input type="password" placeholder="Password" name="password" value="<?php echo $_GET['pass'] ?>">
-                        <input type="hidden" name="user" value="<?php echo $_GET['user'] ?>">
+                        Password: <input type="password" placeholder="Password" name="password">
                     </td>
                 <tr>
                     <td>

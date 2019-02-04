@@ -6,27 +6,9 @@
     if($_SESSION['loggedIn'] == false){
         header('location=../index.html');
     }
-    $ahPhone = 0;
-    $shPhone = 0;
-    $ecPhone = 0;
-    $ghPhone = 0;
-    $abPhone = 0;
-    $skPhone = 0;
-    $jsPhone = 0;
-    $dtPhone = 0;
-    $ssPhone = 0;
-    $ncPhone = 0;
-    $ahRX = 0;
-    $shRX = 0;
-    $ecRX = 0;
-    $ghRX = 0;
-    $abRX = 0;
-    $skRX = 0;
-    $jsRX = 0;
-    $dtRX = 0;
-    $ssRX = 0;
-    $ncRX = 0;
-    $ASAP = 0;
+
+    $totalMa = 0;
+    $totalReception = 0;
     $newPatient = 0;
     $newReferral = 0;
     $pendingApt = 0;
@@ -128,7 +110,7 @@
     $result = $con->query($query);
     while ($row = $result->fetch_row()){
 
-        $RxStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="#" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $ahRX . '</span></a></td></tr>';
+        $RxStats .= '<tr><td><a style="background-color:'. $row[4] . '; color:' . $row[5] . '" href="#" class="notification"><span>' . $row[2] . '</span><span class="badge">' . '0' . '</span></a></td></tr>';
     }
 
 ?>
@@ -137,8 +119,43 @@
         <link rel="stylesheet" href="Menu/menu.css">
         <title>DASH: <?php echo $_SESSION['name']?></title>
         <style>
+
+            .ma {
+                border-radius:50%;
+                background-color: #adf052;
+                color: #000000;
+                text-decoration: none;
+                display: inline-block;
+                width: 200px;
+                height: 200px;
+                position: relative;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .ma:hover {
+                background: #baff54;
+            }
+
+
+            .reception {
+                background-color: #2f4f4f;
+                color: #FFFFFF;
+                text-align: center;
+                vertical-align: middle;
+                text-decoration: none;
+                display: inline-block;
+                border-radius: 50%;
+                width: 200px;
+                height: 200px;
+            }
+
+            .reception:hover {
+                background: #507c7c;
+            }
+
         .notification {
-            background-color: #2A7C46;
+            background-color: #2c8951;
             color: #001b00;
             text-decoration: none;
             padding: 15px 26px;
@@ -149,7 +166,7 @@
         }
 
         .notification:hover {
-            background: #b65b5b;
+            background: #2d985f;
         }
 
         .notification .badge {
@@ -164,7 +181,7 @@
         </style>
     </head>
 
-    <body style="background:#7cba92;">
+    <body style="background:#C0C0C0;">
     <?php include "Menu/menu.php"?>
     <table cellpadding="15px" width="100%">
         <tbody>
@@ -207,7 +224,7 @@
             </th>
         </tr>
             <tr>
-                <td valign="top" align="center">
+                <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
                             <tr>
@@ -321,14 +338,6 @@
                         <tr>
                             <td>
                                 <a href="#" class="notification">
-                                    <span>Provider</span>
-                                    <span class="badge"><?php echo $provider?></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="notification">
                                     <span>Reception</span>
                                     <span class="badge"><?php echo $reception?></span>
                                 </a>
@@ -437,17 +446,38 @@
                         </tbody>
                     </table>
                 </td>
-                <td valign="top" align="center">
+                <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
                         <?php echo $phoneStats?>
                         </tbody>
                     </table>
                 </td>
-                <td valign="top" align="center">
+                <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
                         <?php echo $RxStats?>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" valign="top" align="center">
+                    <table cellspacing="20" style="font-size: 30px;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ma">
+                                       <br/> MA<br/><br/><?php echo $totalMa?>
+                                    </a>
+                                </td>
+                                <td width="50px"></td>
+                                <td>
+                                    <a href="#" class="reception">
+                                        <br>Reception<br/><br/><?php echo $totalReception?>
+                                    </a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </td>

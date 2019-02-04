@@ -16,10 +16,10 @@ $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, N
     $_GET['prescription4'] . "', '" . $_GET['mg4'] . "', '" . $_GET['Quantity4'] . "', '" . $_GET['Dir4'] . "', '" . $_GET['Dir24'] ."', '" .
     $_GET['prescription5'] . "', '" . $_GET['mg5'] . "', '" . $_GET['Quantity5'] . "', '" . $_GET['Dir5'] . "', '" . $_GET['Dir25'] .
     "')";
-echo $query;
 
 
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
 $result = $con->query($query);
-echo var_dump($result->fetch_row());
+//echo var_dump($result->fetch_row());
+header($_SESSION['previous']);

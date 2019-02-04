@@ -1,5 +1,4 @@
 <?php
-    //TODO make certain items visible to only some groups-
     session_start();
 //    echo var_dump($_SESSION);
 ?>
@@ -72,7 +71,7 @@
             color: white;
         }
         </style>
-  <body style="background:darkgray; height: 100%">
+  <body style="background: #C0C0C0; height: 100%">
 <?php include "../Menu/menu.php";?>
 <table style="height: 400px" width="100%" cellpadding="10px" cellspacing="5px" >
     <tbody>

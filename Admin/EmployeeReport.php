@@ -8,7 +8,7 @@
 session_start();
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
-$query = "SELECT * FROM Referrals.Users";
+$query = "SELECT * FROM Referrals.Users ORDER BY FirstName ASC, LastName ASC";
 $employee = "";
 $result = $con->query($query);
     while ($row = $result->fetch_row()){
@@ -115,13 +115,13 @@ $result = $con->query($query);
             </td>
             <td width="15%">
                 Select Start Date: <input name="start" type="date" value="<?php
-                $today = date('Y-m-j');
-                $newDate = date('Y-m-j', strtotime('-1 months', strtotime($today)));
+                $today = date('Y-m-d');
+                $newDate = date('Y-m-d', strtotime('-1 months', strtotime($today)));
                 echo $newDate?>">
 
             </td>
             <td width="15%">
-                Select End Date: <input name="end" type="date" value="<?php echo date('Y-m-j')?>">
+                Select End Date: <input name="end" type="date" value="<?php echo date('Y-m-d')?>">
 
             </td>
 
