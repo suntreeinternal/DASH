@@ -10,7 +10,6 @@ session_start();
 
 //TODO update user to all specifications
 //TODO get current user data
-//TODO Create change log.
 $group = 0;
 $access= 0;
 

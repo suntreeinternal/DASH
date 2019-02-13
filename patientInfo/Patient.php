@@ -11,6 +11,10 @@
     $phoneNumber = '';
     $last = $_GET['last'];
     $date = $_GET['date'];
+    if ($date == ''){
+        header('location:/patientInfo/selectPatient.php?last=' . $last);
+        die();
+    }
     $_SESSION['previous'] = "patientInfo/Patient.php?last=" . $last . "&date=" . $date;
     $date = str_ireplace('-', '',$date);
 
@@ -356,6 +360,10 @@
                         <td>
                             <input type="submit" name="button" value="New Record" class="btnOthers">
                         </td>
+                        <td>
+                            <input type="submit" name="button" value="Meds Auth" class="btnOthers">
+                        </td>
+
                     </tr>
                     </tbody>
                 </table>

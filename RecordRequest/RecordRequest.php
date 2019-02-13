@@ -30,15 +30,13 @@
         }
     }
 
-    $query = 'SELECT * FROM Referrals.Provider';
-    $result = $conReferrals->query($query);
-    $providerList = '<select name="provider">';
-$providerList = $providerList . '<option value="1">Doctors Office</option>';
-$providerList = $providerList . '<option value="2">Attorney</option>';
-$providerList = $providerList . '<option value="3">Patient</option>';
-$providerList = $providerList . '<option value="4">SSI</option>';
-$providerList = $providerList . '<option value="5">Life / Health Insurance</option>';
-$providerList = $providerList . '</select>';
+    $providerList = '<select name="requester">';
+    $providerList = $providerList . '<option value="1">Doctors Office</option>';
+    $providerList = $providerList . '<option value="2">Attorney</option>';
+    $providerList = $providerList . '<option value="3">Patient</option>';
+    $providerList = $providerList . '<option value="4">SSI</option>';
+    $providerList = $providerList . '<option value="5">Life / Health Insurance</option>';
+    $providerList = $providerList . '</select>';
 
     $query = 'SELECT * FROM Referrals.Specialty';
     $result = $conReferrals->query($query);
@@ -180,7 +178,7 @@ $providerList = $providerList . '</select>';
                     <tbody>
                         <tr>
                             <td style="font-size: 20px; font-weight: bold" width="50%">
-                                Referral
+                                Record Request
                             </td>
 
                         </tr>
@@ -202,7 +200,7 @@ $providerList = $providerList . '</select>';
                                             <td>
                                                 Status:<select name="status">
                                                             <option value="0">Waiting For CK</option>
-                                                            <option value="1">Need Approval</option>
+                                                            <option selected value="1">Need Approval</option>
                                                             <option value="2">Approved</option>
                                                             <option value="3">Sent</option>
                                                             <option value="4">See Me</option>
@@ -223,7 +221,22 @@ $providerList = $providerList . '</select>';
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="submit" value="Submit new referral">
+                                                Check Img: <input type="file" name="Check">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Record: <input type="file" name="Record">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Reason for Request <input type="text" name="Reason">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="submit" value="Submit new Record Request">
                                             </td>
                                         </tr>
                                     </form>
@@ -254,31 +267,30 @@ $providerList = $providerList . '</select>';
                                 <form action='/pushNewMessage.php'>
                                     <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                         <tbody>
-                                        <tr>
-                                            <td colspan="5" >
-                                                <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr valign="center" aria-rowspan="5px">
-                                            <td valign="center">
-                                                <input type="submit" name="button" value="MA" class="btnMa">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Reception" class="btnRec">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Referrals" class="btnRef">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Provider" class="btnPro">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Clear" class="btnOthers">
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td colspan="5" >
+                                                    <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr valign="center" aria-rowspan="5px">
+                                                <td valign="center">
+                                                    <input type="submit" name="button" value="MA" class="btnMa">
+                                                </td>
+                                                <td>
+                                                    <input type="submit" name="button" value="Reception" class="btnRec">
+                                                </td>
+                                                <td>
+                                                    <input type="submit" name="button" value="Referrals" class="btnRef">
+                                                </td>
+                                                <td>
+                                                    <input type="submit" name="button" value="Provider" class="btnPro">
+                                                </td>
+                                                <td>
+                                                    <input type="submit" name="button" value="Clear" class="btnOthers">
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
-
                                 </form>
                             </td>
                     </tbody>

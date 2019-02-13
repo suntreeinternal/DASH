@@ -8,7 +8,6 @@ session_start();
  * Time: 11:56 AM
  */
 
-echo var_dump($_GET);
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if($con->connect_error){
     header('location:/index.html');
@@ -157,7 +156,7 @@ while ($row = $result->fetch_row()){
                         <input type='radio' name='dest' value='0'>MA</br>
                         <input type='radio' name='dest' value='1'>Reception</br>
                         <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value='3'>None</br>
+                        <input type='radio' name='dest' value=''>None</br>
                     </td>
                 </tr>
 

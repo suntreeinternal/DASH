@@ -19,6 +19,11 @@ switch ($temp){
 
     case 'New Rx':
         header("location:/Rx/newRX.php");
+        die();
+
+    case 'Meds Auth':
+        header("location:/MedsAuth/newMedsAuth.php");
+        die();
 }
 echo var_dump($_GET) . "<br/>";
 echo var_dump($_SESSION);

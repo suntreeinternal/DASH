@@ -48,6 +48,17 @@ session_start();
                             echo DateTime::createFromFormat("Y-m-d H:i:s", $row[7])->format("m/d/Y");
                             echo "</td></tr>";
                         }
+                        $query = 'SELECT * FROM Referrals.RecordRequest WHERE PatientID=\'' . $patientID . '\' AND Status = \'3\'';
+                        $result = $conReferrals->query($query);
+                        while ($row = $result->fetch_row()){
+                            echo "<tr><td>";
+                            echo "Records Request";
+                            echo "</td><td>";
+                            echo 'looking into';
+                            echo "</td><td>";
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[8])->format("m/d/Y");
+                            echo "</td></tr>";
+                        }
                         ?>
                         </tbody>
                     </table>

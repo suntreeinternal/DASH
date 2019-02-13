@@ -21,8 +21,12 @@ if ($_GET['message'] == ''){
     die;
 } else {
     //TODO add to Change log
+    if ($_GET['dest'] == ''){
+        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
 
-    $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, TimeStamp, Message, UserGroup, AlertToGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group']. '\', \'' . $_GET['dest'] . '\')';
+    } else {
+        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, TimeStamp, Message, UserGroup, AlertToGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\')';
+    }
     $result = $conReferrals->query($query);
     header($_SESSION['previous']);
     echo $query;

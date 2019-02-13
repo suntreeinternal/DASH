@@ -39,5 +39,5 @@ if (strpos($row[1], '-') !== false){
     $_SESSION['patientName'] = $row[1] . " " . $row[2];
     $_SESSION['patientDOB'] = $row[3];
 }
-
+//echo var_dump($_SESSION);
 header("location:../Referral/CurrentReferral.php?ReferralID=" . $ReferralId);

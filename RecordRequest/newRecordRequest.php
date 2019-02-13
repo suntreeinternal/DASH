@@ -5,15 +5,22 @@
  * Date: 11/13/2018
  * Time: 10:04 AM
  */
-//echo var_dump($_GET);
-//TODO add to Change log
+
+include ("../AuditLog.php");
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Authorization, Reason, Date, SpecaltyID, SpecalistID) VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority'] . "', '" . $_GET['authorization'] ."', '" . $_GET['Reason'] . "', '" . $_GET['dateTime'] ."', '" . $_GET['Specialty'] . "', '0')";
+$query = "INSERT INTO Referrals.RecordRequest (PatientID, Requester, Status, Auth, CheckImg, ReferralImg, Reason, Date) VALUES
+          ('" . $_SESSION['currentPatient'] . "', '" . $_GET['requester'] . "', '" . $_GET['status'] . "', '" . $_GET['authorization'] . "', '" . "" . "', '" . "" . "', '" . $_GET['Reason'] . "','" . date("Y-m-d h:i:sa") . "')";
+
 $result = $conReferrals->query($query);
+
+$audit = new AuditLog;
+$string = "New record request created for " . $_SESSION[patientName] . " Requester is " . $_GET['requester'] . " Status " . $_GET['status'] . " Authorization " . $_GET['authorization'] . " Reason " . $_GET['Reason'];
+echo $string;
+$audit->SetChange($string);
+
 header($_SESSION['previous']);
 
-echo "<br/>";
 
-//echo $_SESSION['previous'];
+
 

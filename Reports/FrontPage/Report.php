@@ -16,7 +16,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
 <html>
 <head>
-    <link rel="stylesheet" href="../Menu/menu.css">
+    <link rel="stylesheet" href="../../Menu/menu.css">
     <style>
         .dropbtn {
             background-color: #4CAF50;
@@ -148,7 +148,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 </head>
 
 <body style="background:darkgray;">
-<?php include "../Menu/menu.php"?>
+<?php include "../../Menu/menu.php"?>
 <table id="All" width="100%">
     <tbody>
     <tr>
@@ -167,7 +167,7 @@ if (!mssql_select_db('sw_charts', $con)) {
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
             $dob = null;
-            echo "<tr onclick=\"window.location='../Reports/GetPatient.php?ReferralID=" . $row[0] . "';\"><td>";
+            echo "<tr onclick=\"window.location='/Reports/GetPatient.php?ReferralID=" . $row[0] . "';\"><td>";
             $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[2] . '"';
             $temp = $conReferrals->query($query);
             $tr = $temp->fetch_row();
@@ -234,7 +234,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $tempResult = $conReferrals->query('SELECT * FROM Referrals.Referrals WHERE PatientID = "' . $temp[0] . '"');
             while ($referral = $tempResult->fetch_row()){
                 $dob = null;
-                echo "<tr onclick=\"window.location='../Reports/GetPatient.php?ReferralID=" . $referral[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Reports/GetPatient.php?ReferralID=" . $referral[0] . "';\"><td>";
                 $id = "" . $temp[1];
                 $_SESSION['currentPatient'] = $temp[0];
 
