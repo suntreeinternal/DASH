@@ -156,12 +156,10 @@ if (!mssql_select_db('sw_charts', $con)) {
     <tr>
         <th onclick="sortTable(0)" width="12%">Patient Name</th>
         <th onclick="sortTable(2)" width="10%">Date Of Message</th>
-        <th onclick="sortTable(5)" width="12%">Type of Message</th>
         <th onclick="sortTable(3)" width="10%">Phone number</th>
-        <th onclick="sortTable(4)" width="56%">Message</th>
+        <th onclick="sortTable(4)" width="68%">Message</th>
     </tr>
     <?php
-    //TODO get the correct info Here
     $query = $_GET['query'];
     if ($query != "temp"){
         $result = $conReferrals->query($query);

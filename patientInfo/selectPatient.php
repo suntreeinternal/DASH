@@ -3,6 +3,7 @@
 //TODO add error if patient is lost in soapware
 //TODO lots of testing to make sure that patient is added the correct way.
 session_start();
+
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
 }
@@ -33,9 +34,23 @@ while($row = mssql_fetch_array($result)){
     $toTable .= "<td>" . $row['last_name'] . "</td>";
     $toTable .= "<td>" . date("m-d-Y", strtotime($row['birthdate'])) . "</td>";
     $toTable .= "<td>" . $row['sex'] . "</td>";
+    $toTable .= "<td> No </td>";
     $toTable .= "</a></tr>";
 
+}
 
+$query = 'SELECT * FROM Referrals.TempPatient WHERE LastName="' . $_GET['last'] . '"';
+$resultMySql = $conReferrals->query($query);
+
+while ($rows = $resultMySql->fetch_row()){
+//    echo var_dump($rows);
+    $toTable .= "<tr onclick=window.location='../patientInfo/Patient.php?last=" . $rows[2] . "&date=" . $rows[3] . "'>";
+    $toTable .= "<td>" . $rows[1] . "</td>";
+    $toTable .= "<td>" . $rows[2] . "</td>";
+    $toTable .= "<td>" . date("m-d-Y", strtotime($rows[3])) . "</td>";
+    $toTable .= "<td> Unknown </td>";
+    $toTable .= "<td> Yes </td>";
+    $toTable .= "</a></tr>";
 }
 
 ?>
@@ -114,7 +129,8 @@ while($row = mssql_fetch_array($result)){
             <th width="15%">First Name</th>
             <th width="15%">Last Name</th>
             <th width="15%">Date of Birth</th>
-            <th width="55%">Gender</th>
+            <th width="25%">Gender</th>
+            <th width="30%">Temp Patient</th>
         </tr>
         <?php echo $toTable?>
     </tbody>

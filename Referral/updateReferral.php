@@ -19,5 +19,4 @@ header($_SESSION['previous']);
 $conReferrals->close();
 echo "<br/>";
 
-//echo $_SESSION['previous'];
 

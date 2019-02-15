@@ -52,27 +52,28 @@
     $row = $result->fetch_row();
     $ASAP += $row[0];
 
-    $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=2';
+    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $reception = $row[0];
-    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=0';
+
+    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $reception += $row[0];
     $totalReception += $reception;
 
-    $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=5';
+    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=0';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $ma = $row[0];
-    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=1';
+    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=0';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $ma += $row[0];
     $totalMa += $ma;
 
-    $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=4';
+    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=2';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $referrals = $row[0];
@@ -143,12 +144,12 @@
     $rxToReception = $row[0];
     $totalReception += $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=3';
+    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=5';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pharmacyCalled = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=5';
+    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=4';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $rxToEscribe = $row[0];
@@ -173,7 +174,8 @@
         $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE ProviderID=' . $row[0] . ' AND Status=2' ;
         $resultCount = $con->query($query);
         $valCount = $resultCount->fetch_row();
-        $RxStats .= '<tr><td><a style="background-color:'. $row[4] . '; color:' . $row[5] . '" href="#" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
+        $query = 'SELECT * FROM Referrals.Rx WHERE ProviderID=' . $row[0] . ' AND Status=2';
+        $RxStats .= '<tr><td><a style="background-color:'. $row[4] . '; color:' . $row[5] . '" href="../Reports/FrontPage/Rx.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
     }
 
     //TODO Rethink the way that messages work.
@@ -428,7 +430,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/Rx.php?query=SELECT * FROM Referrals.Rx WHERE Status='1'" class="notification">
                                     <span>Rx to MA</span>
                                     <span class="badge"><?php echo $rxToMa ?></span>
                                 </a>
@@ -436,7 +438,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/Rx.php?query=SELECT * FROM Referrals.Rx WHERE Status='3'" class="notification">
                                     <span>Rx to Reception</span>
                                     <span class="badge"><?php echo $rxToReception?></span>
                                 </a>
@@ -444,7 +446,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/Rx.php?query=SELECT * FROM Referrals.Rx WHERE Status='5'" class="notification">
                                     <span>Pharmacy Called</span>
                                     <span class="badge"><?php echo $pharmacyCalled?></span>
                                 </a>
@@ -452,7 +454,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/Rx.php?query=SELECT * FROM Referrals.Rx WHERE Status='4'" class="notification">
                                     <span>Rx to eScribe</span>
                                     <span class="badge"><?php echo $rxToEscribe?></span>
                                 </a>
@@ -466,7 +468,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
                                     <span >New</span>
                                     <span class="badge"><?php echo $newMed?></span>
                                 </a>
@@ -474,7 +476,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
                                     <span>Pending</span>
                                     <span class="badge"><?php echo $pendingMed?></span>
                                 </a>
@@ -482,7 +484,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
                                     <span>Denial</span>
                                     <span class="badge"><?php echo $denialMed?></span>
                                 </a>
@@ -490,7 +492,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
                                     <span>Approved</span>
                                     <span class="badge"><?php echo $approvedMed?></span>
                                 </a>
@@ -498,7 +500,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
                                     <span>Other</span>
                                     <span class="badge"><?php echo $otherMed?></span>
                                 </a>

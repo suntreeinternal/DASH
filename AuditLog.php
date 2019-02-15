@@ -10,7 +10,7 @@
 class AuditLog
 {
     public function SetChange($change){
-        echo 'test';
+        echo $change;
         $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
         $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', ' ". $change . "', '"
         . date("Y-m-d h:i:sa") . "')";

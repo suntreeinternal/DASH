@@ -3,6 +3,7 @@
     //TODO add error if patient is lost in soapware
     //TODO lots of testing to make sure that patient is added the correct way.
     session_start();
+
     if (sizeof($_SESSION) == 0){
         header('location:../index.html');
     }

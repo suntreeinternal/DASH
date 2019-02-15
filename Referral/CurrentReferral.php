@@ -1,4 +1,9 @@
 <?php
+    include("../fetchPatientData/patientInfo.php");
+
+    $patientInfo = new Patient;
+
+
     session_start();
     if (sizeof($_SESSION) == 0){
         header('location:../index.html');
@@ -71,6 +76,9 @@
         }
     }
      $status = $status . '</select>';
+
+    $patientInfo->SelectPatient($_SESSION['currentPatient']);
+    $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
         
 
 ?>

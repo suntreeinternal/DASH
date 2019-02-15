@@ -19,110 +19,18 @@ if (!mssql_select_db('sw_charts', $con)) {
 <head>
     <link rel="stylesheet" href="/Menu/menu.css">
     <style>
-        .dropbtn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
         .dropdown-content a {
             color: black;
             padding: 5px 5px;
             text-decoration: none;
             display: block;
         }
-
         .dropdown-content a:hover {background-color: #ddd;}
 
         .dropdown:hover .dropdown-content {display: block;}
 
         .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
-        .btnRec {
-            border-radius: 20px;
-            width: 100%;
-            height:30px;
-            background-color: #F4D03F;
-            color: black;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btnRec:hover {
-            background-color: #f1c40e;
-        }
-
-        .btnMa {
-            border-radius: 20px;
-            width: 100%;
-            height:30px;
-            background-color: #45B39D;
-            color: black;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btnMa:hover {
-            background-color: #399381;
-        }
-
-        .btnRef {
-            border-radius: 20px;
-            width: 100%;
-            height:30px;
-            background-color: #BB8FCE;
-            color: black;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btnRef:hover {
-            background-color: #a971c1;
-        }
-
-        .btnPro {
-            border-radius: 20px;
-            width: 100%;
-            height:30px;
-            background-color: #E74C3C;
-            color: black;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btnPro:hover {
-            background-color: #e3301c;
-        }
-
-        .btnOthers {
-            border-radius: 20px;
-            width: 100%;
-            height:30px;
-            background-color: #4CAF50;
-            color: black;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btnOthers:hover {
-            background-color: #3e8e41;
-        }
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -131,8 +39,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
         td, th {
             border: 1px solid #dddddd;*/
-        border: 1px solid #a9a9a9;
-
+            border: 1px solid #a9a9a9;
             text-align: left;
             padding: 8px;
         }
@@ -143,7 +50,6 @@ if (!mssql_select_db('sw_charts', $con)) {
         }
         tr:nth-child(odd) {
             background-color: #FFFFFF;
-
         }
     </style>
 </head>
@@ -155,13 +61,14 @@ if (!mssql_select_db('sw_charts', $con)) {
     <tbody>
     <tr>
         <th onclick="sortTable(0)" width="12%">Patient Name</th>
-        <th onclick="sortTable(2)" width="10%">Date Of Message</th>
-        <th onclick="sortTable(5)" width="12%">Type of Message</th>
-        <th onclick="sortTable(3)" width="10%">Phone number</th>
-        <th onclick="sortTable(4)" width="56%">Message</th>
+        <th onclick="sortTable(2)" width="10%">Date Of Submitted</th>
+        <th onclick="sortTable(3)" width="10%">Patient Phone number</th>
+        <th onclick="sortTable(7)" width="8%">Provider</th>
+        <th onclick="sortTable(4)" width="12%">Status</th>
+        <th onclick="sortTable(5)" width="12%">Authorization</th>
+        <th onclick="sortTable(6)" width="36%">Note</th>
     </tr>
     <?php
-    //TODO get the correct info Here
     $query = $_GET['query'];
     if ($query != "temp"){
         $result = $conReferrals->query($query);
@@ -180,9 +87,9 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $tr[1] . '\'';
                 $temp = mssql_query($query);
                 $tr = mssql_fetch_array($temp);
-                $_SESSION['patientName'] = $row[2] . " " . $row[1];
-                $_SESSION['patientDOB'] = $row[21];
-                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
+                $_SESSION['patientName'] = $tr[2] . " " . $tr[1];
+                $_SESSION['patientDOB'] = $tr[21];
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
 
 
                 echo $tr[2] . " " . $tr[1];
@@ -191,14 +98,14 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
                 $temp = $conReferrals->query($query);
                 $tr = $temp->fetch_row();
-                echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr[2] . "&date=" . $tr[3] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
-                $_SESSION['patientName'] = $row[1] . " " . $row[2];
-                $_SESSION['patientDOB'] = $row[3];
+                $_SESSION['patientName'] = $tr[1] . " " . $tr[2];
+                $_SESSION['patientDOB'] = $tr[3];
             }
             echo "</td><td>";
-            $date = date_create($row[8]);
+            $date = date_create($row[2]);
             echo date_format($date, "m/d/Y");
             echo "</td><td>";
             if (ctype_digit($phone) && strlen($phone) == 10) {
@@ -213,7 +120,66 @@ if (!mssql_select_db('sw_charts', $con)) {
 
             echo $phone;
             echo "</td><td>";
-            echo $row[4];
+            $query = "SELECT * FROM Provider WHERE ID=" . $row[4];
+            $thisResult = $conReferrals->query($query);
+            echo $thisResult->fetch_row()[2];
+            echo "</td><td>";
+            switch ($row[3]){
+                case 1:
+                    echo "Rx to MA";
+                    break;
+
+                case 2:
+                    echo "Rx to Provider";
+
+                    break;
+
+                case 3:
+                    echo "Rx to Reception";
+
+                    break;
+
+                case 4:
+                    echo "Rx to eScribe";
+
+                    break;
+
+                case 5:
+                    echo "Pharmacy Called";
+
+                break;
+
+                case 6:
+                    echo "Patient Notified";
+
+                    break;
+            }
+            echo "</td><td>";
+            switch ($row[6]){
+                case 0:
+                    echo 'No Verdict';
+                    break;
+
+                case 1:
+                    echo 'Yes';
+
+                    break;
+
+                case 2:
+                    echo 'No';
+                    break;
+
+                case 3:
+                    echo 'Needs To Be Seen';
+                    break;
+
+                case 4:
+                    echo 'See Me';
+                    break;
+
+            }
+            echo "</td><td>";
+            echo $row[5];
             echo "</td></tr>";
         }
     }

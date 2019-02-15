@@ -1,4 +1,7 @@
 <?php
+include("../fetchPatientData/patientInfo.php");
+
+$patientInfo = new Patient;
 session_start();
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
@@ -50,6 +53,9 @@ while ($row = $result->fetch_row()){
 
 
 $dateTime = date("Y-m-d h:i:sa");
+
+$patientInfo->SelectPatient($_SESSION['currentPatient']);
+$_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
 ?>
 
 
