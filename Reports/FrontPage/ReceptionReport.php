@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: SimInternal
@@ -17,7 +16,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
 <html>
 <head>
-    <link rel="stylesheet" href="/Menu/menu.css">
+    <link rel="stylesheet" href="../../Menu/menu.css">
     <style>
         .dropbtn {
             background-color: #4CAF50;
@@ -149,19 +148,19 @@ if (!mssql_select_db('sw_charts', $con)) {
 </head>
 
 <body style="background:darkgray;">
-
 <?php include "../../Menu/menu.php"?>
 <table id="All" width="100%">
     <tbody>
     <tr>
         <th onclick="sortTable(0)" width="12%">Patient Name</th>
-        <th onclick="sortTable(2)" width="10%">Date Of Message</th>
-        <th onclick="sortTable(5)" width="12%">Type of Message</th>
-        <th onclick="sortTable(3)" width="10%">Phone number</th>
-        <th onclick="sortTable(4)" width="56%">Message</th>
+        <th onclick="sortTable(1)" width="10%">DOB</th>
+        <th onclick="sortTable(4)" width="10%">Phone number</th>
+        <th onclick="sortTable(3)" width="15%">Item</th>
+        <th onclick="sortTable(2)" width="68%">Message</th>
+
+
     </tr>
     <?php
-    //TODO get the correct info Here
     $query = $_GET['query'];
     if ($query != "temp"){
         $result = $conReferrals->query($query);
@@ -177,13 +176,10 @@ if (!mssql_select_db('sw_charts', $con)) {
 
             if (strpos($id, "-") == 8) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-                $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $tr[1] . '\'';
+                $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
                 $temp = mssql_query($query);
                 $tr = mssql_fetch_array($temp);
-                $_SESSION['patientName'] = $row[2] . " " . $row[1];
-                $_SESSION['patientDOB'] = $row[21];
-                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
-
+                echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
 
                 echo $tr[2] . " " . $tr[1];
                 $dob = $tr[21];
@@ -194,11 +190,9 @@ if (!mssql_select_db('sw_charts', $con)) {
                 echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr[2] . "&date=" . $tr[3] . "';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
-                $_SESSION['patientName'] = $row[1] . " " . $row[2];
-                $_SESSION['patientDOB'] = $row[3];
             }
             echo "</td><td>";
-            $date = date_create($row[8]);
+            $date = date_create($dob);
             echo date_format($date, "m/d/Y");
             echo "</td><td>";
             if (ctype_digit($phone) && strlen($phone) == 10) {
@@ -212,14 +206,73 @@ if (!mssql_select_db('sw_charts', $con)) {
             }
 
             echo $phone;
+
             echo "</td><td>";
+
             echo $row[4];
+
+
             echo "</td></tr>";
         }
     }
     ?>
     </tbody>
 </table>
-
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("All");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount ++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

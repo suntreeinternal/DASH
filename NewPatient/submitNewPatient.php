@@ -17,15 +17,32 @@ if($con->connect_error){
     $row = $result->fetch_row();
     if ($row[0] == 0) {
         $query = 'INSERT INTO TempPatient (FirstName, LastName, BirthDate) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\')';
-        echo $query;
+//        echo $query;
         $result = $con->query($query);
         $query = "SELECT LAST_INSERT_ID()";
         $result = $con->query($query);
         $row = $result->fetch_row();
-        echo var_dump($row);
-        $query = "INSERT INTO PatientData(SW_ID, Message_alert_to_group, Note, Phone_number, temp) VALUES ('" . $row[0] ."','','','','')";
+
+//        echo var_dump($row);
+//        echo $row[0];
+        $query = "INSERT INTO PatientData(SW_ID) VALUES ('" . $row[0] ."')";
+
+        if (!$result = $con->query($query)) {
+            // Oh no! The query failed.
+            echo "Sorry, the website is experiencing problems.";
+
+            // Again, do not do this on a public site, but we'll show you how
+            // to get the error information
+            echo "Error: Our query failed to execute and here is why: </br>";
+            echo "Query: " . $query . "</br>";
+            echo "Errno: " . $con->errno . "</br>";
+            echo "Error: " . $con->error . "<br/>";
+            exit;
+        }
+
+        echo $query;
         $result = $con->query($query);
-        $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Patient " . $_GET['first'] . " " . $_GET['last'] . " with DOB " .  $_GET['birthDate'] . " Added as a Temporary patient who is not is SW yet', ' " . date("Y-m-d h:i:sa") . "')";
+        $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] . "', 'Patient " . $_GET['first'] . " " . $_GET['last'] . " with DOB " .  $_GET['birthDate'] . " Added as a Temporary patient who is not is SW yet')";
         $result = $con->query($query);
         header($_SESSION['previous']);
 

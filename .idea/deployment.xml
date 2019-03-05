@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="dash">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="DASH Production">
     <serverData>
+      <paths name="DASH Production">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="dash">
         <serverdata>
           <mappings>

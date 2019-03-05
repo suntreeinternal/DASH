@@ -17,9 +17,9 @@ if ($_GET['message'] == ''){
     header($_SESSION['previous']);
     die;
 } else {
-    $query = 'INSERT INTO Note(ReferralID, UserID, TimeStamp, Note, UserGroup) values (\'' . $_GET['refNum'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
+    $query = 'INSERT INTO Note(ReferralID, UserID, Note, UserGroup) values (\'' . $_GET['refNum'] . '\', \'' . $_SESSION['name'] . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
     $result = $conReferrals->query($query);
-//    header($_SESSION['previous']);
+    header($_SESSION['previous']);
 }
 
 echo $query;

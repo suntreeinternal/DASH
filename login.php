@@ -2,10 +2,10 @@
 <?php
     session_start();
     include ("AuditLog.php");
-
+//echo phpinfo();
     $msg = '';
-    $_SESSION['username'] = 'DashLoginUser';
-    $_SESSION['password'] = 'Cr4sietd!';
+    $_SESSION['username'] = 'siminternal';
+    $_SESSION['password'] = 'Watergate2015';
     $user = $_GET['login'];
     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
     if($con->connect_error){

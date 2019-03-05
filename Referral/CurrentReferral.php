@@ -20,6 +20,7 @@
     if (!mssql_select_db('sw_charts', $con)) {
         die('Unable to select database!');
     }
+
     $query = 'SELECT * FROM Referrals.Referrals WHERE ID=\'' . $_GET['ReferralID'] . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
@@ -79,7 +80,8 @@
 
     $patientInfo->SelectPatient($_SESSION['currentPatient']);
     $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
-        
+
+
 
 ?>
 
@@ -202,10 +204,13 @@
             background-color: #3e8e41;
         }
     </style>
+
 </head>
 
 <body style="background:darkgray;">
 <?php include "../Menu/menu.php"?>
+
+
 <table style="width: 100%" cellspacing="15" cellpadding="10">
     <tbody>
     <tr>

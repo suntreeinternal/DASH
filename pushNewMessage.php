@@ -43,9 +43,21 @@ if ($_GET['message'] == ''){
 } else {
     //TODO add to Change log
 
-    $query = 'UPDATE PatientData SET Message_alert_to_group="' . $groupValue . '" WHERE ID="' . $_SESSION['currentPatient'] . '"';
-    $result = $conReferrals->query($query);
-    $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
-    $result = $conReferrals->query($query);
-    header($_SESSION['previous']);
+//    $query = 'UPDATE PatientData SET Message_alert_to_group="' . $groupValue . '" WHERE ID="' . $_SESSION['currentPatient'] . '"';
+//    $result = $conReferrals->query($query);
+    $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
+//    $result = $conReferrals->query($query);
+    if (!$result = $conReferrals->query($query)) {
+        // Oh no! The query failed.
+        echo "Sorry, the website is experiencing problems.";
+
+        // Again, do not do this on a public site, but we'll show you how
+        // to get the error information
+        echo "Error: Our query failed to execute and here is why: </br>";
+        echo "Query: " . $query . "</br>";
+        echo "Errno: " . $conReferrals->errno . "</br>";
+        echo "Error: " . $conReferrals->error . "<br/>";
+    } else {
+        header($_SESSION['previous']);
+    }
 }

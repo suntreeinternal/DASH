@@ -9,13 +9,9 @@
 //TODO add to Change log
 session_start();
 
+//echo var_dump($_SESSION);
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.Referrals(ProviderID, PatientID, Status, Priority, Authorization, Reason, SpecaltyID, SpecalistID)
- VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority']
-    . "', '" . $_GET['authorization'] ."', '" . $_GET['Reason'] . "', '" . $_GET['Specialty'] . "', '0')";
-
-echo var_dump($_SESSION);
-
+$query = "INSERT INTO MedsAuth (PatientID, ProviderID, PharmacyName, PharmacyPhone, Status) VALUES ('" . $_SESSION['currentPatient'] . "', '" . $_GET['provider'] . "', '" . $_GET['Pharmacy'] ."', '0', '" . $_GET['status'] . "')";
 if (!$result = $conReferrals->query($query)) {
     // Oh no! The query failed.
     echo "Sorry, the website is experiencing problems.";
@@ -30,10 +26,6 @@ if (!$result = $conReferrals->query($query)) {
     header($_SESSION['previous']);
 }
 
-//$result = $conReferrals->query($query);
 //header($_SESSION['previous']);
 
-echo "<br/>";
-
-//echo $_SESSION['previous'];
 

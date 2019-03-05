@@ -25,12 +25,14 @@ if ($_GET['message'] == ''){
 } else {
     //TODO add to Change log
     if ($_GET['dest'] == '') {
-        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
+        $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, TimeStamp, Message, UserGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
 
     } else {
-        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, TimeStamp, Message, UserGroup, AlertToGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\')';
+        $query = 'INSERT INTO MessageAboutPatient(PatientID, UserID, TimeStamp, Message, UserGroup, AlertToGroup) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . date("Y-m-d h:i:sa") . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\')';
     }
 }
-    $result = $conReferrals->query($query);
-    $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
-    header($_SESSION['previous']);
+$result = $conReferrals->query($query);
+$_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
+header($_SESSION['previous']);
+
+$query = "SELECT * FROM Referrals.PagesBeingViewed WHERE ItemId='95' AND type='1'";

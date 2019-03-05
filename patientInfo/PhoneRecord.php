@@ -77,7 +77,7 @@
                                     <td style=\"border-radius: 7px\" width='80%'>
                                         " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> " . $row[4] . "
                                     </td>
-                                    <td style=\"border-radius: 7px; " . $style . "\" width='20%' onclick=\"window . location = '../patientInfo/messageReplie.php?messageID=" . $row[0] . "';\">
+                                    <td style=\"border-radius: 7px; " . $style . "\" width='20%' onclick=\"window . location = '../patientInfo/phoneMessageReplie.php?messageID=" . $row[0] . "';\">
                                         Mark Viewed
                                     </td>
                                 </tr>

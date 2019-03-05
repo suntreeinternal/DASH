@@ -135,6 +135,7 @@ while ($row = $result->fetch_row()){
         }
 
     </style>
+
 </head>
 <div class="login-page">
     <div class="form">
