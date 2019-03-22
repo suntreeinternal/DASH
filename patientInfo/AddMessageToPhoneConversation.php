@@ -1,19 +1,57 @@
 <?php
+
+//echo 'asdf';
+
+
 session_start();
 
-/**
- * Created by PhpStorm.
- * User: SimInternal
- * Date: 11/2/2018
- * Time: 11:56 AM
- */
 
+//echo 'asdf';
+
+$previousMessages = "";
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if($con->connect_error){
     header('location:/index.html');
-} else {
-    $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
+
+$query = 'SELECT * FROM Referrals.PatientPhoneMessages WHERE id=' . $_GET['parent'] . ' OR ParrentMessage=' . $_GET['parent'] . ' ORDER BY id ASC' ;
+$result = $con->query($query);
+while ($row = $result->fetch_row()) {
+    $messageGroup = $row[5];
+    switch ($messageGroup) {
+        case 'Admin':
+            $previousMessages .= "<tr style=\"background-color: #0066ff\">";
+            break;
+
+        case 'Reception':
+            $previousMessages .= "<tr style=\"background-color: #F4D03F\">";
+            break;
+
+        case 'Provider':
+            $previousMessages .= "<tr style=\"background-color: #E74C3C\">";
+            break;
+
+        case 'Referrals':
+            $previousMessages .= "<tr style=\"background-color: #BB8FCE\">";
+            break;
+
+        case 'MA':
+            $previousMessages .= "<tr style=\"background-color: #45B39D\">";
+            break;
+    }
+
+
+    $date = date_create($row[3]);
+    if ($row[6] == null) {
+        $previousMessages .= "
+                                    <td style=\"border-radius: 7px\" colspan='2'>
+                                        " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> <br/>" . $row[4] . "
+                                    </td>
+                                </tr>
+                            ";
+    }
+}
+
 
 $destination = "";
 $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
@@ -25,8 +63,6 @@ while ($row = $result->fetch_row()){
     $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +73,7 @@ while ($row = $result->fetch_row()){
     <style>
         .login-page {
             width: 600px;
-            padding: 8% 0 0;
+            padding: 3% 0 0;
             margin: auto;
         }
         .form {
@@ -71,8 +107,6 @@ while ($row = $result->fetch_row()){
             padding: 15px;
             color: #FFFFFF;
             font-size: 14px;
-            -webkit-transition: all 0.3 ease;
-            transition: all 0.3 ease;
             cursor: pointer;
         }
         .form button:hover,.form button:active,.form button:focus {
@@ -138,9 +172,19 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
-            <table width="100%">
+        <table width="100%">
+            <tbody>
+                <?php echo $previousMessages?>
+            </tbody>
+        </table>
+        <form action="PushMessageToConversation.php" method="get" class="login-form">
+            <table width="100%" style="padding: 5px;">
                 <tbody>
+                <tr>
+                    <td colspan="2" width="100%">
+                        <input type="text" name="message" placeholder="Type reply">
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         Select Message Destination<br/><br/>
@@ -148,11 +192,11 @@ while ($row = $result->fetch_row()){
 
                 </tr>
                 <tr>
-                    <td>
+                    <td width="50%">
                         <?php echo $destination?>
                     </td>
-                    <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
+                    <td width="50%">
+<!--                        <input type="hidden" name="message" value="--><?php //echo $_GET['message'] ?><!--">-->
                         <input type='radio' name='dest' value='0'>MA</br>
                         <input type='radio' name='dest' value='1'>Reception</br>
                         <input type='radio' name='dest' value='2'>Referral</br>

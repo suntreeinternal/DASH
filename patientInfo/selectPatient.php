@@ -14,7 +14,8 @@ $last = $_GET['last'];
 $date = $_GET['date'];
 
 //connection for mssql
-$con = mssql_connect('sunserver', 'dash', 'test');
+$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+
 //connection for sqli
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
@@ -22,20 +23,14 @@ if($con->connect_error){
     header('location:/index.html');
 }
 
+if (!mssql_select_db('sw_charts', $con)) {
+    die('Unable to select database! ');
+}
 
 
-echo var_dump(mssql_select_db('sw_charts', $con));
-//die();
-//if (!$link) {
-//    die('Something went wrong while connecting to MSSQL');
-//}
-////
-//if (!mssql_select_db('sw_charts', $con)) {
-//    die('Unable to select database! ');
-//}
-//echo
 $query = "SELECT * FROM dbo.Gen_Demo WHERE last_name='" . $_GET['last'] . "' ORDER BY first_name ASC";
 $result = mssql_query($query);
+
 $toTable = "";
 while($row = mssql_fetch_array($result)){
 

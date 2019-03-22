@@ -32,22 +32,30 @@
     $denialMed = 0;
     $approvedMed = 0;
     $otherMed = 0;
+    $ASAP = 0;
+    $pendingSoapAndDemo = 0;
+
 
 
     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
-
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=1';
+//
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=0 AND NOT Priority=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingSoap = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE LastSent IS NULL';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=2 AND NOT Priority=1';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $pendingSoapAndDemo = $row[0];
+
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=5 AND NOT Priority=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $newReferral = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=0';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=1 AND NOT STATUS=3';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $ASAP += $row[0];
@@ -87,12 +95,12 @@
     $row = $result->fetch_row();
     $provider = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=0';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=1 AND NOT Priority=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingDemo = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=4';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=3 AND NOT Priority=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingApt = $row[0];
@@ -138,7 +146,7 @@
     $rxToMa = $row[0];
     $totalMa += $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=2';
+    $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE Status=3';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $rxToReception = $row[0];
@@ -181,8 +189,6 @@
     $otherMed = $row[0];
 
 
-
-
     $phoneStats = '';
     $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
     $result = $con->query($query);
@@ -191,8 +197,13 @@
         $query = 'SELECT COUNT(*) FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' . $val;
         $resultCount = $con->query($query);
         $valCount = $resultCount->fetch_row();
+        $valToShow = $valCount[0];
+        $query = 'SELECT COUNT(*) FROM Referrals.MessageAboutPatient WHERE AlertToGroup=' . $val;
+        $resultCount = $con->query($query);
+        $valCount = $resultCount->fetch_row();
+        $valToShow += $valCount[0];
         $query = 'SELECT * FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' .$val;
-        $phoneStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="../Reports/FrontPage/PhoneReport.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
+        $phoneStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="../Reports/FrontPage/PhoneReport.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valToShow . '</span></a></td></tr>';
     }
 
     $RxStats = '';
@@ -203,6 +214,7 @@
         $query = 'SELECT COUNT(*) FROM Referrals.Rx WHERE ProviderID=' . $row[0] . ' AND Status=2' ;
         $resultCount = $con->query($query);
         $valCount = $resultCount->fetch_row();
+
         $query = 'SELECT * FROM Referrals.Rx WHERE ProviderID=' . $row[0] . ' AND Status=2';
         $RxStats .= '<tr><td><a style="background-color:'. $row[4] . '; color:' . $row[5] . '" href="../Reports/FrontPage/Rx.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
     }
@@ -284,6 +296,7 @@
             <tr valign="center">
                 <td>
                     <form action="\patientInfo\Patient.php">
+                        Dr. Pipek <input type="checkbox" name="pipek" value="yes">
                         Last name
                         <input type="text" name="last" style="width: 180px; height: 30px">
                         Birth Date
@@ -337,7 +350,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE LastSent IS NULL" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='5' AND NOT Priority=1" class="notification">
                                         <span>New</span>
                                         <span class="badge"><?php echo $newReferral?></span>
                                     </a>
@@ -345,7 +358,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='4'" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='3'" class="notification">
                                         <span>Pending Appointment from Specialist</span>
                                         <span class="badge"><?php echo $pendingApt?></span>
                                     </a>
@@ -353,7 +366,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='1'" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='0' AND NOT Priority=1" class="notification">
                                         <span>Pending Soap</span>
                                         <span class="badge"><?php echo $pendingSoap ?></span>
                                     </a>
@@ -361,7 +374,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='0'" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='1' AND NOT Priority=1" class="notification">
                                         <span>Pending Demo</span>
                                         <span class="badge"><?php echo $pendingDemo ?></span>
                                     </a>
@@ -369,9 +382,17 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Authorization='4'" class="notification">
-                                        <span>Pending Authorization</span>
-                                        <span class="badge"><?php echo $pendingAuth ?></span>
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Authorization='2' AND NOT Priority=1" class="notification">
+                                        <span>Pending Soap and Demo</span>
+                                        <span class="badge"><?php echo $pendingSoapAndDemo ?></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Priority='1' AND NOT Status='3'" class="notification">
+                                        <span>ASAP</span>
+                                        <span class="badge"><?php echo $ASAP ?></span>
                                     </a>
                                 </td>
                             </tr>

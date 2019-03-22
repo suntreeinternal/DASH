@@ -34,7 +34,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 $date = date("Y-m-d h:i:sa");
 //TODO add to Change log
 
-$query = "INSERT INTO Referrals.Uploads (PatientID, UserId, TimeStamp, OriginalFileName, SavedFileName) VALUES ('" . $_SESSION['currentPatient'] ."','" . $_SESSION['name'] . "','" . $date . "','" . $fileName . "','" . $newFileName . "')";
+$query = "INSERT INTO Referrals.Uploads (PatientID, UserId, OriginalFileName, SavesFileName) VALUES ('" . $_SESSION['currentPatient'] ."','" . $_SESSION['name'] . "','" . $fileName . "','" . $newFileName . "')";
 
 echo $query;
 $result = $conReferrals->query($query);

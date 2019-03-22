@@ -13,7 +13,7 @@
     $last = $_GET['last'];
     $date = $_GET['date'];
     if ($date == ''){
-        header('location:/patientInfo/selectPatient.php?last=' . $last);
+        header('location:/patientInfo/selectPatient.php?last=' . $last . "&pipek=" . $_GET['pipek']);
         die();
     }
     $_SESSION['previous'] = "patientInfo/Patient.php?last=" . $last . "&date=" . $date;
@@ -317,7 +317,7 @@
             </form>
         </td>
         <td>
-            <form action='/pushNewMessage.php'>
+            <form action='/patientInfo/pushNewMessage.php'>
                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                     <tbody>
                     <tr>
@@ -325,21 +325,9 @@
                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                         </td>
                     </tr>
-                    <tr valign="center" aria-rowspan="5px">
-                        <td valign="center">
-                            <input type="submit" name="button" value="MA" class="btnMa">
-                        </td>
+                    <tr>
                         <td>
-                            <input type="submit" name="button" value="Reception" class="btnRec">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Referrals" class="btnRef">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Provider" class="btnPro">
-                        </td>
-                        <td>
-                            <input type="submit" name="button" value="Clear" class="btnOthers">
+                            <input type="submit" name="button" class="btnOthers">
                         </td>
                     </tr>
                     </tbody>

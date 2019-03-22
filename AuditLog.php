@@ -13,15 +13,8 @@ class AuditLog
         echo $change;
         $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
         $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] . "', ' ". $change . "')";
-
-        if (!$result = $conReferrals->query($query)){
-            echo $conReferrals->error;
-        } else {
-            echo 'done';
-
-        }
-
-//        $conReferrals->query($query);
+        $conReferrals->query($query);
+//        echo mysqli_error($conReferrals);
         return;
     }
 

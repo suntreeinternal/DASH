@@ -242,7 +242,7 @@ $dateTime = date("Y-m-d h:i:sa");
                             </form>
                         </td>
                         <td>
-                            <form action='/pushNewMessage.php'>
+                            <form action='/patientInfo/newMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -250,21 +250,9 @@ $dateTime = date("Y-m-d h:i:sa");
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
-                                    <tr valign="center" aria-rowspan="5px">
-                                        <td valign="center">
-                                            <input type="submit" name="button" value="MA" class="btnMa">
-                                        </td>
+                                    <tr>
                                         <td>
-                                            <input type="submit" name="button" value="Reception" class="btnRec">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Referrals" class="btnRef">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Provider" class="btnPro">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Clear" class="btnOthers">
+                                            <input type="submit" name="button" value="Add new message" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>

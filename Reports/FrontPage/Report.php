@@ -153,12 +153,13 @@ if (!mssql_select_db('sw_charts', $con)) {
     <tbody>
     <tr>
         <th onclick="sortTable(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable(1)" width="14%">DOB</th>
-        <th onclick="sortTable(2)" width="14%">Reason</th>
+        <th onclick="sortTable(1)" width="10%">DOB</th>
+        <th onclick="sortTable(2)" width="12%">Reason</th>
         <th onclick="sortTable(3)" width="14%">Specialist</th>
-        <th onclick="sortTable(4)" width="14%">Phone number</th>
-        <th onclick="sortTable(5)" width="14%">Specialty</th>
-        <th onclick="sortTable(6)" width="14%">Date Sent</th>
+        <th onclick="sortTable(4)" width="12%">Phone number</th>
+        <th onclick="sortTable(5)" width="12%">Specialty</th>
+        <th onclick="sortTable(6)" width="10%">Priority</th>
+        <th onclick="sortTable(7)" width="14%">Date Sent</th>
 
     </tr>
     <?php
@@ -217,7 +218,25 @@ if (!mssql_select_db('sw_charts', $con)) {
             $tr = $temp->fetch_row();
             echo $tr[1];
             echo "</td><td>";
-            echo $referral[0];
+            switch ($row[4]) {
+                case 1:
+                    echo 'ASAP';
+                    break;
+
+                case 2:
+                    echo 'Complete Date';
+                    break;
+
+                case 3:
+                    echo 'Routine';
+                    break;
+
+                case 4:
+                    echo 'Patient Referral';
+                    break;
+            }
+
+            echo "</td><td>";
             if ($row[10] == ""){
                 echo "Has not been sent yet";
             } else {
@@ -268,6 +287,8 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $t = $conReferrals->query($query);
                 $tr = $t->fetch_row();
                 echo $tr[1];
+                echo "</td><td>";
+                echo $row[4];
                 echo "</td><td>";
                 $date = date_create($referral[10]);
                 echo date_format($date, "m/d/Y");

@@ -34,10 +34,10 @@ session_start();
                             </th>
                         </tr>
                         <?php
-                        $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status = \'10\'';
+                        $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status = \'4\'';
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr><td>";
+                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?ReferralID=" . $row[0] ."';\"><td>";
                             echo "Referral";
                             echo "</td><td>";
                             $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[1] . '\'';

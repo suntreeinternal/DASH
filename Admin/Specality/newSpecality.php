@@ -15,18 +15,6 @@ if($con->connect_error){
     $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
 
-$destination = "";
-$query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
-$result = $con->query($query);
-
-
-while ($row = $result->fetch_row()){
-    $val = 4+$row[0];
-    $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
-}
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +42,7 @@ while ($row = $result->fetch_row()){
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
-            /*width: 100%;*/
+            width: 100%;
             border: 0;
             margin: 0 0 15px;
             padding: 15px;
@@ -138,28 +126,14 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
+        <form action="submitNewSpecality.php" class="login-form">
             <table width="100%">
                 <tbody>
                 <tr>
-                    <td>
-                        Select Message Destination<br/><br/>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <?php echo $destination?>
-                    </td>
-                    <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
-                        <input type='radio' name='dest' value='0'>MA</br>
-                        <input type='radio' name='dest' value='1'>Reception</br>
-                        <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value=''>None</br>
+                    <td width="100%">
+                        <input type="text" name="Speciality" placeholder="New Speciality">
                     </td>
                 </tr>
-
                 </tbody>
             </table>
             <button>Submit</button>

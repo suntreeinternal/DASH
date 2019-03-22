@@ -16,13 +16,11 @@ $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['passwo
 
 $query = 'UPDATE MessageAboutPatient SET AlertToGroup = NULL WHERE id=\'' . $_GET["messageID"] .'\'' ;
 
-//$result = $conReferrals->query($query);
-if (!$result = $conReferrals->query($query)){
-    echo $conReferrals->error;
-} else {
-    echo $conReferrals->error;
+$result = $conReferrals->query($query);
 
-}
 $audit = new AuditLog;
 $string = "Cleared request from Patient " . $_GET['messageID'];
 $audit->SetChange($string);
+
+echo var_dump($_SESSION);
+header($_SESSION['previous']);

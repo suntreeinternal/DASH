@@ -161,7 +161,75 @@ if (!mssql_select_db('sw_charts', $con)) {
 
     </tr>
     <?php
-    $query = $_GET['query'];
+    $Array = array('test');
+    $tArray = array('asdf', 'da', 'asdf');
+    array_push($Array, $tArray);
+    array_push($Array, $tArray);
+    array_push($Array, $tArray);
+    array_push($Array, $tArray);
+
+
+
+
+    $query= 'SELECT * FROM Referrals.MessageAboutPatient WHERE AlertToGroup = 1';
+    if ($query != "temp") {
+        $result = $conReferrals->query($query);
+        while ($row = $result->fetch_row()) {
+            $dob = null;
+            $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[1] . '"';
+            $temp = $conReferrals->query($query);
+            $tr = $temp->fetch_row();
+            $id = "" . $tr[1];
+            $phone = $tr[4];
+            $_SESSION['currentPatient'] = $tr[0];
+
+
+            if (strpos($id, "-") == 8) {
+                $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+                $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
+                $temp = mssql_query($query);
+                $tr = mssql_fetch_array($temp);
+                echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
+
+                echo $tr[2] . " " . $tr[1];
+                $dob = $tr[21];
+            } else {
+                $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
+                $temp = $conReferrals->query($query);
+                $tr = $temp->fetch_row();
+                echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr[2] . "&date=" . $tr[3] . "';\"><td>";
+                echo $tr[1] . " " . $tr[2];
+                $dob = $tr[3];
+            }
+            echo "</td><td>";
+            $date = date_create($dob);
+            echo date_format($date, "m/d/Y");
+            echo "</td><td>";
+            if (ctype_digit($phone) && strlen($phone) == 10) {
+
+                $phone = "(" . substr($phone, 0, 3) . ') ' . substr($phone, 3, 3) . '-' . substr($phone, 6);
+            } else {
+
+                if (ctype_digit($phone) && strlen($phone) == 7) {
+                    $phone = substr($phone, 0, 3) . '-' . substr($phone, 3, 4);
+                }
+            }
+
+            echo $phone;
+
+            echo "</td><td>";
+
+            echo 'Message';
+
+            echo "</td><td>";
+
+            echo $row[4];
+
+
+            echo "</td></tr>";
+        }
+    }
+    $query= 'SELECT * FROM Referrals.PatientPhoneMessages WHERE AlertToGroup = 1';
     if ($query != "temp"){
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
@@ -209,7 +277,69 @@ if (!mssql_select_db('sw_charts', $con)) {
 
             echo "</td><td>";
 
+            echo 'Phone Message';
+
+            echo "</td><td>";
+
             echo $row[4];
+
+
+            echo "</td></tr>";
+        }
+    }
+    $query= 'SELECT * FROM Referrals.Rx WHERE Status = 3';
+    if ($query != "temp"){
+        $result = $conReferrals->query($query);
+        while ($row = $result->fetch_row()) {
+            $dob = null;
+            $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[1] . '"';
+            $temp = $conReferrals->query($query);
+            $tr = $temp->fetch_row();
+            $id = "" . $tr[1];
+            $phone = $tr[4];
+            $_SESSION['currentPatient'] = $tr[0];
+
+
+            if (strpos($id, "-") == 8) {
+                $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+                $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
+                $temp = mssql_query($query);
+                $tr = mssql_fetch_array($temp);
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+
+                echo $tr[2] . " " . $tr[1];
+                $dob = $tr[21];
+            } else {
+                $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
+                $temp = $conReferrals->query($query);
+                $tr = $temp->fetch_row();
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+                echo $tr[1] . " " . $tr[2];
+                $dob = $tr[3];
+            }
+            echo "</td><td>";
+            $date = date_create($dob);
+            echo date_format($date, "m/d/Y");
+            echo "</td><td>";
+            if (ctype_digit($phone) && strlen($phone) == 10) {
+
+                $phone = "(" . substr($phone, 0, 3) . ') ' . substr($phone, 3, 3) . '-' . substr($phone, 6);
+            } else {
+
+                if (ctype_digit($phone) && strlen($phone) == 7) {
+                    $phone = substr($phone, 0, 3) . '-' . substr($phone, 3, 4);
+                }
+            }
+
+            echo $phone;
+
+            echo "</td><td>";
+
+            echo 'Rx';
+
+            echo "</td><td>";
+
+            echo $row[5];
 
 
             echo "</td></tr>";

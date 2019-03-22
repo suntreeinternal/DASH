@@ -18,7 +18,7 @@
         $phoneOld = str_ireplace('-','',$row[4]);
         $query = 'UPDATE Referrals.PatientData SET Phone_number=\'' . $phone . '\' WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
         $result = $con->query($query);
-        $query = "INSERT INTO Referrals.ChangeLog(UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] ."', 'Patient phone number Changed from " . $phoneOld . " to " . $phone . "',' " . date("Y-m-d h:i:sa") . "')";
+        $query = "INSERT INTO Referrals.ChangeLog(UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] ."', 'Patient phone number Changed from " . $phoneOld . " to " . $phone . "')";
         $result = $con->query($query);
     }
 //    echo $_SESSION['currentPatient'];

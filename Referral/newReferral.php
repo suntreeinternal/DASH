@@ -9,31 +9,24 @@
 //TODO add to Change log
 session_start();
 
-$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.Referrals(ProviderID, PatientID, Status, Priority, Authorization, Reason, SpecaltyID, SpecalistID)
- VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority']
-    . "', '" . $_GET['authorization'] ."', '" . $_GET['Reason'] . "', '" . $_GET['Specialty'] . "', '0')";
+include "../AuditLog.php";
+include "../fetchPatientData/patientInfo.php";
 
 echo var_dump($_SESSION);
 
-if (!$result = $conReferrals->query($query)) {
-    // Oh no! The query failed.
-    echo "Sorry, the website is experiencing problems.";
+$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+$query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID) VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority'] . "', '" . $_GET['Reason'] . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "')";
+echo $query;
 
-    // Again, do not do this on a public site, but we'll show you how
-    // to get the error information
-    echo "Error: Our query failed to execute and here is why: </br>";
-    echo "Query: " . $query . "</br>";
-    echo "Errno: " . $conReferrals->errno . "</br>";
-    echo "Error: " . $conReferrals->error . "<br/>";
-} else {
-    header($_SESSION['previous']);
-}
+$result = $conReferrals->query($query);
 
-//$result = $conReferrals->query($query);
-//header($_SESSION['previous']);
+$audit = new AuditLog();
+$patientInfo = new Patient();
+$patientInfo->SelectPatient($_SESSION['currentPatient']);
 
-echo "<br/>";
 
-//echo $_SESSION['previous'];
+$string = $_SESSION['name'] . " has created a new referral for " . $patientInfo->GetLastName() . " for the following reason " . $_GET['Reason'];
+$audit->SetChange($string);
+
+header($_SESSION['previous']);
 

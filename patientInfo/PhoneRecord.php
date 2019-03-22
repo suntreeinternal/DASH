@@ -17,9 +17,10 @@
                         </td>
                     </tr>
                     <?php
-                    $query = 'SELECT * FROM PatientPhoneMessages WHERE PatientID=\'' . $_SESSION["currentPatient"]. '\' ORDER BY ID DESC' ;
+                    $query = 'SELECT * FROM PatientPhoneMessages WHERE PatientID=\'' . $_SESSION["currentPatient"]. '\' AND ParrentMessage=\'0\' ORDER BY ID DESC' ;
                     $result = $conReferrals->query($query);
                     while ($row = $result->fetch_row()){
+                        echo "<tr  onclick=\"window.location='/patientInfo/AddMessageToPhoneConversation.php?parent=" . $row[0] . "';\"><td><table style='background-color: rgb(87,87,87); border-radius: 10px; padding: 5px' width='100%' ><tbody>";
                         $messageGroup = $row[5];
                         switch ($messageGroup){
                             case 'Admin':
@@ -41,8 +42,9 @@
                             case 'MA':
                                 echo "<tr style=\"background-color: #45B39D\">";
                                 break;
-
                         }
+
+
                         $date = date_create($row[3]);
                         if ($row[6] == null){
                             echo "
@@ -83,6 +85,40 @@
                                 </tr>
                             ";
                         }
+
+                        $query = 'SELECT * FROM PatientPhoneMessages WHERE ParrentMessage=\'' . $row[0] . '\' ORDER BY ID ASC' ;
+                        $findChild = $conReferrals->query($query);
+                        while ($childRow = $findChild->fetch_row()) {
+                            $messageGroup = $childRow[5];
+                            switch ($messageGroup){
+                                case 'Admin':
+                                    echo "<tr style=\"background-color: #0066ff\">";
+                                    break;
+
+                                case 'Reception':
+                                    echo "<tr style=\"background-color: #F4D03F\">";
+                                    break;
+
+                                case 'Provider':
+                                    echo "<tr style=\"background-color: #E74C3C\">";
+                                    break;
+
+                                case 'Referrals':
+                                    echo "<tr style=\"background-color: #BB8FCE\">";
+                                    break;
+
+                                case 'MA':
+                                    echo "<tr style=\"background-color: #45B39D\">";
+                                    break;
+                            }
+                            $date = date_create($childRow[3]);
+                            echo "
+                                <td style=\"border-radius: 7px\" colspan='2'>
+                                    " . $childRow[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> " . $childRow[4] . "
+                                </td></tr>
+                            ";
+                        }
+                        echo "</tbody></table></td></tr>";
                     }
                     ?>
 

@@ -19,7 +19,7 @@ if($con->connect_error){
     $result = $con->query($query);
     $row = $result->fetch_row();
     echo var_dump($row);
-    $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Made provider inactive: " . $row[1] . "', '" . date("Y-m-d h:i:sa") . "')";
+    $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] . "', 'Made provider inactive: " . $row[1] . "')";
     $result = $con->query($query);
     echo var_dump($query);
 

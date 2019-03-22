@@ -8,8 +8,8 @@
 
 class server{
     private  $server;
-    private $username = 'DashLoginUser';
-    private $password = 'Cr4sietd!';
+    private $username = 'siminternal';
+    private $password = 'Watergate2015';
     public function __construct(){
         $this->server = new mysqli('localhost', $this->username, $this->password, 'Referrals');
     }

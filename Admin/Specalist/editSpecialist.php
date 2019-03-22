@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: SimInternal
+ * Date: 3/22/2019
+ * Time: 7:59 AM
+ */
+
 session_start();
 
 /**
@@ -15,16 +22,31 @@ if($con->connect_error){
     $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
 
-$destination = "";
-$query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+$query = 'SELECT * FROM Referrals.Specialist WHERE ID=' . $_GET['id'];
 $result = $con->query($query);
+$row = $result->fetch_row();
+
+$specialityID = $row[1];
+$name = $row[2];
+$location = $row[3];
+$phone = $row[4];
+$fax = $row[5];
+$note = $row[6];
 
 
+$speciality = '<select name="Speciality">';
+$query = 'SELECT * FROM Referrals.Specialty';
+$result = $con->query($query);
 while ($row = $result->fetch_row()){
-    $val = 4+$row[0];
-    $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
+    if ($row[0] == $specialityID){
+        $speciality .= "<option selected=\"selected\" value='" . $row[0] . "'> " . $row[1] . "</option>";
+
+    } else {
+        $speciality .= "<option value='" . $row[0] . "'> " . $row[1] . "</option>";
+    }
 }
 
+$speciality .= '</select>';
 
 
 ?>
@@ -54,7 +76,7 @@ while ($row = $result->fetch_row()){
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
-            /*width: 100%;*/
+            width: 100%;
             border: 0;
             margin: 0 0 15px;
             padding: 15px;
@@ -138,28 +160,36 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
+        <form action="updateSpecialist.php" class="login-form">
             <table width="100%">
                 <tbody>
                 <tr>
-                    <td>
-                        Select Message Destination<br/><br/>
+                    <td width="50%">
+                        <input type="text" name="DrName" value="<?php echo $name?>">
+                        <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                     </td>
-
+                    <td width="50%">
+                        Speciality <?php echo $speciality?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="address"  value="<?php echo $location ?>">
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <?php echo $destination?>
+                        <input type="text" name="phone"  value="<?php echo $phone ?>">
                     </td>
                     <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
-                        <input type='radio' name='dest' value='0'>MA</br>
-                        <input type='radio' name='dest' value='1'>Reception</br>
-                        <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value=''>None</br>
+                        <input type="text" name="fax" value="<?php echo $fax ?>">
                     </td>
                 </tr>
-
+                <tr>
+                    <td colspan="2">
+                        <textarea id="note" name="note" style="height: 50px; width: 100%;"><?php echo $note ?></textarea>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <button>Submit</button>

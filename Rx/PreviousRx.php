@@ -1,5 +1,8 @@
 <?php
 session_start();
+//echo var_dump($_SESSION);
+include ("../fetchPatientData/patientInfo.php");
+
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
 }
@@ -8,9 +11,6 @@ $DOB = $_SESSION['patientDOB'];
 
 
 $phoneNumber = '';
-
-//echo var_dump($_SESSION);
-
 
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -50,8 +50,12 @@ $providerList = $providerList . '</select>';
 
 $date = new DateTime($RxInfo[2]);
 $dateTime = $date->format("m-d-Y h:i:sa");
-//$dateTime = date("m-d-Y h:i:sa", $RxInfo[2]);
 
+$patientInfo = new Patient();
+$patientInfo->SelectPatient($_SESSION['currentPatient']);
+
+//$dateTime = date("m-d-Y h:i:sa", $RxInfo[2]);
+$_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo->GetLastName() . '&date=' . $patientInfo->GetDOB();
 
 ?>
 
@@ -362,7 +366,7 @@ $dateTime = $date->format("m-d-Y h:i:sa");
                             </form>
                         </td>
                         <td>
-                            <form action='/pushNewMessage.php'>
+                            <form action='/patientInfo/newMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -370,26 +374,13 @@ $dateTime = $date->format("m-d-Y h:i:sa");
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
-                                    <tr valign="center" aria-rowspan="5px">
-                                        <td valign="center">
-                                            <input type="submit" name="button" value="MA" class="btnMa">
-                                        </td>
+                                    <tr>
                                         <td>
-                                            <input type="submit" name="button" value="Reception" class="btnRec">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Referrals" class="btnRef">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Provider" class="btnPro">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Clear" class="btnOthers">
+                                            <input type="submit" name="button" value="Add new message" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-
                             </form>
                         </td>
                     </tbody>

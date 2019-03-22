@@ -21,6 +21,7 @@
         } else {
             if ($_GET['password'] == $row[6]){
                 $_SESSION['userID'] = $row[0];
+                $_SESSION['user'] = $row[3];
                 $_SESSION['name'] = $row[4] . " " . $row[5];
                 $temp = $row[2];
                 $query = 'SELECT *FROM Referrals.UserGroups WHERE ID=' . $row[1];

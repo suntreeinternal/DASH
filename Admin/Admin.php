@@ -80,13 +80,13 @@
             echo '<tr>';
             include "Users.php";
             include "Providers.php";
-            include "Specialist.php";
-            include "Specialty.php";
+            include "Specality/Specialty.php";
+            include "Specalist/Specialist.php";
             echo'</tr>';
         } else {
             echo '<tr>';
-            include "Specialist.php";
-            include "Specialty.php";
+            include "Specality/Specialty.php";
+            include "Specalist/Specialist.php";
             echo '</tr>';
         }
         ?>

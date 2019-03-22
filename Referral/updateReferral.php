@@ -1,6 +1,5 @@
 <?php
 
-//TODO update a current referral
 
 /**
  * Created by PhpStorm.
@@ -10,11 +9,15 @@
  */
 //TODO add to Change log
 
-//echo var_dump($_GET) . "<br\>";
+session_start();
+
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "UPDATE Referrals.Referrals SET SpecaltyID='" . $_GET['Specialty'] . "', ProviderID='" . $_GET['provider'] . "', Status='" . $_GET['status'] . "', Priority='" . $_GET['priority'] . "', Authorization='" . $_GET['authorization'] . "' WHERE ID='" . $_GET['refID'] ."'";
+
+$query = "UPDATE Referrals.Referrals SET Reason='" . $_GET['Reason'] . "', SpecalistID=" . $_GET['Specalist'] . ", SpecaltyID=" . $_GET['Specialty'] . ", ProviderID=" . $_GET['provider'] . ", Status=" . $_GET['status'] . ", Priority=" . $_GET['priority'] . " WHERE ID=" . $_GET['refID'];
 echo $query;
+
 $result = $conReferrals->query($query);
+
 header($_SESSION['previous']);
 $conReferrals->close();
 echo "<br/>";

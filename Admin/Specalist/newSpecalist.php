@@ -15,16 +15,14 @@ if($con->connect_error){
     $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
 
-$destination = "";
-$query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+$speciality = '<select name="Speciality">';
+$query = 'SELECT * FROM Referrals.Specialty';
 $result = $con->query($query);
-
-
 while ($row = $result->fetch_row()){
-    $val = 4+$row[0];
-    $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
+    $speciality .= "<option value='" . $row[0] . "'> ". $row[1] . "</option>";
 }
 
+$speciality .= '</select>';
 
 
 ?>
@@ -54,7 +52,7 @@ while ($row = $result->fetch_row()){
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
-            /*width: 100%;*/
+            width: 100%;
             border: 0;
             margin: 0 0 15px;
             padding: 15px;
@@ -138,28 +136,35 @@ while ($row = $result->fetch_row()){
 </head>
 <div class="login-page">
     <div class="form">
-        <form action="newPhoneMessage.php" method="get" class="login-form">
+        <form action="Specilist.php" class="login-form">
             <table width="100%">
                 <tbody>
                 <tr>
-                    <td>
-                        Select Message Destination<br/><br/>
+                    <td width="50%">
+                        <input type="text" name="DrName" placeholder="Dr Name">
                     </td>
-
+                    <td width="50%">
+                        Speciality <?php echo $speciality?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="address" placeholder="Address">
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <?php echo $destination?>
+                        <input type="text" name="phone" placeholder="Phone Number">
                     </td>
                     <td>
-                        <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">
-                        <input type='radio' name='dest' value='0'>MA</br>
-                        <input type='radio' name='dest' value='1'>Reception</br>
-                        <input type='radio' name='dest' value='2'>Referral</br>
-                        <input type='radio' name='dest' value=''>None</br>
+                        <input type="text" name="fax" placeholder="Fax Number">
                     </td>
                 </tr>
-
+                <tr>
+                    <td colspan="2">
+                        <textarea id="note" name="note" placeholder="Notes" style="height: 50px; width: 100%;"></textarea>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <button>Submit</button>

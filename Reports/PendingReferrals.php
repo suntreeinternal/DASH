@@ -39,10 +39,11 @@ session_start();
         <th onclick="sortTable1(0)" width="16%">Patient Name</th>
         <th onclick="sortTable1(1)" width="14%">DOB</th>
         <th onclick="sortTable1(2)" width="14%">Reason</th>
-        <th onclick="sortTable1(3)" width="14%">Specialist</th>
-        <th onclick="sortTable1(4)" width="14%">Phone number</th>
-        <th onclick="sortTable1(5)" width="14%">Specialty</th>
-        <th onclick="sortTable1(6)" width="14%">Date Sent</th>
+        <th onclick="sortTable1(3)" width="12%">Specialist</th>
+        <th onclick="sortTable1(4)" width="12%">Specialist Phone number</th>
+        <th onclick="sortTable1(5)" width="12%">Specialty</th>
+        <th onclick="sortTable1(6)" width="12%">Date Sent</th>
+        <th onclick="sortTable1(7)" width="8%">Priority</th>
 
     </tr>
     <?php
@@ -103,6 +104,24 @@ session_start();
             } else {
                 $date = date_create($row[10]);
                 echo date_format($date, "m/d/Y");
+            }
+            echo "</td><td>";
+            switch ($row[4]) {
+                case 1:
+                    echo 'ASAP';
+                    break;
+
+                case 2:
+                    echo 'Complete Date';
+                    break;
+
+                case 3:
+                    echo 'Routine';
+                    break;
+
+                case 4:
+                    echo 'Patient Referral';
+                    break;
             }
             echo "</td></tr>";
         }

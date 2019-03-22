@@ -34,7 +34,7 @@
                             </th>
                         </tr>
                         <?php
-                        $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status <> \'10\'';
+                        $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status <> \'4\'';
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){

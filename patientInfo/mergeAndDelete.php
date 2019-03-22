@@ -25,7 +25,7 @@ $query = 'DELETE FROM Referrals.TempPatient WHERE ID=\''. $_GET['id'] . '\'';
 echo "<br/>" . $query;
 $result = $conReferrals->query($query);
 
-$query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Temporary patient merged with patient in SW " . $name . "', '" . date("Y-m-d h:i:sa") . "')";
+$query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] . "', 'Temporary patient merged with patient in SW " . $name . "')";
 
 $result = $conReferrals->query($query);
 header($_SESSION['previous']);

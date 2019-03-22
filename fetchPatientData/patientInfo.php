@@ -9,7 +9,7 @@
 
 class Patient{
 
-    private $lastname="";
+    private $lastName="";
     private $dob = 0;
     public function SelectPatient($DashID){
 
@@ -28,7 +28,7 @@ class Patient{
             $query = "SELECT * FROM dbo.Gen_Demo WHERE Patient_ID='" . $row[1] . "'";
             $result = mssql_query($query);
             $row = mssql_fetch_array($result);
-            $this->lastname = $row[1];
+            $this->lastName = $row[1];
             $this->dob = $row[21];
 
 
@@ -36,7 +36,7 @@ class Patient{
             $query = "SELECT * FROM Referrals.TempPatient WHERE ID='" . $row[1] . "'";
             $result = $conReferrals->query($query);
             $row = $result->fetch_row();
-            $this->lastname = $row[2];
+            $this->lastName = $row[2];
             $this->dob = $row[3];
         }
     }
@@ -45,6 +45,6 @@ class Patient{
     }
 
     public function GetLastName(){
-        return $this->lastname;
+        return $this->lastName;
     }
 }

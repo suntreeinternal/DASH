@@ -41,6 +41,9 @@
     $query = 'SELECT * FROM Referrals.Specialty';
     $result = $conReferrals->query($query);
     $specalty = "";
+    $row = $result->fetch_row();
+    $specalty = $specalty . '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+    $SelectedSpecality = $row[0];
     while ($row = $result->fetch_row()){
         $specalty = $specalty . '<option value="' . $row[0] . '">' . $row[1] . '</option>';
     }
@@ -48,6 +51,24 @@
 
 
     $dateTime = date("Y-m-d h:i:sa");
+    $query = 'SELECT * FROM Referrals.Status';
+    $result = $conReferrals->query($query);
+    $status = '<select name="status">';
+
+    while ($row = $result->fetch_row()){
+        if ($row[0] == 5){
+            $status = $status . '<option selected="selected" value="'. $row[0] .'">'. $row[1] .'</option>';
+        } else {
+            $status = $status . '<option value="'. $row[0] .'">'. $row[1] .'</option>';
+        }
+    }
+    $status = $status . '</select>';
+
+    $query = 'SELECT * FROM Referrals.Specialist WHERE SpecialtyID=' .  $SelectedSpecality;
+    $result = $conReferrals->query($query);
+    while ($row = $result->fetch_row()){
+        $specalist = $specalist . '<option value="'. $row[0] .'">'. $row[2] .'</option>';
+    }
 ?>
 
 
@@ -185,7 +206,7 @@
                         <tr>
                             <table cellpadding="15px" cellspacing="15px" width="100%" >
                                 <tbody>
-                                    <form action="newReferral.php">
+                                    <form action="newReferral.php" name="referral">
                                         <tr>
                                             <td width="50%">
                                                 Provider <?php echo $providerList?>
@@ -199,50 +220,29 @@
                                                 Reason <input name="Reason" type="text">
                                             </td>
                                             <td>
-                                                Status: <select name="status">
-                                                            <option value="0">Pending Demo</option>
-                                                            <option value="1">Pending Soap</option>
-                                                            <option value="2">Pending Insurance Authorization</option>
-                                                            <option value="3">Pending Specialist Review</option>
-                                                            <option value="4">Pending Appointment From Specialist</option>
-                                                            <option value="5">Pending Couldn't  be Reached by Specialist</option>
-                                                            <option value="6">Pending Declined bt Specialist</option>
-                                                            <option value="7">Pending Insurance doesn't cover</option>
-                                                            <option value="8">Patient Declined Appointment</option>
-                                                            <option value="9">Provider to Referral</option>
-                                                            <option value="10">Completed</option>
-                                                            <option value="11">Unsuccessful contact</option>
-                                                        </select>
+                                                Status: <?php echo $status?>
                                                 <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                Authorization: <select name="authorization">
-                                                                    <option value="1">Yes</option>
-                                                                    <option value="2">No</option>
-                                                                    <option value="3">N/A</option>
-                                                                    <option selected="selected" value="4">Unknown</option>
-                                                                </select>
-                                            </td>
-                                            <td>
                                                 Priority: <select name="priority">
                                                                 <option selected="selected" value="1">ASAP</option>
-                                                                <option value="2">Complete Date</option>
                                                                 <option value="3">Routine</option>
-                                                                <option value="4">Patient Referral</option>
                                                             </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                Specialty: <select name="Specialty">
+                                                Specialty: <select name="Specialty" onchange="getData()">
                                                                 <?php echo $specalty?>
                                                            </select>
                                             </td>
                                             <td>
-                                                Specialist
+                                                Specialist: <select name="Specalist" id="specalist">
+                                                                <?php echo $specalist?>
+                                                            </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -275,7 +275,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form action='/pushNewMessage.php'>
+                                <form action='/patientInfo/newMessage.php'>
                                     <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                         <tbody>
                                         <tr>
@@ -283,21 +283,9 @@
                                                 <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                             </td>
                                         </tr>
-                                        <tr valign="center" aria-rowspan="5px">
-                                            <td valign="center">
-                                                <input type="submit" name="button" value="MA" class="btnMa">
-                                            </td>
+                                        <tr>
                                             <td>
-                                                <input type="submit" name="button" value="Reception" class="btnRec">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Referrals" class="btnRef">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Provider" class="btnPro">
-                                            </td>
-                                            <td>
-                                                <input type="submit" name="button" value="Clear" class="btnOthers">
+                                                <input type="submit" name="button" value="Add new message" class="btnOthers">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -311,6 +299,22 @@
         </td>
     </tbody>
 </table>
+<script>
+    function getData() {
+        var name = document.forms['referral']['Specialty'].value;
+        var xmlhttp = new XMLHttpRequest();
+        if (name !="") {
+
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById('specalist').innerHTML = this.responseText;
+            };
+            xmlhttp.open("GET", "loadSpecalist.php?specality=" + name , true);
+            xmlhttp.send();
+        }
+        return 0;
+
+    }
+</script>
 
 </body>
 
