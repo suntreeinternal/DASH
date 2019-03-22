@@ -42,14 +42,13 @@ while ($row = $result->fetch_row()) {
 
 
     $date = date_create($row[3]);
-    if ($row[6] == null) {
-        $previousMessages .= "
-                                    <td style=\"border-radius: 7px\" colspan='2'>
-                                        " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> <br/>" . $row[4] . "
-                                    </td>
-                                </tr>
-                            ";
-    }
+
+    $previousMessages .= "
+                                <td style=\"border-radius: 7px\" colspan='2'>
+                                    " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> <br/>" . $row[4] . "
+                                </td>
+                            </tr>
+                        ";
 }
 
 
@@ -183,6 +182,7 @@ while ($row = $result->fetch_row()){
                 <tr>
                     <td colspan="2" width="100%">
                         <input type="text" name="message" placeholder="Type reply">
+                        <input type="hidden" name="parent" value="<?php echo $_GET['parent'] ?>">
                     </td>
                 </tr>
                 <tr>

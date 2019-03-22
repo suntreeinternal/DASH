@@ -60,35 +60,23 @@
     $row = $result->fetch_row();
     $ASAP += $row[0];
 
-    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=1';
-    $result = $con->query($query);
-    $row = $result->fetch_row();
-    $reception = $row[0];
-
     $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=1';
     $result = $con->query($query);
     $row = $result->fetch_row();
-    $reception += $row[0];
+    $reception = $row[0];
     $totalReception += $reception;
 
-    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=0';
-    $result = $con->query($query);
-    $row = $result->fetch_row();
-    $ma = $row[0];
+
     $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=0';
     $result = $con->query($query);
     $row = $result->fetch_row();
-    $ma += $row[0];
+    $ma = $row[0];
     $totalMa += $ma;
 
-    $query = 'SELECT COUNT(*) FROM MessageAboutPatient WHERE AlertToGroup=2';
-    $result = $con->query($query);
-    $row = $result->fetch_row();
-    $referrals = $row[0];
     $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=2';
     $result = $con->query($query);
     $row = $result->fetch_row();
-    $referrals += $row[0];
+    $referrals = $row[0];
 
     $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=3';
     $result = $con->query($query);
@@ -450,7 +438,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <a href="../Reports/FrontPage/Messages.php?query=SELECT * FROM Referrals.PatientData WHERE U='4'" class="notification">
+                                <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=1" class="notification">
                                     <span>Reception</span>
                                     <span class="badge"><?php echo $reception?></span>
                                 </a>
@@ -458,7 +446,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="../Reports/FrontPage/Records.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
+                                <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=0" class="notification">
                                     <span>MA</span>
                                     <span class="badge"><?php echo $ma?></span>
                                 </a>
@@ -466,7 +454,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="../Reports/FrontPage/Records.php?query=SELECT * FROM Referrals.RecordRequest WHERE Status='4'" class="notification">
+                                <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=2" class="notification">
                                     <span>Referrals</span>
                                     <span class="badge"><?php echo $referrals?></span>
                                 </a>

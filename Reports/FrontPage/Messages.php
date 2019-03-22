@@ -150,7 +150,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
 <body style="background:darkgray;">
 
-<?php include "/home/siminternal/html/Menu/menu.php"?>
+<?php include "../../Menu/menu.php"?>
 <table id="All" width="100%">
     <tbody>
     <tr>
