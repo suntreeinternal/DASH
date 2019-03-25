@@ -207,10 +207,11 @@
         $RxStats .= '<tr><td><a style="background-color:'. $row[4] . '; color:' . $row[5] . '" href="../Reports/FrontPage/Rx.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valCount[0] . '</span></a></td></tr>';
     }
 
-    //TODO Rethink the way that messages work.
+    $con->close();
 
 ?>
 <html>
+    <meta http-equiv="refresh" content="15" />
     <head>
         <link rel="stylesheet" href="Menu/menu.css">
         <title>DASH: <?php echo $_SESSION['name']?></title>

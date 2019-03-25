@@ -7,7 +7,7 @@
     $DOB = $_SESSION['patientDOB'];
     $phoneNumber = '';
 
-
+    $currentReferral = '';
 
 
     $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');

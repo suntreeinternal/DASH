@@ -190,9 +190,13 @@ $speciality .= '</select>';
                         <textarea id="note" name="note" style="height: 50px; width: 100%;"><?php echo $note ?></textarea>
                     </td>
                 </tr>
+
+                <tr>
+                    <td><button>Submit</button></td>
+                    <td><button name="delete" value="true">Delete Specialist</button></td>
+                </tr>
                 </tbody>
             </table>
-            <button>Submit</button>
         </form>
     </div>
 </div>

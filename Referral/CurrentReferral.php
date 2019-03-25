@@ -15,6 +15,7 @@
     $phoneNumber = '';
     $reason = "";
 
+    $currentReferral = '';
 
     $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
     $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -24,6 +25,8 @@
     $query = 'SELECT * FROM Referrals.Referrals WHERE ID=\'' . $_GET['ReferralID'] . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
+
+    $currentReferral = $row[1] . $row[2] . $row[3] . $row[4] . $row[5] . $row[6] . $row[7] . $row[8] . $row[9];
 
     $dateTime =$row[7];
     $reason = $row[6];
@@ -282,12 +285,8 @@
         <?php include "../patientInfo/Messages.php"?>
         <?php include "../patientInfo/Notes.php"?>
         <?php
-//        if ($viewingName == ""){
-            echo '<td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">';
-//        }
-//        else {
-//            echo '<td style=" width: 25%; border-radius: 10px; background-color: #fff573">';
-//        }
+        echo '<td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">';
+
 
         ?>
             <div style="height:650px">
@@ -321,6 +320,7 @@
                                     <td>
                                         Status: <?php echo $status?>
                                         <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
+                                        <input type="hidden" name="test" value="<?php echo $currentReferral?>">
 
                                     </td>
                                 </tr>

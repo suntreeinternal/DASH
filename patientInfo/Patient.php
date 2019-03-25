@@ -155,6 +155,7 @@
 
 
 <html>
+<meta http-equiv="refresh" content="10" />
 <head>
     <link rel="stylesheet" href="../Menu/menu.css">
     <style>
@@ -291,7 +292,9 @@
         <?php include "patientInfoHeader.php"?>
     </tr>
     <tr valign="top">
-        <?php include "PhoneRecord.php"?>
+<!--        <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF" id="testPhone" >-->
+            <?php include "PhoneRecord.php"?>
+<!--        </td>-->
         <?php include "Messages.php"?>
         <?php include "pendingAction.php"?>
         <?php include "CompletedAction.php"?>
@@ -364,6 +367,15 @@
 </table>
 
 
-</body>
 
+</body>
+<script type="text/javascript">
+    window.onbeforeunload = StartInterval;
+    function StartInterval() {
+        setInterval("StartTime();", 1000);
+    }
+    function StartTime() {
+        document.getElementById('testPhone').innerHTML = Date();
+    }
+</script>
 </html>
