@@ -225,8 +225,8 @@ $dateTime = date("Y-m-d h:i:sa");
                                                 <th width="25%">Prescription</th>
                                                 <th width="10%">Mg</th>
                                                 <th>Quantity</th>
+                                                <th>Refills</th>
                                                 <th>Directions</th>
-                                                <th>Directions 2</th>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -349,7 +349,7 @@ $dateTime = date("Y-m-d h:i:sa");
                             </form>
                         </td>
                         <td>
-                            <form action='/patientInfo/newMessage.php'>
+                            <form action='/patientInfo/pushNewMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -359,7 +359,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="submit" name="button" value="Add new message" class="btnOthers">
+                                            <input type="submit" name="button" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>

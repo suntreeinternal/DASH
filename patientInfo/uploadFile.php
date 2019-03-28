@@ -15,11 +15,10 @@ $group = 0;
 $access= 0;
 
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-if($con->connect_error){
+if($con->connect_error) {
     header('location:/index.html');
-} else {
-    $query = 'SELECT * FROM Referrals.Users WHERE UserName="' . $_GET['user'] .'"';
 }
+
 $result = $con->query($query);
 $row = $result->fetch_row();
 $group = $row[1];

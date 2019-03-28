@@ -7,11 +7,12 @@
  */
 //echo var_dump($_GET);
 //TODO add to Change log
-
+session_start();
 echo var_dump($_SESSION);
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO MedsAuth (PatientID, ProviderID, DateCreated, PharmacyName, PharmacyPhone, Status) VALUES ('" . $_SESSION['currentPatient'] . "', '" . $_GET['provider'] . "', '" . $_GET['dateTime'] . "', '" . $_GET['Pharmacy'] ."', '" . $_GET['PhoneNum'] . "', '" . $_GET['status'] . "')";
+$query = "INSERT INTO MedsAuth (PatientID, ProviderID, PharmacyName, PharmacyPhone, Status) VALUES ('" . $_SESSION['currentPatient'] . "', '" . $_GET['provider'] . "', '" . $_GET['Pharmacy'] ."', '" . $_GET['PhoneNum'] . "', '" . $_GET['status'] . "')";
 $result = $conReferrals->query($query);
+
 header($_SESSION['previous']);
 
 

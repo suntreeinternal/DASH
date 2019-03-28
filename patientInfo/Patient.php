@@ -292,9 +292,7 @@
         <?php include "patientInfoHeader.php"?>
     </tr>
     <tr valign="top">
-<!--        <td height="700px" style="width: 25%; border-radius: 10px;background-color:#FFFFFF" id="testPhone" >-->
-            <?php include "PhoneRecord.php"?>
-<!--        </td>-->
+        <?php include "PhoneRecord.php"?>
         <?php include "Messages.php"?>
         <?php include "pendingAction.php"?>
         <?php include "CompletedAction.php"?>

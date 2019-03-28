@@ -168,7 +168,7 @@ if (!mssql_select_db('sw_charts', $con)) {
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
             $dob = null;
-            echo "<tr onclick=\"window.location='/Reports/GetPatient.php?ReferralID=" . $row[0] . "';\"><td>";
+            echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $row[0] . "&type=1';\"><td>";
             $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[2] . '"';
             $temp = $conReferrals->query($query);
             $tr = $temp->fetch_row();
@@ -253,7 +253,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $tempResult = $conReferrals->query('SELECT * FROM Referrals.Referrals WHERE PatientID = "' . $temp[0] . '"');
             while ($referral = $tempResult->fetch_row()){
                 $dob = null;
-                echo "<tr onclick=\"window.location='/Reports/GetPatient.php?ReferralID=" . $referral[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $referral[0] . "&type=1';\"><td>";
                 $id = "" . $temp[1];
                 $_SESSION['currentPatient'] = $temp[0];
 

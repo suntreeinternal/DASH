@@ -37,7 +37,7 @@ session_start();
                         $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status = \'4\'';
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?ReferralID=" . $row[0] ."';\"><td>";
+                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?typeID=" . $row[0] ."&type=1';\"><td>";
                             echo "Referral";
                             echo "</td><td>";
                             $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[1] . '\'';
@@ -51,12 +51,27 @@ session_start();
                         $query = 'SELECT * FROM Referrals.RecordRequest WHERE PatientID=\'' . $patientID . '\' AND Status = \'3\'';
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr><td>";
+                            echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?typeID=" . $row[0] ."&type=2';\"><td>";
                             echo "Records Request";
                             echo "</td><td>";
-                            echo 'looking into';
                             echo "</td><td>";
                             echo DateTime::createFromFormat("Y-m-d H:i:s", $row[8])->format("m/d/Y");
+                            echo "</td></tr>";
+                        }
+
+                        //TODO change link
+                        $query = 'SELECT * FROM Referrals.MedsAuth WHERE PatientID=\'' . $patientID . '\' AND Status = \'4\'';
+                        $result = $conReferrals->query($query);
+                        while ($row = $result->fetch_row()){
+                            echo "<tr onclick=\"window.location='../MedsAuth/current.php?typeID=" . $row[0] ."&type=3';\"><td>";
+                            echo "Meds Auth";
+                            echo "</td><td>";
+                            $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[2] . '\'';
+                            $temp = $conReferrals->query($query);
+                            $temp1 = $temp->fetch_row();
+                            echo $temp1[1];
+                            echo "</td><td>";
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[3])->format("m/d/Y");
                             echo "</td></tr>";
                         }
                         ?>

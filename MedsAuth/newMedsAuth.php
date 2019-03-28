@@ -214,7 +214,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" value="Submit new referral">
+                                        <input type="submit" value="Submit new meds auth">
                                     </td>
                                 </tr>
                             </form>

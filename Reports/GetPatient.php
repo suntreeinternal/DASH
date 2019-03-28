@@ -8,7 +8,7 @@
 
 session_start();
 
-$ReferralId = $_GET['ReferralID'];
+$ReferralId = $_GET['typeID'];
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 $query = "SELECT * FROM Referrals.Referrals WHERE ID='" . $ReferralId . "'";
@@ -40,4 +40,4 @@ if (strpos($row[1], '-') !== false){
     $_SESSION['patientDOB'] = $row[3];
 }
 //echo var_dump($_SESSION);
-header("location:../Referral/CurrentReferral.php?ReferralID=" . $ReferralId);
+header("location:../Referral/CurrentReferral.php?typeID=" . $ReferralId . "&type=1");

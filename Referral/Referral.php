@@ -63,11 +63,18 @@
         }
     }
     $status = $status . '</select>';
-
+    $speacalistTable = '';
     $query = 'SELECT * FROM Referrals.Specialist WHERE SpecialtyID=' .  $SelectedSpecality;
     $result = $conReferrals->query($query);
     while ($row = $result->fetch_row()){
-        $specalist = $specalist . '<option value="'. $row[0] .'">'. $row[2] .'</option>';
+        $specalist = $specalist . '<option value="'. $row[0] .'">' . $row[2] . '</option>';
+
+        $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
+        $speacalistTable .= "<tr><td>". $row[3] ."</td>";
+        $speacalistTable .= "<td>". $row[5] ."</td>";
+        $speacalistTable .= "<td>". $row[4] ."</td>";
+        $speacalistTable .= "<td>". $row[6] ."</td></tr>";
+        $speacalistTable .= "</tbody></table>";
     }
 ?>
 
@@ -240,10 +247,16 @@
                                                            </select>
                                             </td>
                                             <td>
-                                                Specialist: <select name="Specalist" id="specalist">
+                                                Specialist: <select name="Specalist" id="specalist" onclick="updateData()">
                                                                 <?php echo $specalist?>
                                                             </select>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td><?php echo $speacalistTable ?></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -275,7 +288,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form action='/patientInfo/newMessage.php'>
+                                <form action='/patientInfo/pushNewMessage.php'>
                                     <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                         <tbody>
                                         <tr>
@@ -285,7 +298,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="submit" name="button" value="Add new message" class="btnOthers">
+                                                <input type="submit" name="button" class="btnOthers">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -313,6 +326,19 @@
         }
         return 0;
 
+    }
+
+    function updateData() {
+        var name = document.forms['referral']['Specalist'].value;
+        var xmlhttp = new XMLHttpRequest();
+        if (name != "") {
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById('specialistInfo').innerHTML = this.responseText;
+            };
+            xmlhttp.open("GET", "loadSpecalistData.php?id=" + name, true);
+            xmlhttp.send();
+        }
+        return 0;
     }
 </script>
 

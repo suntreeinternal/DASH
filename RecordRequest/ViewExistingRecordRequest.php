@@ -10,52 +10,136 @@ $patientName = $_SESSION['patientName'];
 $DOB = $_SESSION['patientDOB'];
 $phoneNumber = '';
 
-
-
-
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {
     die('Unable to select database!');
 }
 
-$query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
+$query = "SELECT * FROM Referrals.RecordRequest WHERE ID=" . $_GET['typeID'];
 $result = $conReferrals->query($query);
 $row = $result->fetch_row();
-$phoneNumber = $row[4];
-$alert = $row[2];
-
-if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
-    $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
-} else {
-    if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 7) {
-        $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 4);
-    }
-}
 
 $query = 'SELECT * FROM Referrals.Provider';
 $result = $conReferrals->query($query);
-$providerList = '<select name="provider">';
-$providerList = $providerList . '<option value="1">Doctors Office</option>';
-$providerList = $providerList . '<option value="2">Attorney</option>';
-$providerList = $providerList . '<option value="3">Patient</option>';
-$providerList = $providerList . '<option value="4">SSI</option>';
-$providerList = $providerList . '<option value="5">Life / Health Insurance</option>';
-$providerList = $providerList . '</select>';
+$providerList .= "";
 
-$query = 'SELECT * FROM Referrals.Specialty';
-$result = $conReferrals->query($query);
-$specalty = "";
-while ($row = $result->fetch_row()){
-    $specalty = $specalty . '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+switch ($row[2]){
+
+    case 1:
+        $providerList .= '<select name="Requester">';
+        $providerList .= '<option selected="selected" value="1">Doctors Office</option>';
+        $providerList .= '<option value="2">Attorney</option>';
+        $providerList .= '<option value="3">Patient</option>';
+        $providerList .= '<option value="4">SSI</option>';
+        $providerList .= '<option value="5">Life / Health Insurance</option>';
+        $providerList .= '</select>';
+        break;
+
+    case 2:
+        $providerList .= '<select name="Requester">';
+        $providerList .= '<option value="1">Doctors Office</option>';
+        $providerList .= '<option selected="selected" value="2">Attorney</option>';
+        $providerList .= '<option value="3">Patient</option>';
+        $providerList .= '<option value="4">SSI</option>';
+        $providerList .= '<option value="5">Life / Health Insurance</option>';
+        $providerList .= '</select>';
+        break;
+
+    case 3:
+        $providerList .= '<select name="Requester">';
+        $providerList .= '<option value="1">Doctors Office</option>';
+        $providerList .= '<option value="2">Attorney</option>';
+        $providerList .= '<option selected="selected" value="3">Patient</option>';
+        $providerList .= '<option value="4">SSI</option>';
+        $providerList .= '<option value="5">Life / Health Insurance</option>';
+        $providerList .= '</select>';
+        break;
+
+    case 4:
+        $providerList .= '<select name="Requester">';
+        $providerList .= '<option value="1">Doctors Office</option>';
+        $providerList .= '<option value="2">Attorney</option>';
+        $providerList .= '<option value="3">Patient</option>';
+        $providerList .= '<option selected="selected" value="4">SSI</option>';
+        $providerList .= '<option value="5">Life / Health Insurance</option>';
+        $providerList .= '</select>';
+        break;
+
+    case 5:
+        $providerList .= '<select name="Requester">';
+        $providerList .= '<option value="1">Doctors Office</option>';
+        $providerList .= '<option value="2">Attorney</option>';
+        $providerList .= '<option value="3">Patient</option>';
+        $providerList .= '<option value="4">SSI</option>';
+        $providerList .= '<option selected="selected" value="5">Life / Health Insurance</option>';
+        $providerList .= '</select>';
+        break;
+
+}
+$auth = "";
+switch ($row[4]){
+    case 1:
+        $auth .= '<select name="authorization">';
+        $auth .= '<option selected="selected" value="1">Yes</option>';
+        $auth .= '<option value="2">No</option>';
+        $auth .= '<option value="3">N/A</option>';
+        $auth .= '<option value="4">Unknown</option>';
+        $auth .= '</select>';
+        break;
+
+    case 2:
+        $auth .= '<select name="authorization">';
+        $auth .= '<option value="1">Yes</option>';
+        $auth .= '<option selected="selected" value="2">No</option>';
+        $auth .= '<option value="3">N/A</option>';
+        $auth .= '<option value="4">Unknown</option>';
+        $auth .= '</select>';
+        break;
+
+    case 3:
+        $auth .= '<select name="authorization">';
+        $auth .= '<option value="1">Yes</option>';
+        $auth .= '<option value="2">No</option>';
+        $auth .= '<option selected="selected" value="3">N/A</option>';
+        $auth .= '<option value="4">Unknown</option>';
+        $auth .= '</select>';
+        break;
+
+    case 4:
+        $auth .= '<select name="authorization">';
+        $auth .= '<option value="1">Yes</option>';
+        $auth .= '<option value="2">No</option>';
+        $auth .= '<option value="3">N/A</option>';
+        $auth .= '<option selected="selected" value="4">Unknown</option>';
+        $auth .= '</select>';
+        break;
 }
 
+$query = 'SELECT * FROM Referrals.RecordStatus';
+$result = $conReferrals->query($query);
+$status = "<select name='selected'>";
+while ($row1 = $result->fetch_row()){
+    if ($row[3] == $row1[0]){
+        $status .= '<option selected="selected" value="' . $row1[0] . '">' . $row1[1] . '</option>';
+
+    } else {
+        $status .= '<option value="' . $row1[0] . '">' . $row1[1] . '</option>';
+    }
+}
+
+$status .= "</select>";
+$reason = $row[7];
 
 
-$dateTime = date("Y-m-d h:i:sa");
+//TODO date time
+
+$dateTime = date("Y-m-d h:i:sa", $row[8]);
 
 $patientInfo->SelectPatient($_SESSION['currentPatient']);
 $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
+
+//$conReferrals->close();
 ?>
 
 
@@ -194,7 +278,7 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                     <tr>
                         <table cellpadding="15px" cellspacing="15px" width="100%" >
                             <tbody>
-                            <form action="newRecordRequest.php">
+                            <form action="updateRecordRequest.php">
                                 <tr>
                                     <td width="50%">
                                         3rd Party Requester <?php echo $providerList?>
@@ -207,30 +291,24 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                                 </tr>
                                 <tr>
                                     <td>
-                                        Status:<select name="status">
-                                            <option value="0">Waiting For CK</option>
-                                            <option value="1">Need Approval</option>
-                                            <option value="2">Approved</option>
-                                            <option value="3">Sent</option>
-                                            <option value="4">See Me</option>
-                                        </select>
-                                        <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
+                                        Reason <input type="text" name="Reason" value="<?php echo $reason?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Status:<?php echo $status?>
+                                        <input type="hidden" name="ID" value="<?php echo  $_GET['typeID']?>">
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        Authorization: <select name="authorization">
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
-                                            <option value="3">N/A</option>
-                                            <option selected="selected" value="4">Unknown</option>
-                                        </select>
+                                        Authorization: <?php echo $auth?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" value="Submit new referral">
+                                        <input type="submit" value="Update referral">
                                     </td>
                                 </tr>
                             </form>
@@ -258,7 +336,7 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                             </form>
                         </td>
                         <td>
-                            <form action='/pushNewMessage.php'>
+                            <form action='/patientInfo/pushNewMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -266,21 +344,9 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
-                                    <tr valign="center" aria-rowspan="5px">
-                                        <td valign="center">
-                                            <input type="submit" name="button" value="MA" class="btnMa">
-                                        </td>
+                                    <tr>
                                         <td>
-                                            <input type="submit" name="button" value="Reception" class="btnRec">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Referrals" class="btnRef">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Provider" class="btnPro">
-                                        </td>
-                                        <td>
-                                            <input type="submit" name="button" value="Clear" class="btnOthers">
+                                            <input type="submit" name="button" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>

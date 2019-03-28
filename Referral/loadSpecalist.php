@@ -11,5 +11,5 @@ $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['passwo
 $query = "SELECT * FROM Referrals.Specialist WHERE SpecialtyID=" .$_GET['specality'];
 $result = $conReferrals->query($query);
 while ($row = $result->fetch_row()){
-    echo '<option value="'. $row[0] .'">'. $row[2] .'</option>';
+    echo '<option value="'. $row[0] .'">'. $row[2] . '</option>';
 }

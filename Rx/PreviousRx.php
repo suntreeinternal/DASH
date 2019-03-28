@@ -32,7 +32,7 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
     }
 }
 
-$query = 'SELECT * FROM Rx WHERE ID=' . $_GET['RxId'];
+$query = 'SELECT * FROM Rx WHERE ID=' . $_GET['typeID'];
 $result = $conReferrals->query($query);
 $RxInfo = $result->fetch_row();
 
@@ -194,9 +194,10 @@ $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo
                     <tr>
                         <table cellpadding="15px" cellspacing="15px" width="100%" >
                             <tbody>
-                            <form action="subbmitRx.php">
+                            <form action="updateRX.php">
                                 <tr>
                                     <td width="50%">
+                                        <input type="hidden" name="RxId" value="<?php echo $_GET['typeID']?>">
                                         Provider <?php echo $providerList?>
                                     </td>
                                     <td width="50%">
@@ -338,7 +339,7 @@ $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" value="Submit new Rx">
+                                        <input type="submit" value="Update Rx">
                                     </td>
                                 </tr>
                             </form>

@@ -56,7 +56,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
 <body style="background:darkgray;">
 
-<?php include "/home/siminternal/html/Menu/menu.php"?>
+<?php include "../../Menu/menu.php"?>
 <table id="All" width="100%">
     <tbody>
     <tr>
@@ -89,7 +89,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $tr = mssql_fetch_array($temp);
                 $_SESSION['patientName'] = $tr[2] . " " . $tr[1];
                 $_SESSION['patientDOB'] = $tr[21];
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
 
 
                 echo $tr[2] . " " . $tr[1];
@@ -98,7 +98,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
                 $temp = $conReferrals->query($query);
                 $tr = $temp->fetch_row();
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "typeID';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
                 $_SESSION['patientName'] = $tr[1] . " " . $tr[2];

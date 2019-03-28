@@ -38,7 +38,7 @@
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?ReferralID=" . $row[0] ."';\"><td>";
+                            echo "<tr onclick=\"window.location='../Referral/CurrentReferral.php?typeID=" . $row[0] ."&type=1';\"><td>";
                             $query = "SELECT * FROM Status WHERE id='" . $row[3] . "'";
                             $tempResult = $conReferrals->query($query);
                             $tr = $tempResult->fetch_row();
@@ -58,7 +58,7 @@
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
 
-                            echo "<tr onclick=\"window.location='../Rx/PreviousRx.php?RxId=" . $row[0] ."';\"><td>";
+                            echo "<tr onclick=\"window.location='../Rx/PreviousRx.php?typeID=" . $row[0] ."&type=2';\"><td>";
                             //TODO Fix this part
                             echo 'Rx';
 
@@ -78,7 +78,7 @@
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
 
-                            echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?RecordID=" . $row[0] ."';\"><td>";
+                            echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?typeID=" . $row[0] ."&type=3';\"><td>";
                             //TODO Fix this part
                             echo 'Record Request';
                             echo "</td><td>";
@@ -90,6 +90,35 @@
                             echo DateTime::createFromFormat("Y-m-d H:i:s", $row[8])->format("m/d/Y");
                             echo "</td></tr>";
                         }
+                        $query = 'SELECT * FROM Referrals.MedsAuth WHERE PatientID=\'' . $patientID . '\' AND Status <> \'4\'';
+
+                        $result = $conReferrals->query($query);
+                        while ($row = $result->fetch_row()){
+
+                            echo "<tr onclick=\"window.location='../MedsAuth/current.php?typeID=" . $row[0] ."&type=4';\"><td>";
+                            //TODO Fix this part
+                            echo 'Meds Auth';
+                            echo "</td><td>";
+
+                            switch ($row[6]){
+                                case 0:
+                                    echo 'New';
+                                    break;
+                                case 1:
+                                    echo 'Pending';
+                                    break;
+                                case 2:
+                                    echo 'Denial';
+                                    break;
+                                case 3:
+                                    echo 'Other';
+                                    break;
+                            }
+                            echo "</td><td>";
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[3])->format("m/d/Y");
+                            echo "</td></tr>";
+                        }
+
                         ?>
                         </tbody>
                     </table>

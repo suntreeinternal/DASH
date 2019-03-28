@@ -181,7 +181,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $tr = mssql_fetch_array($temp);
                 $_SESSION['patientName'] = $tr[2] . " " . $tr[1];
                 $_SESSION['patientDOB'] = $tr[21];
-                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "&typeID=" . $row[0] . "&type=2';\"><td>";
 
                 echo $tr[2] . " " . $tr[1];
                 $dob = $tr[21];
@@ -218,24 +218,24 @@ if (!mssql_select_db('sw_charts', $con)) {
 
             echo "</td><td>";
 
-            switch ($row[3]) {
-                case 0:
+            switch ($row[2]) {
+                case 1:
                     echo "Doctors Office";
                     break;
 
-                case 1:
+                case 2:
                     echo "Attorney";
                     break;
 
-                case 2:
+                case 3:
                     echo "Patient";
                     break;
 
-                case 3:
+                case 4:
                     echo "SSI";
                     break;
 
-                case 4:
+                case 5:
                     echo "Life / Health Insurance";
                     break;
             }

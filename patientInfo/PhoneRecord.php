@@ -32,7 +32,7 @@
                                 break;
 
                             case 'Provider':
-                                echo "<tr style=\"background-color: #E74C3C\">";
+                                echo "<tr style=\"background-color: #E74C3C; color: #FFFFFF\">";
                                 break;
 
                             case 'Referrals':
@@ -100,7 +100,7 @@
                                     break;
 
                                 case 'Provider':
-                                    echo "<tr style=\"background-color: #E74C3C\">";
+                                    echo "<tr style=\"background-color: #E74C3C; color: #FFFFFF\">";
                                     break;
 
                                 case 'Referrals':

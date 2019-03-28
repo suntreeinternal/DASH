@@ -18,7 +18,7 @@ session_start();
             </td>
             <td width="50%" align="right">
                 <form action="Specalist/newSpecalist.php">
-                    <input type="submit" name="Add Specialist">
+                    <input type="submit" name="Add Specialist" value="Add Specialist">
                 </form>
 <!--                <input type="button" value="Edit Specialist">-->
             </td>

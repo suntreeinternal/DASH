@@ -264,7 +264,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form action='/patientInfo/newMessage.php'>
+                                <form action='/patientInfo/pushNewMessage.php'>
                                     <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                         <tbody>
                                         <tr>
@@ -274,7 +274,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="submit" name="button" value="Add new message" class="btnOthers">
+                                                <input type="submit" name="button" class="btnOthers">
                                             </td>
                                         </tr>
                                         </tbody>

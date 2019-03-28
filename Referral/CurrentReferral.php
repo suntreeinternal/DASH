@@ -22,7 +22,7 @@
     if (!mssql_select_db('sw_charts', $con)) {
         die('Unable to select database!');
     }
-    $query = 'SELECT * FROM Referrals.Referrals WHERE ID=\'' . $_GET['ReferralID'] . '\'';
+    $query = 'SELECT * FROM Referrals.Referrals WHERE ID=\'' . $_GET['typeID'] . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
 
@@ -92,14 +92,22 @@
 
 
 
+
     $query = 'SELECT * FROM Referrals.Specialist WHERE SpecialtyID=' . $currentSpecality;
     $result = $conReferrals->query($query);
     $speacalist = "";
     while ($row = $result->fetch_row()){
         if($row[0] == $currentSpeacalist){
-            $speacalist = $speacalist . '<option selected="selected" value="'. $row[0] .'">'. $row[2] .'</option>';
+            $test = "";
+            $speacalist = $speacalist . '<option selected="selected" value="'. $row[0] .'">'. $row[2] . '</option>';
+            $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
+            $speacalistTable .= "<tr><td>". $row[3] ."</td>";
+            $speacalistTable .= "<td>". $row[5] ."</td>";
+            $speacalistTable .= "<td>". $row[4] ."</td>";
+            $speacalistTable .= "<td>". $row[6] ."</td></tr>";
+            $speacalistTable .= "</tbody></table>";
         } else {
-            $speacalist = $speacalist . '<option value="' . $row[0] . '">' . $row[2] . '</option>';
+            $speacalist = $speacalist . '<option value="' . $row[0] . '">' . $row[2] . ', ' . $row[3] . ', ' . $row[5] . '</option>';
         }
     }
 
@@ -334,14 +342,19 @@
                                         Specialty: <select name="Specialty" onchange="getData()">
                                             <?php echo $specalty?>
                                         </select>
-                                        <input type="hidden" name="refID" value="<?php echo $_GET['ReferralID']?>" >
+                                        <input type="hidden" name="refID" value="<?php echo $_GET['typeID']?>" >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        Specialist: <select name="Specalist" id="specalist">
+                                        Specialist: <select name="Specalist" id="specalist" onclick="updateData()">
                                             <?php echo $speacalist?>
                                         </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php echo $speacalistTable?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -402,7 +415,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action='/pushNewNote.php'>
+                            <form action='/patientInfo/pushNewMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -410,14 +423,14 @@
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
-                                    <tr valign="center" aria-rowspan="5px">
-                                        <td valign="center">
-                                            <input type="submit" name="button" value="Add Note" class="btnOthers">
-                                            <input type="hidden" name="refNum" value="<?php echo $referralID?>">
+                                    <tr>
+                                        <td>
+                                            <input type="submit" name="button" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
+
                             </form>
                         </td>
                     </tbody>
@@ -439,7 +452,19 @@
             xmlhttp.send();
         }
         return 0;
+    }
 
+    function updateData() {
+        var name = document.forms['referral']['Specalist'].value;
+        var xmlhttp = new XMLHttpRequest();
+        if (name != ""){
+            xmlhttp.onreadystatechange =function () {
+                document.getElementById('specialistInfo').innerHTML = this.responseText;
+            };
+            xmlhttp.open("GET", "loadSpecalistData.php?id=" + name, true);
+            xmlhttp.send();
+        }
+        return 0;
     }
 </script>
 </body>

@@ -6,7 +6,7 @@
  * Time: 12:28 PM
  */
 session_start();
-
+var_dump($_GET);
 $query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['swID'] . '\' ORDER BY visit_date DESC ';
 $result = mssql_query($query);
 $encounters = "";
@@ -28,16 +28,25 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
     }
 }
 
-
-$query = 'SELECT * FROM Referrals.Uploads WHERE PatientID=\'' . $_SESSION['currentPatient'] . '\'';
-$result = $conReferrals->query($query);
-//$row = $result->fetch_row();
-
-$files = "";
-while ($row = $result->fetch_row()){
-    $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+if (!$_GET['type']){
+    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] ."'";
+    $result = $conReferrals->query($query);
+    echo $query;
+    $files = "";
+    while ($row = $result->fetch_row()){
+        $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+    }
+    $files .= '<a href="../patientInfo/uploadFile.php">Upload attachment</a>';
+} else {
+    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] . "' AND type=" . $_GET['type'] . " AND typeID=" . $_GET['typeID'];
+    $result = $conReferrals->query($query);
+    echo $query;
+    $files = "";
+    while ($row = $result->fetch_row()) {
+        $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+    }
+    $files .= '<a href="../patientInfo/uploadFile.php?type='. $_GET['type'] . '&typeID=' . $_GET['typeID'] . '">Upload attachment</a>';
 }
-$files .= '<a href="../patientInfo/uploadFile.php">Upload attachment</a>';
 ?>
 
 <td colspan="4">
