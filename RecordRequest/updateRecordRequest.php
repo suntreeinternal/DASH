@@ -15,6 +15,5 @@ echo $query;
 
 include '../fetchPatientData/patientInfo.php';
 
-//TODO reditrect
-//var_dump($_SESSION);
+
 header($_SESSION['previous']);

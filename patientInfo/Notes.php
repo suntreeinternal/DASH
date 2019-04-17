@@ -17,7 +17,7 @@ session_start();
                 </td>
             </tr>
                 <?php
-            $query = 'SELECT * FROM Note WHERE ReferralID=\'' . $_GET['ReferralID'] . '\' ORDER BY ID DESC' ;
+            $query = 'SELECT * FROM Referrals.Note WHERE ReferralID=\'' . $_GET['typeID'] . '\' ORDER BY ID DESC' ;
             $result = $conReferrals->query($query);
             while ($row = $result->fetch_row()){
                 $messageGroup = $row[5];
@@ -42,6 +42,9 @@ session_start();
                         echo "<tr style=\"background-color: #45B39D\">";
                         break;
 
+                    default:
+                        echo "<tr style=\"background-color: #00B34F\">";
+                        break;
                 }
                 $date = date_create($row[3]);
 

@@ -211,22 +211,10 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Authorization: <select name="authorization">
+                                                Check required: <select name="authorization">
                                                     <option value="1">Yes</option>
-                                                    <option value="2">No</option>
-                                                    <option value="3">N/A</option>
-                                                    <option selected="selected" value="4">Unknown</option>
+                                                    <option value="0">No</option>
                                                 </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Check Img: <input type="file" name="Check">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Record: <input type="file" name="Record">
                                             </td>
                                         </tr>
                                         <tr>

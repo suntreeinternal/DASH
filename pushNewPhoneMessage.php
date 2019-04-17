@@ -16,14 +16,19 @@ if($con->connect_error){
 }
 
 $destination = "";
+$destinationMA = "";
 $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
 $result = $con->query($query);
 
 
 while ($row = $result->fetch_row()){
     $val = 4+$row[0];
+    $valMA = 104+$row[0];
     $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
+    $destinationMA .= "<input type='radio' name='dest' value='" . $valMA . "'>" . $row[2] . " ma </br>";
+
 }
+
 
 
 
@@ -142,7 +147,7 @@ while ($row = $result->fetch_row()){
             <table width="100%">
                 <tbody>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         Select Message Destination<br/><br/>
                     </td>
 
@@ -150,6 +155,9 @@ while ($row = $result->fetch_row()){
                 <tr>
                     <td>
                         <?php echo $destination?>
+                    </td>
+                    <td>
+                        <?php echo $destinationMA?>
                     </td>
                     <td>
                         <input type="hidden" name="message" value="<?php echo $_GET['message'] ?>">

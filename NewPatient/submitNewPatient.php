@@ -17,15 +17,18 @@ if($con->connect_error){
     $row = $result->fetch_row();
     if ($row[0] == 0) {
         $query = 'INSERT INTO TempPatient (FirstName, LastName, BirthDate) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\')';
-        echo $query;
+        echo $query . "</br>";
         $result = $con->query($query);
         $query = "SELECT LAST_INSERT_ID()";
         $result = $con->query($query);
         $row = $result->fetch_row();
-        echo var_dump($row);
-        $query = "INSERT INTO PatientData(SW_ID, Message_alert_to_group, Note, Phone_number, temp) VALUES ('" . $row[0] ."','','','','')";
+        echo var_dump($row) . '</br>';
+        $query = "INSERT INTO PatientData(SW_ID, Message_alert_to_group, Note, Phone_number, temp) VALUES ('" . $row[0] ."','0','','0','1')";
+        echo $query. "</br>";
         $result = $con->query($query);
         $query = "INSERT INTO Referrals.ChangeLog (UserID, ChangeSummery, DateTime) VALUES ('" . $_SESSION['userID'] . "', 'Patient " . $_GET['first'] . " " . $_GET['last'] . " with DOB " .  $_GET['birthDate'] . " Added as a Temporary patient who is not is SW yet', ' " . date("Y-m-d h:i:sa") . "')";
+
+//        echo $query;
         $result = $con->query($query);
         header($_SESSION['previous']);
 

@@ -150,7 +150,7 @@ if (!mssql_select_db('sw_charts', $con)) {
 
 <body style="background:darkgray;">
 
-<?php include "/home/siminternal/html/Menu/menu.php"?>
+<?php include "../../Menu/menu.php"?>
 <table id="All" width="100%">
     <tbody>
     <tr>
@@ -178,9 +178,9 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $tr[1] . '\'';
                 $temp = mssql_query($query);
                 $tr = mssql_fetch_array($temp);
-                $_SESSION['patientName'] = $row[2] . " " . $row[1];
-                $_SESSION['patientDOB'] = $row[21];
-                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "';\"><td>";
+                $_SESSION['patientName'] = $tr[2] . " " . $tr[1];
+                $_SESSION['patientDOB'] = $tr[21];
+                echo "<tr onclick=\"window.location='/MedsAuth/current.php?last=" . $tr['last_name'] . "&date=" . $tr['birthdate'] . "&type=4&typeID=" . $row[0] . "';\"><td>";
 
 
                 echo $tr[2] . " " . $tr[1];
@@ -192,8 +192,8 @@ if (!mssql_select_db('sw_charts', $con)) {
                 echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr[2] . "&date=" . $tr[3] . "';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
-                $_SESSION['patientName'] = $row[1] . " " . $row[2];
-                $_SESSION['patientDOB'] = $row[3];
+                $_SESSION['patientName'] = $tr[1] . " " . $tr[2];
+                $_SESSION['patientDOB'] = $tr[3];
             }
             echo "</td><td>";
             $date = date_create($row[8]);

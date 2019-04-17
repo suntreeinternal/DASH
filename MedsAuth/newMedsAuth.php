@@ -209,6 +209,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                             <option value="2">Denial</option>
                                             <option value="3">Other</option>
                                             <option value="4">Patient Notified</option>
+                                            <option value="5">Approved</option>
                                         </select>
                                     </td>
                                 </tr>

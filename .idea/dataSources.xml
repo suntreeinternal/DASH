@@ -19,7 +19,7 @@
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://SUNSERVER\SOAPWARE;database=sw_charts</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://SUNSERVER2\SOAPWARE</jdbc-url>
       <driver-properties>
         <property name="applicationName" value="DataGrip" />
       </driver-properties>

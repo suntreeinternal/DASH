@@ -161,7 +161,6 @@ if (!mssql_select_db('sw_charts', $con)) {
         <th onclick="sortTable(4)" width="56%">Message</th>
     </tr>
     <?php
-    //TODO get the correct info Here
     $query = $_GET['query'];
     if ($query != "temp"){
         $result = $conReferrals->query($query);

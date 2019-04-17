@@ -11,24 +11,26 @@ session_start();
 //TODO update user to all specifications
 //TODO get current user data
 //TODO Create change log.
-$group = 0;
-$access= 0;
+//$group = 0;
+//$access= 0;
 
-$con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-if($con->connect_error) {
-    header('location:/index.html');
-}
+//$con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+//if($con->connect_error) {
+//    header('location:/index.html');
+//}
 
-$result = $con->query($query);
-$row = $result->fetch_row();
-$group = $row[1];
-$access = $row[2];
+//$result = $con->query($query);
+//$row = $result->fetch_row();
+//$group = $row[1];
+//$access = $row[2];
+
+$type = $_GET['type'];
+$typeID = $_GET['typeID'];
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<!--    <link rel="stylesheet" href="updateForm.css">-->
     <title>DASH</title>
     <style>
         .login-page {
@@ -106,9 +108,10 @@ $access = $row[2];
 
     </style>
 </head>
+
 <div class="login-page">
     <div class="form">
-        <form action="placeFile.php" method="post" enctype="multipart/form-data" class="login-form">
+        <form action="placeFile.php?type=<?php echo $type?>&typeID=<?php echo $typeID?>" method="post" enctype="multipart/form-data" class="login-form">
             Select attachment for patient: <input type="file" name="fileToUpload" id="fileToUpload">
             <button>Submit</button>
         </form>

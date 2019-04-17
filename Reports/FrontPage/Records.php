@@ -191,7 +191,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $tr = $temp->fetch_row();
                 $_SESSION['patientName'] = $tr[1] . " " . $tr[2];
                 $_SESSION['patientDOB'] = $tr[3];
-                echo "<tr onclick=\"window.location='/patientInfo/Patient.php?last=" . $tr[2] . "&date=" . $tr[3] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/RecordRequest/ViewExistingRecordRequest.php?last=" . $tr[2] . "&date=" . $tr[3] . "&typeID=" . $row[0] . "&type=2';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
             }

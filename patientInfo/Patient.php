@@ -13,7 +13,7 @@
     $last = $_GET['last'];
     $date = $_GET['date'];
     if ($date == ''){
-        header('location:/patientInfo/selectPatient.php?last=' . $last . "&pipek=" . $_GET['pipek']);
+        header('location:/patientInfo/selectPatient.php?last=' . $last );
         die();
     }
     $_SESSION['previous'] = "patientInfo/Patient.php?last=" . $last . "&date=" . $date;
@@ -155,7 +155,7 @@
 
 
 <html>
-<meta http-equiv="refresh" content="10" />
+<!--<meta http-equiv="refresh" content="10" />-->
 <head>
     <link rel="stylesheet" href="../Menu/menu.css">
     <style>

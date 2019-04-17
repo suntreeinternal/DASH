@@ -1,12 +1,9 @@
 <?php
-    include("../fetchPatientData/patientInfo.php");
-
-
-
-    $patientInfo = new Patient;
-
-
     session_start();
+    include_once "../fetchPatientData/patientInfo.php";
+//    echo var_dump(get_included_files());
+    $patientInfo = new Patient();
+
     if (sizeof($_SESSION) == 0){
         header('location:../index.html');
     }
@@ -125,9 +122,16 @@
      $status = $status . '</select>';
 
     $patientInfo->SelectPatient($_SESSION['currentPatient']);
-    $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
 
     $query = "SELECT * FROM Referrals.PagesBeingViewed WHERE itemId='" . $_GET['ReferralID'] ."'AND type='1'";
+
+    $patientInfo->SelectPatient($_SESSION['currentPatient']);
+    $_SESSION['swID'] = $patientInfo->getSwId();
+
+    $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
+
+
+    //    $patientInfo->shutdown();
 
     $result = $conReferrals->query($query);
     $viewingName = '';
@@ -302,7 +306,7 @@
                     <tbody>
                     <tr>
                         <td style="font-size: 20px; font-weight: bold" width="50%">
-                            Referral  &nbsp &nbsp &nbsp &nbsp &nbsp <!--Being viewed by: <?php echo $viewingName?>-->
+                            Referral  &nbsp &nbsp &nbsp &nbsp &nbsp <!--Being viewed by: <?php echo $viewingName;?>-->
                         </td>
                     </tr>
                     <tr>
@@ -396,7 +400,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action='/patientInfo/newMessage.php'>
+                            <form action='/patientInfo/pushNewMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
@@ -415,12 +419,13 @@
                             </form>
                         </td>
                         <td>
-                            <form action='/patientInfo/pushNewMessage.php'>
+                            <form action='/patientInfo/NewNote.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
                                         </td>
                                     </tr>
                                     <tr>

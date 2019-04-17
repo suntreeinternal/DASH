@@ -55,7 +55,7 @@
     $row = $result->fetch_row();
     $newReferral = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=1 AND NOT STATUS=3';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Priority=1 AND STATUS=5';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $ASAP += $row[0];
@@ -166,7 +166,7 @@
     $row = $result->fetch_row();
     $denialMed = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.MedsAuth WHERE Status=4';
+    $query = 'SELECT COUNT(*) FROM Referrals.MedsAuth WHERE Status=5';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $approvedMed = $row[0];
@@ -194,6 +194,23 @@
         $phoneStats .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="../Reports/FrontPage/PhoneReport.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valToShow . '</span></a></td></tr>';
     }
 
+    $providerMaPhone = '';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $result = $con->query($query);
+    while ($row = $result->fetch_row()){
+        $val = $row[0]+104;
+        $query = 'SELECT COUNT(*) FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' . $val;
+        $resultCount = $con->query($query);
+        $valCount = $resultCount->fetch_row();
+        $valToShow = $valCount[0];
+        $query = 'SELECT COUNT(*) FROM Referrals.MessageAboutPatient WHERE AlertToGroup=' . $val;
+        $resultCount = $con->query($query);
+        $valCount = $resultCount->fetch_row();
+        $valToShow += $valCount[0];
+        $query = 'SELECT * FROM Referrals.PatientPhoneMessages WHERE AlertToGroup=' .$val;
+        $providerMaPhone .= '<tr><td><a style="background-color:'. $row[4] . ' ; color:' . $row[5] . '" href="../Reports/FrontPage/PhoneReport.php?query=' . $query . '" class="notification"><span>' . $row[2] . '</span><span class="badge">' . $valToShow . '</span></a></td></tr>';
+    }
+
     $RxStats = '';
     $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
     $result = $con->query($query);
@@ -211,7 +228,7 @@
 
 ?>
 <html>
-    <meta http-equiv="refresh" content="15" />
+<!--    <meta http-equiv="refresh" content="15" />-->
     <head>
         <link rel="stylesheet" href="Menu/menu.css">
         <title>DASH: <?php echo $_SESSION['name']?></title>
@@ -259,7 +276,7 @@
             position: relative;
             display: inline-block;
             border-radius: 2px;
-            width: 120px;
+            width: 110px;
         }
 
         .notification:hover {
@@ -279,18 +296,20 @@
     </head>
 
     <body style="background:#C0C0C0;">
+
     <?php include "Menu/menu.php"?>
     <table cellpadding="15px" width="100%">
         <tbody>
             <tr valign="center">
                 <td>
                     <form action="\patientInfo\Patient.php">
-                        Dr. Pipek <input type="checkbox" name="pipek" value="yes">
                         Last name
                         <input type="text" name="last" style="width: 180px; height: 30px">
                         Birth Date
                         <input type="date" name="date" style="width: 180px; height: 30px">
-                        <input type="submit" value="Search" style="width: 100px; height: 30px">
+                        <input type="submit" name="sim" value="Search Sim" style="width: 100px; height: 30px">
+                        <input type="submit" name="pipek" value="Dr. Pipek Patient" style="width: 150px; height: 30px">
+                        <input type="submit" name="new" value="New Patient" style="width: 100px; height: 30px">
                     </form>
                 </td>
                 <td align="right">
@@ -319,7 +338,10 @@
                 <h2>Meds Auth</h2>
             </th>
             <th>
-                <h2>Message Stats</h2>
+                <h2>Message To Provider</h2>
+            </th>
+            <th>
+                <h2>Message To Provider MA</h2>
             </th>
             <th>
                 <h2>Rx Stats</h2>
@@ -329,15 +351,7 @@
                 <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=temp" class="notification">
-                                        <span>New Patient</span>
-                                        <span class="badge"><?php echo $newPatient?></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
+                           <tr>
                                 <td>
                                     <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='5' AND NOT Priority=1" class="notification">
                                         <span>New</span>
@@ -371,7 +385,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Authorization='2' AND NOT Priority=1" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='2' AND NOT Priority=1" class="notification">
                                         <span>Pending Soap and Demo</span>
                                         <span class="badge"><?php echo $pendingSoapAndDemo ?></span>
                                     </a>
@@ -531,7 +545,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.MedsAuth WHERE Status='4'" class="notification">
+                                <a href="../Reports/FrontPage/MedsAuth.php?query=SELECT * FROM Referrals.MedsAuth WHERE Status='5'" class="notification">
                                     <span>Approved</span>
                                     <span class="badge"><?php echo $approvedMed?></span>
                                 </a>
@@ -552,6 +566,13 @@
                     <table cellspacing="15px">
                         <tbody>
                         <?php echo $phoneStats?>
+                        </tbody>
+                    </table>
+                </td>
+                <td rowspan="2" valign="top" align="center">
+                    <table cellspacing="15px">
+                        <tbody>
+                        <?php echo $providerMaPhone?>
                         </tbody>
                     </table>
                 </td>
@@ -586,5 +607,8 @@
             </tr>
         </tbody>
     </table>
+    <footer>
+        <p align="center">Dash 1.2</p>
+    </footer>
 </body>
 </html>

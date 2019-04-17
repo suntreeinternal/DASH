@@ -5,7 +5,10 @@
  * Date: 11/16/2018
  * Time: 12:48 PM
  */
-echo var_dump($_GET);
+session_start();
+echo var_dump($_GET) . "<br/>";
+echo var_dump($_SESSION);
+
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\''. $_GET['id'] . '\'';
 $result = $conReferrals->query($query);

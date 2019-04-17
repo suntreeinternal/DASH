@@ -6,19 +6,31 @@
  * Time: 12:28 PM
  */
 session_start();
-var_dump($_GET);
-$query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['swID'] . '\' ORDER BY visit_date DESC ';
-$result = mssql_query($query);
-$encounters = "";
-while ($row = mssql_fetch_array($result)) {
-    $encounters .= '<a href="../SoapNote.php?ID=' . $row[0] . '&dob=' . $_SESSION['patientDOB'] . '&dos=' . $row['visit_date'] .'&first=' . $first . '&last=' . $last . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row['visit_date']) . '</a>';
+include_once "/var/www/simDash.com/html/fetchPatientData/patientInfo.php";
+$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+$conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
+if (!mssql_select_db('sw_charts', $con)) {
+    die('Unable to select database!');
 }
+
+$patientInfo = new Patient();
+
+$query = 'SELECT * FROM dbo.Encounters WHERE Patient_ID=\'' . $_SESSION['swID'] . '\' ORDER BY visit_date DESC ';
+$result1 = mssql_query($query);
+$encounters = "";
 
 $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
 $result = $conReferrals->query($query);
-$row = $result->fetch_row();
-$phoneNumber = $row[4];
-$alert = $row[2];
+$testRow2 = $result->fetch_row();
+$phoneNumber = $testRow2[4];
+$alert = $testRow2[2];
+
+$patientInfo->SelectPatient($_SESSION['currentPatient']);
+$patientName = $patientInfo->GetFirstName() . " " . $patientInfo->GetLastName();
+
+while ($row1 = mssql_fetch_array($result1)) {
+    $encounters .= '<a href="../SoapNote.php?ID=' . $row1[0] . '&dob=' . $_SESSION['patientDOB'] . '&dos=' . $row1['visit_date'] .'&first=' . $patientInfo->GetFirstName() . '&last=' . $patientInfo->GetLastName() . '" target=\"_blank\">' . str_ireplace(':00:000', '', $row1['visit_date']) . '</a>';
+}
 
 if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
     $phoneNumber = "(" . substr($phoneNumber, 0, 3) .') '. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
@@ -31,19 +43,17 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
 if (!$_GET['type']){
     $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] ."'";
     $result = $conReferrals->query($query);
-    echo $query;
     $files = "";
     while ($row = $result->fetch_row()){
-        $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+        $files .= '<a href="../uploads/uploads/' . $row[8] . '/' . $row[9] . '/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
     }
-    $files .= '<a href="../patientInfo/uploadFile.php">Upload attachment</a>';
+    $files .= '<a href="../patientInfo/uploadFile.php?typeID=' . $_GET['typeID'] . '&type=' . $_GET['type'] . '">Upload attachment</a>';
 } else {
     $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] . "' AND type=" . $_GET['type'] . " AND typeID=" . $_GET['typeID'];
     $result = $conReferrals->query($query);
-    echo $query;
     $files = "";
     while ($row = $result->fetch_row()) {
-        $files .= '<a href="../uploads/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
+        $files .= '<a href="../uploads/uploads/' . $row[8] . '/' . $row[9] . '/' . $row[5] . '" target=\"_blank\">' . $row[4] . '</a>';
     }
     $files .= '<a href="../patientInfo/uploadFile.php?type='. $_GET['type'] . '&typeID=' . $_GET['typeID'] . '">Upload attachment</a>';
 }

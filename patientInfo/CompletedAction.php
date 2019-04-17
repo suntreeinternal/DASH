@@ -55,7 +55,7 @@ session_start();
                             echo "Records Request";
                             echo "</td><td>";
                             echo "</td><td>";
-                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[8])->format("m/d/Y");
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[6])->format("m/d/Y");
                             echo "</td></tr>";
                         }
 

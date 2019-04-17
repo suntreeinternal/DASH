@@ -59,7 +59,10 @@ $result = $con->query($query);
 
 while ($row = $result->fetch_row()){
     $val = 4+$row[0];
+    $valMA = 104+$row[0];
     $destination .= "<input type='radio' name='dest' value='" . $val . "'>" . $row[2] . "</br>";
+    $destinationMA .= "<input type='radio' name='dest' value='" . $valMA . "'>" . $row[2] . " ma </br>";
+
 }
 
 ?>
@@ -180,22 +183,25 @@ while ($row = $result->fetch_row()){
             <table width="100%" style="padding: 5px;">
                 <tbody>
                 <tr>
-                    <td colspan="2" width="100%">
+                    <td colspan="3" width="100%">
                         <input type="text" name="message" placeholder="Type reply">
                         <input type="hidden" name="parent" value="<?php echo $_GET['parent'] ?>">
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         Select Message Destination<br/><br/>
                     </td>
 
                 </tr>
                 <tr>
-                    <td width="50%">
+                    <td width="33%">
                         <?php echo $destination?>
                     </td>
-                    <td width="50%">
+                    <td width="33%">
+                        <?php echo $destinationMA?>
+                    </td>
+                    <td width="33%">
 <!--                        <input type="hidden" name="message" value="--><?php //echo $_GET['message'] ?><!--">-->
                         <input type='radio' name='dest' value='0'>MA</br>
                         <input type='radio' name='dest' value='1'>Reception</br>

@@ -77,7 +77,6 @@
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-
                             echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?typeID=" . $row[0] ."&type=3';\"><td>";
                             //TODO Fix this part
                             echo 'Record Request';
@@ -87,14 +86,13 @@
                             $temp1 = $temp->fetch_row();
                             echo $temp1[1];
                             echo "</td><td>";
-                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[8])->format("m/d/Y");
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[6])->format("m/d/Y");
                             echo "</td></tr>";
                         }
                         $query = 'SELECT * FROM Referrals.MedsAuth WHERE PatientID=\'' . $patientID . '\' AND Status <> \'4\'';
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-
                             echo "<tr onclick=\"window.location='../MedsAuth/current.php?typeID=" . $row[0] ."&type=4';\"><td>";
                             //TODO Fix this part
                             echo 'Meds Auth';

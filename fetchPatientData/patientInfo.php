@@ -10,7 +10,10 @@
 class Patient{
 
     private $lastName="";
+    private $firstName="";
     private $dob = 0;
+    private $SwId = '';
+
     public function SelectPatient($DashID){
 
         $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -18,7 +21,7 @@ class Patient{
         $query = "SELECT * FROM Referrals.PatientData WHERE ID='" . $DashID . "'";
         $result = $conReferrals->query($query);
         $row = $result->fetch_row();
-
+        $this->SwId = $row[1];
 
         if (strpos($row[1], '-') !== false){
             $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
@@ -30,6 +33,7 @@ class Patient{
             $row = mssql_fetch_array($result);
             $this->lastName = $row[1];
             $this->dob = $row[21];
+            $this->firstName = $row[2];
 
 
         } else {
@@ -38,6 +42,7 @@ class Patient{
             $row = $result->fetch_row();
             $this->lastName = $row[2];
             $this->dob = $row[3];
+            $this->firstName[1];
         }
     }
     public function GetDOB(){
@@ -47,4 +52,22 @@ class Patient{
     public function GetLastName(){
         return $this->lastName;
     }
+
+    public function GetFirstName(){
+        return $this->firstName;
+    }
+
+    public function GetFullName(){
+        $string = $this->firstName . " " . $this->lastName;
+        return $string;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSwId()
+    {
+        return $this->SwId;
+    }
+
 }

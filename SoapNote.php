@@ -1,4 +1,5 @@
 <?php
+session_start();
     $ID = $_GET['ID'];
 
     $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
@@ -17,11 +18,11 @@
 
     //Converting DOS to good format
 
-
     $date = strtotime($_GET['dos']);
     $DOS = date('m-d-Y', $date);
     $date = strtotime($_SESSION['patientDOB']);
-    $DOB = date("m-d-Y", $date);
+
+$DOB = date("m-d-Y", $date);
     $query = 'SELECT * FROM dbo.Encounter_Data WHERE EncountID=\''. $ID . '\'';
 
     $result = mssql_query($query);

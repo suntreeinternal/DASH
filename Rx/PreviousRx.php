@@ -57,6 +57,127 @@ $patientInfo->SelectPatient($_SESSION['currentPatient']);
 //$dateTime = date("m-d-Y h:i:sa", $RxInfo[2]);
 $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo->GetLastName() . '&date=' . $patientInfo->GetDOB();
 
+
+$statusText = '';
+
+$authorizationText = '';
+
+switch ($RxInfo[6]){
+    case 0:
+        $authorizationText = ' <select name="authorization">
+                                    <option selected="selected" value="0">No verdict</option>
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                    <option value="3">Needs to be seen</option>
+                                    <option value="4">See me</option>
+                                </select>';
+        break;
+
+    case 1:
+        $authorizationText = ' <select name="authorization">
+                                    <option value="0">No verdict</option>
+                                    <option selected="selected" value="1">Yes</option>
+                                    <option value="2">No</option>
+                                    <option value="3">Needs to be seen</option>
+                                    <option value="4">See me</option>
+                                </select>';
+        break;
+
+    case 2:
+        $authorizationText = ' <select name="authorization">
+                                    <option value="0">No verdict</option>
+                                    <option value="1">Yes</option>
+                                    <option selected="selected" value="2">No</option>
+                                    <option value="3">Needs to be seen</option>
+                                    <option value="4">See me</option>
+                                </select>';
+        break;
+
+    case 3:
+        $authorizationText = ' <select name="authorization">
+                                    <option value="0">No verdict</option>
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                    <option selected="selected" value="3">Needs to be seen</option>
+                                    <option value="4">See me</option>
+                                </select>';
+        break;
+
+    case 4:
+        $authorizationText = ' <select name="authorization">
+                                    <option value="0">No verdict</option>
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                    <option value="3">Needs to be seen</option>
+                                    <option selected="selected" value="4">See me</option>
+                                </select>';
+        break;
+}
+
+
+switch ($RxInfo[3]){
+    case 1:
+        $statusText = '<select name="status">
+                            <option selected="selected" value="1">Rx to MA</option>
+                            <option value="2">Rx to Provider</option>
+                            <option value="3">Rx to Reception</option>
+                            <option value="4">Rx to eScribe</option>
+                            <option value="5">Pharmacy Called</option>
+                            <option value="6">Patient Notified</option>
+                        </select>';
+        break;
+    case 2:
+        $statusText = '<select name="status">
+                            <option value="1">Rx to MA</option>
+                            <option selected="selected" value="2">Rx to Provider</option>
+                            <option value="3">Rx to Reception</option>
+                            <option value="4">Rx to eScribe</option>
+                            <option value="5">Pharmacy Called</option>
+                            <option value="6">Patient Notified</option>
+                        </select>';
+        break;
+    case 3:
+        $statusText = '<select name="status">
+                            <option value="1">Rx to MA</option>
+                            <option value="2">Rx to Provider</option>
+                            <option selected="selected" value="3">Rx to Reception</option>
+                            <option value="4">Rx to eScribe</option>
+                            <option value="5">Pharmacy Called</option>
+                            <option value="6">Patient Notified</option>
+                        </select>';
+        break;
+    case 4:
+        $statusText = '<select name="status">
+                            <option value="1">Rx to MA</option>
+                            <option value="2">Rx to Provider</option>
+                            <option value="3">Rx to Reception</option>
+                            <option selected="selected" value="4">Rx to eScribe</option>
+                            <option value="5">Pharmacy Called</option>
+                            <option value="6">Patient Notified</option>
+                        </select>';
+        break;
+    case 5:
+        $statusText = '<select name="status">
+                            <option value="1">Rx to MA</option>
+                            <option value="2">Rx to Provider</option>
+                            <option value="3">Rx to Reception</option>
+                            <option value="4">Rx to eScribe</option>
+                            <option selected="selected" value="5">Pharmacy Called</option>
+                            <option value="6">Patient Notified</option>
+                        </select>';
+        break;
+    case 6:
+        $statusText = '<select name="status">
+                            <option value="1">Rx to MA</option>
+                            <option value="2">Rx to Provider</option>
+                            <option value="3">Rx to Reception</option>
+                            <option value="4">Rx to eScribe</option>
+                            <option value="5">Pharmacy Called</option>
+                            <option selected="selected" value="6">Patient Notified</option>
+                        </select>';
+        break;
+}
+
 ?>
 
 
@@ -209,14 +330,7 @@ $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo
                                         Reason <input name="Reason" type="text" value="<?php echo $RxInfo[32]?>"
                                     </td>
                                     <td>
-                                        Status: <select name="status">
-                                            <option value="1">Rx to MA</option>
-                                            <option value="2">Rx to Provider</option>
-                                            <option value="3">Rx to Reception</option>
-                                            <option value="4">Rx to eScribe</option>
-                                            <option value="5">Pharmacy Called</option>
-                                            <option value="6">Patient Notified</option>
-                                        </select>
+                                        Status: <?php echo $statusText?>
                                         <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
                                         <input type="hidden" name="patientID" value="<?php echo $_SESSION['currentPatient']?>">
 
@@ -224,16 +338,11 @@ $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo
                                 </tr>
                                 <tr>
                                     <td>
-                                        Authorization: <select name="authorization">
-                                            <option selected="selected" value="0">No verdict</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
-                                            <option value="3">Needs to be seen</option>
-                                            <option value="4">See me</option>
-                                        </select>
+                                        Authorization: <?php echo $authorizationText?>
                                     </td>
                                     <td>
-                                        Note: <input type="text" name="Note" value="<?php echo $RxInfo[5]?> ">
+                                        Note:<br/> <textarea name="note" rows="5" cols="40"><?php echo $RxInfo[5]?></textarea>
+
                                     </td>
                                 <tr>
                                     <td colspan="2">
@@ -243,8 +352,8 @@ $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo
                                                 <th width="25%">Prescription</th>
                                                 <th width="10%">Mg</th>
                                                 <th>Quantity</th>
+                                                <th>Refills</th>
                                                 <th>Directions</th>
-                                                <th>Directions 2</th>
                                             </tr>
                                             <tr>
                                                 <td>
