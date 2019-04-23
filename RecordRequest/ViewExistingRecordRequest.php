@@ -113,19 +113,19 @@ while ($row1 = $result->fetch_row()){
 }
 
 $status .= "</select>";
-$reason = $row[7];
+$reason = $row[5];
 
 
 //TODO date time
-
-$dateTime = date("Y-m-d h:i:sa", $row[8]);
+//echo $row[6];
+$dateTime = $row[6];
 
 $patientInfo = new Patient();
 $patientInfo->SelectPatient($_SESSION['currentPatient']);
 $_SESSION['swID'] = $patientInfo->getSwId();
 
 $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
-echo $_SESSION['previous'];
+//echo $_SESSION['previous'];
 
 $conReferrals->close();
 ?>
@@ -330,6 +330,26 @@ $conReferrals->close();
                                     <tr>
                                         <td colspan="5" >
                                             <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" name="button" class="btnOthers">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </td>
+                        <td>
+                            <form action='NewNote.php'>
+                                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
                                         </td>
                                     </tr>
                                     <tr>

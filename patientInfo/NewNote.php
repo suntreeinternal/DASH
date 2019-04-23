@@ -24,7 +24,7 @@ if ($_GET['message'] == ''){
     die;
 } else {
     //TODO add to Change log
-    $query = 'INSERT INTO Referrals.Note(ReferralID, UserID, Note, UserGroup) values (\'' . $_GET['typeID'] . '\', \'' . $_SESSION['name'] . '\', \'' . $_GET['message'] . '\',\'' . $_SESSION['group'] . '\')';
+    $query = 'INSERT INTO Referrals.Note(ReferralID, UserID, Note, UserGroup) values (\'' . $_GET['typeID'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'",$_GET['message']) . '\',\'' . $_SESSION['group'] . '\')';
     echo $query;
 }
 

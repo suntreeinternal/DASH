@@ -13,11 +13,11 @@ session_start();
             <tbody>
             <tr>
                 <td style="font-size: 20px; font-weight: bold" width="50%">
-                    Record Notes
+                    Referral Notes
                 </td>
             </tr>
                 <?php
-                $query = 'SELECT * FROM Referrals.RecordNote WHERE RecordID=\'' . $_GET['typeID'] . '\' ORDER BY ID DESC' ;
+            $query = 'SELECT * FROM Referrals.MedsNotes WHERE RecordID=\'' . $_GET['typeID'] . '\' ORDER BY ID DESC' ;
             $result = $conReferrals->query($query);
             while ($row = $result->fetch_row()){
                 $messageGroup = $row[5];
@@ -42,12 +42,15 @@ session_start();
                         echo "<tr style=\"background-color: #45B39D\">";
                         break;
 
+                    default:
+                        echo "<tr style=\"background-color: #00B34F\">";
+                        break;
                 }
                 $date = date_create($row[3]);
 
                 echo "
                                 <td style=\"border-radius: 7px\" colspan='2'>
-                                    " . $row[2] . " " . date_format($date, 'm/d/Y h:i:s') . " <br/> " . $row[4] . "
+                                    " . $row[2] . " " . date_format($date, 'm/d/Y H:i:s') . " <br/> " . $row[4] . "
                                 </td>
                             </tr>
                         ";

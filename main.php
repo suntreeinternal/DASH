@@ -341,10 +341,10 @@
                 <h2>Message To Provider</h2>
             </th>
             <th>
-                <h2>Message To Provider MA</h2>
+                <h2>Rx Stats</h2>
             </th>
             <th>
-                <h2>Rx Stats</h2>
+                <h2>Message To Provider MA</h2>
             </th>
         </tr>
             <tr>
@@ -393,7 +393,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Priority='1' AND NOT Status='3'" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Priority='1' AND Status='5'" class="notification">
                                         <span>ASAP</span>
                                         <span class="badge"><?php echo $ASAP ?></span>
                                     </a>
@@ -572,14 +572,14 @@
                 <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
-                        <?php echo $providerMaPhone?>
+                        <?php echo $RxStats?>
                         </tbody>
                     </table>
                 </td>
                 <td rowspan="2" valign="top" align="center">
                     <table cellspacing="15px">
                         <tbody>
-                        <?php echo $RxStats?>
+                        <?php echo $providerMaPhone?>
                         </tbody>
                     </table>
                 </td>

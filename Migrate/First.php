@@ -91,6 +91,12 @@ $query = "DELETE FROM Referrals.ChangeLog WHERE ID IS NOT NULL";
 $conReferrals->query($query);
 echo $query . "</br>";
 
+$query = "DELETE FROM Referrals.RecordNote WHERE ID IS NOT NULL";
+$conReferrals->query($query);
+$query = "ALTER TABLE Referrals.RecordNote AUTO_INCREMENT=1";
+$conReferrals->query($query);
+echo $query . "</br>";
+
 //if (!mssql_select_db('sw_charts', $con2)){
 //    echo "this sucks";
 //}
@@ -102,6 +108,7 @@ $count = 0;
 $result = mssql_query($query);
 while ($row = mssql_fetch_array($result)){
     $foo = ucwords(strtolower($row['Specialties']));
+    $foo = str_replace("'", "\'", $foo);
     $queryPut = "INSERT INTO Referrals.Specialty(Specialty) VALUES (\"" . $foo . "\")";
     echo $queryPut . " : ";
     $resultPut = $conReferrals->query($queryPut);

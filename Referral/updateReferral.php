@@ -24,7 +24,7 @@ echo $_GET['test'];
 
 if($strinNow == $_GET['test'])
 {
-    $query = "UPDATE Referrals.Referrals SET Reason='" . $_GET['Reason'] . "', SpecalistID=" . $_GET['Specalist'] . ", SpecaltyID=" . $_GET['Specialty'] . ", ProviderID=" . $_GET['provider'] . ", Status=" . $_GET['status'] . ", Priority=" . $_GET['priority'] . " WHERE ID=" . $_GET['refID'];
+    $query = "UPDATE Referrals.Referrals SET Reason='" . str_replace("'", "\'",$_GET['Reason']) . "', SpecalistID=" . $_GET['Specalist'] . ", SpecaltyID=" . $_GET['Specialty'] . ", ProviderID=" . $_GET['provider'] . ", Status=" . $_GET['status'] . ", Priority=" . $_GET['priority'] . " WHERE ID=" . $_GET['refID'];
 //echo $query;
 
     $result = $conReferrals->query($query);

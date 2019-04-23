@@ -221,8 +221,9 @@ $dateTime = date("Y-m-d h:i:sa");
     <tr valign="top">
         <?php include "../patientInfo/PhoneRecord.php"?>
         <?php include "../patientInfo/Messages.php"?>
+        <?php include "Notes.php"?>
 
-        <td style=" width: 50%; border-radius: 10px;background-color:#FFFFFF">
+        <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
             <div style="overflow-y: scroll; height:650px">
                 <table width="100%" cellspacing="10px" cellpadding="5px" >
                     <tbody>
@@ -238,16 +239,20 @@ $dateTime = date("Y-m-d h:i:sa");
                             <form action="update.php">
                                 <tr>
                                     <td width="50%">
-                                        Provider <?php echo $providerList?>
-                                    </td>
-                                    <td width="50%">
                                         Date created: <?php echo $dateTime?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">
+                                        Provider <?php echo $providerList?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         Pharmacy Name <input name="Pharmacy" type="text" value="<?php echo $pharmacy?>">
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         Pharmacy Phone Number: <input name="PhoneNum" type="text" value="<?php echo $pharmacyPhone?>">
                                         <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
@@ -299,6 +304,26 @@ $dateTime = date("Y-m-d h:i:sa");
                                     <tr>
                                         <td>
                                             <input type="submit" name="button" value="Add new message" class="btnOthers">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </td>
+                        <td>
+                            <form action='/MedsAuth/newNote.php'>
+                                <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" name="button" class="btnOthers">
                                         </td>
                                     </tr>
                                     </tbody>

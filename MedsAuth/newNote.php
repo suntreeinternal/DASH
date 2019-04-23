@@ -13,13 +13,17 @@ $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['passwo
 $groupValue = 0;
 
 //echo var_dump($_GET);
+//echo var_dump($_SESSION);
 if ($_GET['message'] == ''){
     header($_SESSION['previous']);
     die;
 } else {
-    $query = 'INSERT INTO Note(ReferralID, UserID, Note, UserGroup) values (\'' . $_GET['refNum'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'", $_GET['message']) . '\',\'' . $_SESSION['group'] . '\')';
-    $result = $conReferrals->query($query);
+    $query = "INSERT INTO Referrals.MedsNotes(RecordID, UserID, Note, UserGroup) VALUES ('". $_GET['typeID'] . "', '" . $_SESSION['user'] ."', '" . str_replace("'", "\'",$_GET['message']) . "', '" . $_SESSION['group'] . "')";
+    $conReferrals->query($query);
+    if ($conReferrals->error){
+        echo $conReferrals->error;
+    }
     header($_SESSION['previous']);
 }
 
-echo $query;
+//echo $query;

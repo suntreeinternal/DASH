@@ -219,100 +219,151 @@ $dateTime = date("Y-m-d h:i:sa");
                                     </td>
                                 <tr>
                                     <td colspan="2">
-                                        <table width="100%" style="border-collapse: collapse; border-spacing: 0">
-                                            <tbody >
-                                            <tr>
-                                                <th width="25%">Prescription</th>
-                                                <th width="10%">Mg</th>
-                                                <th>Quantity</th>
-                                                <th>Refills</th>
-                                                <th>Directions</th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="prescription1">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="mg1">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Quantity1">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir1">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir21">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="prescription2">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="mg2">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Quantity2">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir2">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir22">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="prescription3">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="mg3">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Quantity3">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir3">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir23">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="prescription4">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="mg4">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Quantity4">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir4">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir24">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="prescription5">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="mg5">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Quantity5">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir5">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="Dir25">
-                                                </td>
-                                            </tr>
+                                        <table style="border-collapse: collapse; border-spacing: 0">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Prescription</th>
+                                                    <th>Dose</th>
+                                                    <th>Quantity</th>
+                                                    <th>Refills</th>
+                                                    <th>Directions</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription1">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg1">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity1">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir1">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir21">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription2">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg2">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity2">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir2">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir22">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription3">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg3">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity3">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir3">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir23">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription4">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg4">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity4">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir4">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir24">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription5">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg5">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity5">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir5">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir25">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription6">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg6">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity6">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir6">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir26">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription7">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg7">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity7">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir7">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir27">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="prescription8">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="mg8">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Quantity8">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir8">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Dir28">
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
 
