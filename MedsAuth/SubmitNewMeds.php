@@ -10,7 +10,7 @@
 session_start();
 echo var_dump($_SESSION);
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "8 INTO MedsAuth (PatientID, ProviderID, PharmacyName, PharmacyPhone, Status) VALUES ('" . $_SESSION['currentPatient'] . "', '" . $_GET['provider'] . "', '" . str_replace("'", "\'",$_GET['Pharmacy']) ."', '" . $_GET['PhoneNum'] . "', '" . $_GET['status'] . "')";
+$query = "INSERT INTO MedsAuth (PatientID, ProviderID, PharmacyName, PharmacyPhone, Status) VALUES ('" . $_SESSION['currentPatient'] . "', '" . $_GET['provider'] . "', '" . str_replace("'", "\'",$_GET['Pharmacy']) ."', '" . $_GET['PhoneNum'] . "', '" . $_GET['status'] . "')";
 $result = $conReferrals->query($query);
 
 header($_SESSION['previous']);

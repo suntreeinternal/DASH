@@ -94,7 +94,7 @@ while ($row = mssql_fetch_array($result)){
 //        echo $row[0] . " : " . $val[0] . " : " . $row['FirstName'] . " : " . $row["LastName"] . " : " . date("Ymd", $dob) . "<br/>";
     }
 
-//    echo $patientID . " </br>";
+//    echo  . " </br>";
 
     $status = $row['Status'];
 
@@ -105,26 +105,28 @@ while ($row = mssql_fetch_array($result)){
             $statusVal = 6;
             break;
 
-        case 'Rx to MA':
+        case 'RX to MA':
             $statusVal =1;
             break;
 
-        case 'Rx to Provider':
-            $statusVal =2;
+        case 'RX to Provider':
             break;
 
-        case 'Rx to Reception':
+        case 'RX to Reception':
             $statusVal =3;
             break;
 
-        case 'Rx to eScribe':
+        case 'RX to eScribe':
             $statusVal =4;
             break;
 
         case 'Pharmacy Called':
             $statusVal =5;
             break;
-
+        default :
+            $statusVal =2;
+//            echo $status . "<br/>";
+            break;
     }
     $query = "SELECT * FROM Referrals.Provider WHERE ProviderName='" . $row['Provider'] . "'";
     $temp = $conReferrals->query($query);
@@ -139,25 +141,212 @@ while ($row = mssql_fetch_array($result)){
     if (!$va1StatOption)
         $va1StatOption = 0;
 
-    $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization) VALUES 
-        ('" . $patientID . "', '" .
-        $dateChange . "', '" .
-        $statusVal . "', '" .
-        $providerID . "', '" .
-        "" . "', '" .
-        $va1StatOption . "')";
-
-    $conReferrals->query($query);
-    if ($conReferrals->error){
-        echo $conReferrals->error . "    :    " .$query . " <br/><br/>";
-    }
+//    $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization) VALUES
+//        ('" . $patientID . "', '" .
+//        $providerID . "', '" .
+//        "" . "', '" .
+//        $dateChange . "', '" .
+//        $statusVal . "', '" .
+//      $va1StatOption . "')";
+//
+//    $conReferrals->query($query);
+//    if ($conReferrals->error){
+//        echo $conReferrals->error . "    :    " .$query . " <br/><br/>";
+//    }
 
     $query = "SELECT * FROM ReferralSystem.dbo.tblRXdetail WHERE HeaderID = '" . $row['ID'] . "'";
     $test = mssql_query($query);
     $testCnt = mssql_num_rows($test);
-    while ($testArr = mssql_fetch_array($testCnt)){
+//    echo $testCnt . "<br/>";
+    if ($testCnt == 0){
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+        }
+    } elseif ($testCnt == 1){
+        $tempRow = mssql_fetch_array($test);
+//        echo var_dump($tempRow) . "<br/>";
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason, presc1, mg1, quan1, dir1, dir21) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "','"
+            . str_replace("'", "\'",$tempRow['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow['MG']) . "','"
+            . str_replace("'", "\'",$tempRow['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions2'])
+            ."')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+            echo $query;
+        }
+    } elseif ($testCnt == 2){
+        $tempRow = mssql_fetch_array($test);
+        $tempR0w2 = mssql_fetch_array($test);
+//        echo var_dump($tempRow) . "<br/>";
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason, presc1, mg1, quan1, dir1, dir21, presc2, mg2, quan2, dir2, dir22) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "','"
+            . str_replace("'", "\'",$tempRow['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow['MG']) . "','"
+            . str_replace("'", "\'",$tempRow['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow2['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow2['MG']) . "','"
+            . str_replace("'", "\'",$tempRow2['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions2'])
+            ."')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+            echo $query;
+        }
+    } elseif ($testCnt == 3){
+        $tempRow = mssql_fetch_array($test);
+        $tempR0w2 = mssql_fetch_array($test);
+        $tempR0w3 = mssql_fetch_array($test);
 
+//        echo var_dump($tempRow) . "<br/>";
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason, presc1, mg1, quan1, dir1, dir21, presc2, mg2, quan2, dir2, dir22, presc3, mg3, quan3, dir3, dir23) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "','"
+            . str_replace("'", "\'",$tempRow['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow['MG']) . "','"
+            . str_replace("'", "\'",$tempRow['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow2['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow2['MG']) . "','"
+            . str_replace("'", "\'",$tempRow2['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow3['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow3['MG']) . "','"
+            . str_replace("'", "\'",$tempRow3['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions2'])
+            ."')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+            echo $query;
+        }
+    } elseif ($testCnt == 4){
+        $tempRow = mssql_fetch_array($test);
+        $tempR0w2 = mssql_fetch_array($test);
+        $tempR0w3 = mssql_fetch_array($test);
+        $tempR0w4 = mssql_fetch_array($test);
+//        echo var_dump($tempRow) . "<br/>";
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason, presc1, mg1, quan1, dir1, dir21, presc2, mg2, quan2, dir2, dir22, presc3, mg3, quan3, dir3, dir23, presc4, mg4, quan4, dir4, dir24) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "','"
+            . str_replace("'", "\'",$tempRow['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow['MG']) . "','"
+            . str_replace("'", "\'",$tempRow['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow2['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow2['MG']) . "','"
+            . str_replace("'", "\'",$tempRow2['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow3['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow3['MG']) . "','"
+            . str_replace("'", "\'",$tempRow3['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow4['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow4['MG']) . "','"
+            . str_replace("'", "\'",$tempRow4['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow4['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow4['Directions2'])
+            ."')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+            echo $query;
+        }
+    } elseif ($testCnt == 5){
+        $tempRow = mssql_fetch_array($test);
+        $tempR0w2 = mssql_fetch_array($test);
+        $tempR0w3 = mssql_fetch_array($test);
+        $tempR0w4 = mssql_fetch_array($test);
+        $tempR0w5 = mssql_fetch_array($test);
+//        echo var_dump($tempRow) . "<br/>";
+        $query = "INSERT INTO Referrals.Rx(PatientID, DateCreated, Status, ProviderID, Note, Authorization, Reason, presc1, mg1, quan1, dir1, dir21, presc2, mg2, quan2, dir2, dir22, presc3, mg3, quan3, dir3, dir23, presc4, mg4, quan4, dir4, dir24, presc5, mg5, quan5, dir5, dir25) VALUES ('"
+            . $patientID . "','"
+            . $dateChange . "','"
+            . $statusVal . "','"
+            . $providerID . "','"
+            . "" . "','"
+            . $va1StatOption . "','"
+            . "" . "','"
+            . str_replace("'", "\'",$tempRow['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow['MG']) . "','"
+            . str_replace("'", "\'",$tempRow['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow2['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow2['MG']) . "','"
+            . str_replace("'", "\'",$tempRow2['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow2['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow3['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow3['MG']) . "','"
+            . str_replace("'", "\'",$tempRow3['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow3['Directions2']) . "','"
+            . str_replace("'", "\'",$tempRow4['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow4['MG']) . "','"
+            . str_replace("'", "\'",$tempRow4['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow4['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow4['Directions2']). "','"
+            . str_replace("'", "\'",$tempRow5['Prescription']) . "','"
+            . str_replace("'", "\'",$tempRow5['MG']) . "','"
+            . str_replace("'", "\'",$tempRow5['Quantity']) . "','"
+            . str_replace("'", "\'",$tempRow5['Directions']) . "','"
+            . str_replace("'", "\'",$tempRow5['Directions2'])
+            . "')";
+        $conReferrals->query($query);
+        if ($conReferrals->error){
+            echo $conReferrals->error . "<br/><br/>";
+            echo $query;
+        }
+    } else {
+        echo "TOO MANY<br/>";
     }
+
+
 
 //    $query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Authorization, Reason, SpecaltyID, SpecalistID, Date) VALUES ('" . $providerID . "', '" . $patientID
 //        . "', '" . $status . "', '" . $priority . "', '0', '" . str_replace("'", "\'", $reason) . "', '" . $specialtyId . "', '" . $list . "', '" .  $dateChange . "')";

@@ -293,7 +293,7 @@ $dateTime = date("Y-m-d h:i:sa");
                             </form>
                         </td>
                         <td>
-                            <form action='/patientInfo/newMessage.php'>
+                            <form action='/patientInfo/pushNewMessage.php'>
                                 <table width="100%" cellpadding="0px" cellspacing="0px" style="border-radius: 10px">
                                     <tbody>
                                     <tr>

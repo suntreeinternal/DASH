@@ -313,57 +313,7 @@ $dateTime = date("Y-m-d h:i:sa");
                                                         <input type="text" name="Dir25">
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" name="prescription6">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="mg6">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Quantity6">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir6">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir26">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" name="prescription7">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="mg7">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Quantity7">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir7">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir27">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" name="prescription8">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="mg8">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Quantity8">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir8">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="Dir28">
-                                                    </td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
 

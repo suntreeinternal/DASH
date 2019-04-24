@@ -13,7 +13,7 @@ session_start();
             <tbody>
             <tr>
                 <td style="font-size: 20px; font-weight: bold" width="50%">
-                    Referral Notes
+                    Medicine Authorization Notes
                 </td>
             </tr>
                 <?php

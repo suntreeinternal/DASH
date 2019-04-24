@@ -45,6 +45,8 @@ echo $query . "</br>";
 
 $query = "DELETE FROM Referrals.Rx WHERE ID IS NOT NULL ";
 $conReferrals->query($query);
+$query = "ALTER TABLE Referrals.Rx AUTO_INCREMENT=1";
+$conReferrals->query($query);
 echo $query . "</br>";
 
 $query = "DELETE FROM Referrals.Referrals WHERE ID IS NOT NULL ";
