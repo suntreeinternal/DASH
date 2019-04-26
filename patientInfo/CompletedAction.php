@@ -74,6 +74,23 @@ session_start();
                             echo DateTime::createFromFormat("Y-m-d H:i:s", $row[3])->format("m/d/Y");
                             echo "</td></tr>";
                         }
+                        $query = 'SELECT * FROM Referrals.Rx WHERE PatientID=\'' . $patientID . '\' AND Status = \'6\'';
+
+                        $result = $conReferrals->query($query);
+                        while ($row = $result->fetch_row()){
+
+                            echo "<tr onclick=\"window.location='../Rx/PreviousRx.php?typeID=" . $row[0] ."&type=2';\"><td>";
+                            echo 'Rx';
+
+                            echo "</td><td>";
+                            $query = 'SELECT * FROM Referrals.Provider WHERE ID=\'' . $row[4] . '\'';
+                            $temp = $conReferrals->query($query);
+                            $temp1 = $temp->fetch_row();
+                            echo $temp1[1];
+                            echo "</td><td>";
+                            echo DateTime::createFromFormat("Y-m-d H:i:s", $row[2])->format("m/d/Y");
+                            echo "</td></tr>";
+                        }
                         ?>
                         </tbody>
                     </table>

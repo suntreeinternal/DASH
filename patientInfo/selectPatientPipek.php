@@ -1,50 +1,20 @@
 <?php
 
-//TODO add error if patient is lost in soapware
-//TODO lots of testing to make sure that patient is added the correct way.
 session_start();
 //echo phpinfo();
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
 }
-$patientName = '';
-$DOB = '';
-$phoneNumber = '';
-$last = $_GET['last'];
-$date = $_GET['date'];
-
-//connection for mssql
-$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+//echo var_dump($_GET);
 
 //connection for sqli
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
-if($con->connect_error){
-    header('location:/index.html');
-}
-
-if (!mssql_select_db('sw_charts', $con)) {
-    die('Unable to select database! ');
-}
-
-
-$query = "SELECT * FROM dbo.Gen_Demo WHERE last_name='" . $_GET['last'] . "' ORDER BY first_name ASC";
-$result = mssql_query($query);
-
 $toTable = "";
-while($row = mssql_fetch_array($result)){
 
-    $toTable .= "<tr onclick=window.location='../patientInfo/Patient.php?last=" . $row['last_name'] . "&date=" . $row['birthdate'] . "'>";
-    $toTable .= "<td>" . $row['first_name'] . "</td>";
-    $toTable .= "<td>" . $row['last_name'] . "</td>";
-    $toTable .= "<td>" . date("m-d-Y", strtotime($row['birthdate'])) . "</td>";
-    $toTable .= "<td>" . $row['sex'] . "</td>";
-    $toTable .= "<td> No </td>";
-    $toTable .= "</a></tr>";
 
-}
 
-$query = 'SELECT * FROM Referrals.TempPatient WHERE LastName="' . $_GET['last'] . '" AND NOT Pipek="1"';
+$query = 'SELECT * FROM Referrals.TempPatient WHERE LastName="' . $_GET['last'] . '" AND Pipek="1"';
 $resultMySql = $conReferrals->query($query);
 
 while ($rows = $resultMySql->fetch_row()){

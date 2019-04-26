@@ -20,14 +20,19 @@ $groupValue = 0;
 
 
 if ($_GET['message'] == ''){
-    header($_SESSION['previous']);
-    die;
+    if ($_GET['dest'] == 3){
+        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'Left Voice Mail\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\', \'0\')';
+
+    } else {
+        header($_SESSION['previous']);
+        die;
+    }
 } else {
     //TODO add to Change log
     if ($_GET['dest'] == '') {
         $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'",$_GET['message']) . '\',\'' . $_SESSION['group'] . '\', \'0\')';
 
-    } else {
+    }  else {
         $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'",$_GET['message']) . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\', \'0\')';
     }
 }

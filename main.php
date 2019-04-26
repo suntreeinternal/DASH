@@ -78,6 +78,11 @@
     $row = $result->fetch_row();
     $referrals = $row[0];
 
+    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=3';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $voiceMail = $row[0];
+
     $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=3';
     $result = $con->query($query);
     $row = $result->fetch_row();
@@ -302,7 +307,8 @@
         <tbody>
             <tr valign="center">
                 <td>
-                    <form action="\patientInfo\Patient.php">
+<!--                    <form action="\patientInfo\Patient.php">-->
+                    <form action="SelectButtonPipek.php">
                         Last name
                         <input type="text" name="last" style="width: 180px; height: 30px">
                         Birth Date
@@ -472,6 +478,14 @@
                                 <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=2" class="notification">
                                     <span>Referrals</span>
                                     <span class="badge"><?php echo $referrals?></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=3" class="notification">
+                                    <span>Voice Mail</span>
+                                    <span class="badge"><?php echo $voiceMail?></span>
                                 </a>
                             </td>
                         </tr>

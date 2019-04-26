@@ -53,7 +53,7 @@
                             echo "</td></tr>";
                         }
                         //input open Rx
-                        $query = 'SELECT * FROM Referrals.Rx WHERE PatientID=\'' . $patientID . '\' AND Status <> \'5\'';
+                        $query = 'SELECT * FROM Referrals.Rx WHERE PatientID=\'' . $patientID . '\' AND Status <> \'6\'';
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){

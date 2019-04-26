@@ -98,7 +98,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
                 $temp = $conReferrals->query($query);
                 $tr = $temp->fetch_row();
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "typeID';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
                 $_SESSION['patientName'] = $tr[1] . " " . $tr[2];

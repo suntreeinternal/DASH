@@ -6,6 +6,8 @@ include ("../fetchPatientData/patientInfo.php");
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
 }
+
+
 $patientName = $_SESSION['patientName'];
 $DOB = $_SESSION['patientDOB'];
 
@@ -17,6 +19,14 @@ $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['passwo
 if (!mssql_select_db('sw_charts', $con)) {
     die('Unable to select database!');
 }
+
+$query = 'SELECT * FROM Referrals.Rx WHERE ID="' . $_GET['typeID'] . '"';
+$result = $conReferrals->query($query);
+$temp = $result->fetch_row();
+
+$_SESSION['currentPatient'] = $temp[1];
+
+
 
 $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
 $result = $conReferrals->query($query);
@@ -350,10 +360,10 @@ switch ($RxInfo[3]){
                                             <tbody >
                                             <tr>
                                                 <th width="25%">Prescription</th>
-                                                <th width="10%">Mg</th>
+                                                <th width="10%">Dose</th>
                                                 <th>Quantity</th>
-                                                <th>Refills</th>
                                                 <th>Directions</th>
+                                                <th>Refills</th>
                                             </tr>
                                             <tr>
                                                 <td>

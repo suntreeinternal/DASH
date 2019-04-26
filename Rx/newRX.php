@@ -225,8 +225,8 @@ $dateTime = date("Y-m-d h:i:sa");
                                                     <th>Prescription</th>
                                                     <th>Dose</th>
                                                     <th>Quantity</th>
-                                                    <th>Refills</th>
                                                     <th>Directions</th>
+                                                    <th>Refills</th>
                                                 </tr>
                                                 <tr>
                                                     <td>

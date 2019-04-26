@@ -145,23 +145,23 @@ if (!mssql_select_db('sw_charts', $con)) {
 
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Pending Referrals</a></li>
-        <li><a data-toggle="tab" href="#menu1">Completed</a></li>
-        <li><a data-toggle="tab" href="#menu2">All Referrals</a></li>
-        <li><a data-toggle="tab" href="#menu3">All Last month</a></li>
+<!--        <li><a data-toggle="tab" href="#menu1">Completed</a></li>-->
+<!--        <li><a data-toggle="tab" href="#menu2">All Referrals</a></li>-->
+<!--        <li><a data-toggle="tab" href="#menu3">All Last month</a></li>-->
     </ul>
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <?php include "../Reports/PendingReferrals.php" ?>
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <?php include "../Reports/CompletedReferrals.php" ?>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <?php include "../Reports/AllReferrals.php" ?>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-        </div>
+<!--        <div id="menu1" class="tab-pane fade">-->
+<!--            --><?php //include "../Reports/CompletedReferrals.php" ?>
+<!--        </div>-->
+<!--        <div id="menu2" class="tab-pane fade">-->
+<!--            --><?php //include "../Reports/AllReferrals.php" ?>
+<!--        </div>-->
+<!--        <div id="menu3" class="tab-pane fade">-->
+<!--        </div>-->
     </div>
 
 

@@ -160,7 +160,7 @@ while ($row = mssql_fetch_array($result)){
         $dateChange = substr($dateChange, $location + 3);
         $now = new DateTime($dateChange);
         $dateChange = $now->format('Y-m-d h:i:s');
-
+        echo $dateChange . "<br/>";
         $query = "INSERT INTO Referrals.RecordRequest (PatientID, Requester, Status, Auth, Date) VALUES (" .
             "'" . $patientID .
             "', '" . $requester .

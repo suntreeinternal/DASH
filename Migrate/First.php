@@ -173,7 +173,7 @@ while ($row = mssql_fetch_array($result)){
             $rights = 3;
     }
 
-    $query = "INSERT INTO Referrals.Users (ID, GroupID, RightsID, UserName, FirstName, LastName, Password) VALUES ('" . $count . "', '" . $group . "', '" . $rights . "', '" . $userName . "', '" . $first . "', '" . $last . "', '" . $password . "')";
+    $query = "INSERT INTO Referrals.Users (ID, GroupID, RightsID, UserName, FirstName, LastName, Password) VALUES ('" . $count . "', '" . $group . "', '" . $rights . "', '" . strtolower($userName) . "', '" . $first . "', '" . $last . "', '" . $password . "')";
     $conReferrals->query($query);
     echo $query . "<br/><br/>";
     $count ++;

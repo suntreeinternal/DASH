@@ -47,7 +47,7 @@ session_start();
 
     </tr>
     <?php
-        $query = 'SELECT * FROM Referrals.Referrals WHERE Status<>"10"';
+        $query = 'SELECT * FROM Referrals.Referrals WHERE Status<>"4"';
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()){
             $dob = null;

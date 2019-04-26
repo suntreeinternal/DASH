@@ -173,7 +173,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $_SESSION['currentPatient'] = $tr[0];
 
 
-            if (strpos($id, "-") == 8) {
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $tr[1] . '\'';
                 $temp = mssql_query($query);
@@ -196,7 +196,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $_SESSION['patientDOB'] = $tr[3];
             }
             echo "</td><td>";
-            $date = date_create($row[8]);
+            $date = date_create($row[3]);
             echo date_format($date, "m/d/Y");
             echo "</td><td>";
             if (ctype_digit($phone) && strlen($phone) == 10) {

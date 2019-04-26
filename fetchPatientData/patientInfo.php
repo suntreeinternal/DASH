@@ -42,7 +42,7 @@ class Patient{
             $row = $result->fetch_row();
             $this->lastName = $row[2];
             $this->dob = $row[3];
-            $this->firstName[1];
+            $this->firstName = $row[1];
         }
     }
     public function GetDOB(){
