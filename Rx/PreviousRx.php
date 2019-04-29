@@ -26,7 +26,7 @@ $temp = $result->fetch_row();
 
 $_SESSION['currentPatient'] = $temp[1];
 
-
+echo var_dump($_SESSION);
 
 $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
 $result = $conReferrals->query($query);
@@ -66,7 +66,8 @@ $patientInfo->SelectPatient($_SESSION['currentPatient']);
 
 //$dateTime = date("m-d-Y h:i:sa", $RxInfo[2]);
 $_SESSION['previous'] = 'location:/patientInfo/Patient.php?last=' . $patientInfo->GetLastName() . '&date=' . $patientInfo->GetDOB();
-
+$_SESSION['patientDOB'] = $patientInfo->GetDOB();
+$_SESSION['swID'] = $patientInfo->getSwId();
 
 $statusText = '';
 

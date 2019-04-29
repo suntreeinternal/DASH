@@ -27,7 +27,12 @@
 
     $dateTime =$row[7];
     $reason = $row[6];
-    $ReferralSentDate = date_create($row[10]);
+    if ($row[10]){
+        $ReferralSentDate = date_create($row[10]);
+        $ReferralSentDate = date_format($ReferralSentDate, "m/d/Y H:i:s");
+    } else {
+        $ReferralSentDate = "Has not been sent yet";
+    }
     $phoneNumber = $row[4];
 
     $alert = $row[2];
@@ -376,7 +381,7 @@
                             </tbody>
                         </table>
                         <a href="../Referral/SendReferral.php?ReferralID='<?php echo $referralID ?>'">
-                            <button> Referral Sent: <?php echo date_format($ReferralSentDate, "m/d/Y H:i:s") ?></button>
+                            <button> Referral Sent: <?php echo $ReferralSentDate ?></button>
                         </a>
                     </tr>
                     <tr>

@@ -57,7 +57,7 @@ session_start();
                 $tr = $temp->fetch_row();
                 $id = "" . $tr[1];
 
-                if (strpos($id, "-") == 8){
+                if (strpos($id, "-")){
                     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                     $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\''. $id . '\'';
                     $temp = mssql_query($query);

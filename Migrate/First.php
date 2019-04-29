@@ -166,7 +166,6 @@ while ($row = mssql_fetch_array($result)){
             break;
 
         case 'Read Only':
-            $rights = 4;
             break;
 
         case 'User':
