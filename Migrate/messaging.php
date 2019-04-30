@@ -18,7 +18,7 @@ if (!mssql_select_db('ReferralSystem', $con)){
     echo "this sucks";
 }
 
-$query = "SELECT * FROM tblPhoneMessages";
+$query = "SELECT  * FROM tblPhoneMessages";
 $result = mssql_query($query);
 if(!mssql_select_db('sw_charts', $con))
     echo "this sucks";
@@ -31,7 +31,7 @@ while ($row = mssql_fetch_array($result)) {
     $dateChange = substr($dateChange, $location+3);
     $now = new DateTime($dateChange);
     $dateChange = $now->format('Y-m-d h:i:s');
-    echo $dateChange;
+//    echo $dateChange;
 
     $dob = strtotime($row['PatientDOB']);
     $last = $row['LastName'];
@@ -86,21 +86,35 @@ while ($row = mssql_fetch_array($result)) {
         }
     }
     $groupTo = -1;
-    echo $row['Status'] . "<br/>";
+//    echo $row['Status'] . "<br/>";
     switch ($row['Status']){
         case 'Provider to MA':
             $groupTo = 0;
-            echo "TO MA <br/>";
+//            echo "TO MA <br/>";
             break;
 
         case 'Reception to MA':
             $groupTo = 0;
+            break;
+
+        case 'Reviewed':
+            $groupTo = -1;
+            break;
+
+        default:
+            $query = "SELECT * FROM Referrals.Provider WHERE Initals='" . $row['Status'] . "'";
+            $ID = $conReferrals->query($query)->fetch_row()[0];
+//            echo $row['Status'] . " : ";
+            $groupTo = $ID+4;
+//            echo $groupTo . "<br/>";
+            break;
     }
 
     if ($groupTo == -1) {
         $query = "INSERT INTO Referrals.PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage, TimeStamp) VALUES ('" . $patientID . "', 'Import', '" . str_replace("'", "\'", $row['Msg']) . "', 'MA', '0', '" . $dateChange . "')";
     } else {
-        $query = "INSERT INTO Referrals.PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage, TimeStamp) VALUES ('" . $patientID . "', 'Import', '" . str_replace("'", "\'", $row['Msg']) . "', 'MA', '0', '" . $groupTo . "', '" . $dateChange . "')";
+        $query = "INSERT INTO Referrals.PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage, AlertToGroup, TimeStamp) VALUES ('" . $patientID . "', 'Import', '" . str_replace("'", "\'", $row['Msg']) . "', 'MA', '0', '" . $groupTo . "', '" . $dateChange . "')";
+        echo $query . "<br/>";
     }
 
         $conReferrals->query($query);
@@ -113,7 +127,7 @@ while ($row = mssql_fetch_array($result)) {
     if ($conReferrals->error)
         echo $conReferrals->error . " : " . $row[0] . "<br/><br/><br/>";
 
-    $query = "INSERT INTO Referrals.PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage) VALUES ('" . $patientID  . "', 'Import', '" . str_replace("'", "\'", $row['ProviderResponce']) . "', 'Provider', '" . $tempVal[0] . "')";
+    $query = "INSERT INTO Referrals.PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage, TimeStamp) VALUES ('" . $patientID  . "', 'Import', '" . str_replace("'", "\'", $row['ProviderResponce']) . "', 'Provider', '" . $tempVal[0] . "', '" . $dateChange . "')";
     $conReferrals->query($query);
     if ($conReferrals->error) {
         echo var_dump($tempVal) . "</br>";

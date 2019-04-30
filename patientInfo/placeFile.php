@@ -14,14 +14,14 @@ $fileExtension = strtolower(end($fileNameCmps));
 $dateArr = getdate();
 
 $newFileName =  md5(time() . $fileName) . '.' . $fileExtension;
-echo $newFileName . "<br/>";
+//echo $newFileName . "<br/>";
 
 //echo print_r(getdate());
 //$dateArr = getdate();
 $uploadFileDir = '../uploads/uploads/' . $dateArr['year'] . '/' . $dateArr['mon'] . '/';
 $dest_path = $uploadFileDir . $newFileName;
 
-echo $dest_path;
+//echo $dest_path;
 //echo var_dump($_FILES['fileToUpload']);
 if(move_uploaded_file($fileTmpPath, $dest_path))
 {
@@ -44,8 +44,10 @@ if (!$_GET['type']){
 } else {
     $query = "INSERT INTO Referrals.Uploads (PatientID, UserId, OriginalFileName, SavesFileName, type, typeID, year, mon) VALUES ('" . $_SESSION['currentPatient'] . "','" . $_SESSION['name'] . "','" . $fileName . "','" . $newFileName . "','" . $_GET['type'] . "','" . $_GET['typeID'] ."','" . $dateArr['year'] . "','" .  $dateArr['mon'] . "')";
 }
-echo $query;
+//echo $query;
 $result = $conReferrals->query($query);
+//echo var_dump($_SESSION);
+header($_SESSION['previous']);
 //TODO redirect back to previous page
 //TODO GET TO work with 2nd drive
 

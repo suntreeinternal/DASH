@@ -58,7 +58,7 @@
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
 
-                            echo "<tr onclick=\"window.location='../Rx/PreviousRx.php?typeID=" . $row[0] ."&type=2';\"><td>";
+                            echo "<tr onclick=\"window.location='../Rx/PreviousRx.php?typeID=" . $row[0] ."&type=3';\"><td>";
                             //TODO Fix this part
                             echo 'Rx';
 
@@ -77,7 +77,7 @@
 
                         $result = $conReferrals->query($query);
                         while ($row = $result->fetch_row()){
-                            echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?typeID=" . $row[0] ."&type=3';\"><td>";
+                            echo "<tr onclick=\"window.location='../RecordRequest/ViewExistingRecordRequest.php?typeID=" . $row[0] ."&type=2';\"><td>";
                             //TODO Fix this part
                             echo 'Record Request';
                             echo "</td><td>";

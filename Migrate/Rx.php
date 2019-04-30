@@ -346,11 +346,16 @@ while ($row = mssql_fetch_array($result)){
         echo "TOO MANY<br/>";
     }
 
+    $query = "SELECT * FROM Referrals.Rx ORDER BY ID DESC LIMIT 1";
+    $row = $conReferrals->query($query)->fetch_row();
+    $RxId = $row[0];
+//    echo $RxId;
 
 
-//    $query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Authorization, Reason, SpecaltyID, SpecalistID, Date) VALUES ('" . $providerID . "', '" . $patientID
-//        . "', '" . $status . "', '" . $priority . "', '0', '" . str_replace("'", "\'", $reason) . "', '" . $specialtyId . "', '" . $list . "', '" .  $dateChange . "')";
-//
+
+
+
+
 //    $conReferrals->query($query);
 //    if ($conReferrals->error)
 //        echo $conReferrals->error. " test : <br/>" . $reason . "<br/><br/>";

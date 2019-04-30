@@ -26,7 +26,7 @@ $temp = $result->fetch_row();
 
 $_SESSION['currentPatient'] = $temp[1];
 
-echo var_dump($_SESSION);
+//echo var_dump($_SESSION);
 
 $query = 'SELECT * FROM Referrals.PatientData WHERE ID=\'' . $_SESSION['currentPatient'] . '\'';
 $result = $conReferrals->query($query);

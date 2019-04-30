@@ -12,11 +12,17 @@ if($con->connect_error){
     header('location:/index.html');
     exit();
 } else {
+    echo '';
     $query = 'SELECT COUNT(*) FROM TempPatient where LastName=\'' . $_GET['last'] . '\' AND BirthDate=\'' . $_GET['birthDate'] . '\'';
     $result = $con->query($query);
     $row = $result->fetch_row();
     if ($row[0] == 0) {
-        $query = 'INSERT INTO TempPatient (FirstName, LastName, BirthDate) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\')';
+        if ($_GET['Pipek'] == "on"){
+            $query = 'INSERT INTO Referrals.TempPatient (FirstName, LastName, BirthDate, Pipek) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\',\'1\')';
+            echo 'test';
+        } else {
+            $query = 'INSERT INTO Referrals.TempPatient (FirstName, LastName, BirthDate) VALUES (\'' . $_GET['first'] . '\',\'' . $_GET['last'] . '\',\'' . $_GET['birthDate'] . '\')';
+        }
         echo $query . "</br>";
         $result = $con->query($query);
         $query = "SELECT LAST_INSERT_ID()";

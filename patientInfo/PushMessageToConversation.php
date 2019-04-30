@@ -26,4 +26,4 @@ if ($_GET['dest'] == 3){
 $result = $con->query($query);
 $con->close();
 
-//header($_SESSION['previous']);
+header($_SESSION['previous']);

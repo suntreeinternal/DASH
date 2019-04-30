@@ -171,8 +171,8 @@ if (!mssql_select_db('sw_charts', $con)) {
             $phone = $tr[4];
             $_SESSION['currentPatient'] = $tr[0];
 
-
-            if (strpos($id, "-") == 8) {
+//            var_dump($row);
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
                 $temp = mssql_query($query);

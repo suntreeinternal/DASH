@@ -65,6 +65,9 @@
                     <input type="date" name="birthDate" value="<?php echo $_GET['date']?>">
                 </td>
                 <td>
+                    <input type="checkbox" name="Pipek">Pipek Patient &nbsp;
+                </td>
+                <td>
                     <input type="submit" value="Create New Patient">
                 </td>
             </tr>

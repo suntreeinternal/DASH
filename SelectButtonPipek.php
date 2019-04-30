@@ -11,4 +11,7 @@ if($_GET['sim']){
 } elseif ($_GET['pipek']){
     $StringRedirect = '/patientInfo/selectPatientPipek.php?last=' . $_GET['last'] . '&date=' . $_GET['date'];
     header("location:".$StringRedirect);
+} elseif ($_GET['new']){
+    $StringRedirect = '/NewPatient/NewPatient.php?last=&date=';
+    header("location:".$StringRedirect);
 }
