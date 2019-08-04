@@ -6,6 +6,9 @@
  * Time: 12:24 PM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 ?>
 <td style=" width: 25%; border-radius: 10px;background-color:#FFFFFF">
     <div style="overflow-y: scroll; height:650px">

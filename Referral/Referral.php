@@ -41,6 +41,7 @@
     $query = 'SELECT * FROM Referrals.Specialty';
     $result = $conReferrals->query($query);
     $specalty = "";
+    $specalty = $specalty . '<option value="-1">' . '</option>';
     $row = $result->fetch_row();
     $specalty = $specalty . '<option value="' . $row[0] . '">' . $row[1] . '</option>';
     $SelectedSpecality = $row[0];
@@ -63,19 +64,23 @@
         }
     }
     $status = $status . '</select>';
-    $speacalistTable = '';
     $query = 'SELECT * FROM Referrals.Specialist WHERE SpecialtyID=' .  $SelectedSpecality;
     $result = $conReferrals->query($query);
-    while ($row = $result->fetch_row()){
+    $specalist = $specalist . '<option value="-1">' . '</option>';
+$speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
+
+while ($row = $result->fetch_row()){
         $specalist = $specalist . '<option value="'. $row[0] .'">' . $row[2] . '</option>';
 
-        $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
+//        $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
         $speacalistTable .= "<tr><td>". $row[3] ."</td>";
         $speacalistTable .= "<td>". $row[5] ."</td>";
         $speacalistTable .= "<td>". $row[4] ."</td>";
         $speacalistTable .= "<td>". $row[6] ."</td></tr>";
-        $speacalistTable .= "</tbody></table>";
+//        $speacalistTable .= "</tbody></table>";
     }
+$speacalistTable .= "</tbody></table>";
+
 ?>
 
 
@@ -235,8 +240,8 @@
                                         <tr>
                                             <td>
                                                 Priority: <select name="priority">
-                                                                <option selected="selected" value="1">ASAP</option>
-                                                                <option value="3">Routine</option>
+                                                                <option value="1">ASAP</option>
+                                                                <option selected="selected"value="3">Routine</option>
                                                             </select>
                                             </td>
                                         </tr>

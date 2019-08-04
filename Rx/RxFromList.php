@@ -23,7 +23,6 @@ if (!mssql_select_db('sw_charts', $con)) {
 $query = 'SELECT * FROM Referrals.Rx WHERE ID="' . $_GET['typeID'] . '"';
 $result = $conReferrals->query($query);
 $temp = $result->fetch_row();
-$lastUpDatedBy = $temp[34];
 
 $_SESSION['currentPatient'] = $temp[1];
 
@@ -71,9 +70,20 @@ $_SESSION['patientDOB'] = $patientInfo->GetDOB();
 $DOB = $_SESSION['patientDOB'];
 $_SESSION['swID'] = $patientInfo->getSwId();
 
-if($_GET['goback']){
-    $_SESSION['previous'] = "location:/Reports/FrontPage/Rx.php?query=" . $_GET['goback'];
+$nextRx="RxFromList.php?typeID=";
+if ($temp[3] == 2){
+
+} else {
+    $query = "SELECT * FROM Referrals.Rx WHERE Status=" . $temp[3];
+    $allToProvider = $conReferrals->query($query);
+    $number = $allToProvider->fetch_row();
+    while ($number[0] !=$_GET['typeID']){
+        $number = $allToProvider->fetch_row();
+    }
+    $nextRx = $nextRx . $number[0] . "&type=3";
 }
+
+echo var_dump($_SESSION);
 
 $statusText = '';
 
@@ -191,17 +201,6 @@ switch ($RxInfo[3]){
                             <option value="4">Rx to eScribe</option>
                             <option value="5">Pharmacy Called</option>
                             <option selected="selected" value="6">Patient Notified</option>
-                        </select>';
-        break;
-
-    default:
-        $statusText = '<select name="status">
-                            <option value="1">Rx to MA</option>
-                            <option value="2">Rx to Provider</option>
-                            <option value="3">Rx to Reception</option>
-                            <option value="4">Rx to eScribe</option>
-                            <option value="5">Pharmacy Called</option>
-                            <option value="6">Patient Notified</option>
                         </select>';
         break;
 }
@@ -357,18 +356,15 @@ switch ($RxInfo[3]){
                                         Reason <input name="Reason" type="text" value="<?php echo $RxInfo[32]?>"
                                     </td>
                                     <td>
-                                        Last updated by: <?php echo $lastUpDatedBy?>
+                                        Status: <?php echo $statusText?>
+                                        <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
+                                        <input type="hidden" name="patientID" value="<?php echo $_SESSION['currentPatient']?>">
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         Authorization: <?php echo $authorizationText?>
-                                    </td>
-                                    <td>
-                                        Status: <?php echo $statusText?>
-                                        <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
-                                        <input type="hidden" name="patientID" value="<?php echo $_SESSION['currentPatient']?>">
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -527,6 +523,9 @@ switch ($RxInfo[3]){
                                 </table>
                             </form>
                         </td>
+                        <td align="right">
+                            <input width="50px" style="height: 50px; background-color: #4caf50; border-radius: 10px" type="submit" name="button" value="Next Rx" onclick="location.href='<?php $nextRx?>'">
+                        <td/>
                     </tbody>
                 </table>
             </div>

@@ -6,6 +6,9 @@
  * Time: 7:30 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {

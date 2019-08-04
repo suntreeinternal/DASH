@@ -36,7 +36,7 @@
 /**
  * check to see if the patient exists as a temp patient
  */
-    $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName=\''. $last . '\' AND BirthDate=\''. $date . '\'';
+    $query = 'SELECT * FROM Referrals.TempPatient WHERE LOWER(LastName)=\''. strtolower($last) . '\' AND BirthDate=\''. $date . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
     if (sizeof($row) == 0) {
@@ -46,7 +46,6 @@
         $result = mssql_query($query);
         $row = mssql_fetch_array($result);
         if (sizeof($row) == 1) {
-
             //not in SW or Temp
             header('location:/NewPatient/NewPatient.php?last=' . $last . '&date=' . $_GET['date']);
             die();
@@ -54,6 +53,29 @@
 
             //yes is in sw not temp
             $SwID = $row[0];
+
+            $query = "SELECT * FROM Referrals.PatientData WHERE SW_ID='" . $SwID . "'";
+            $swValFromSw = $conReferrals->query($query);
+            if ($swValFromSw->num_rows > 1) {
+                $firstOne = $swValFromSw->fetch_row();
+                $mainVal = $firstOne[0];
+                while ($others = $swValFromSw->fetch_row()){
+                    $query = "UPDATE Referrals.Rx SET PatientID=" . $mainVal . " WHERE PatientID=" . $others[0];
+                    $conReferrals->query($query);
+                    $query = "UPDATE Referrals.Referrals SET PatientID=" . $mainVal . " WHERE PatientID=" . $others[0];
+                    $conReferrals->query($query);
+                    $query = "UPDATE Referrals.RecordRequest SET PatientID=" . $mainVal . " WHERE PatientID=" . $others[0];
+                    $conReferrals->query($query);
+                    $query = "UPDATE Referrals.MedsAuth SET PatientID=" . $mainVal . " WHERE PatientID=" . $others[0];
+                    $conReferrals->query($query);
+                    $query = "UPDATE Referrals.PatientPhoneMessages SET PatientID=" . $mainVal . " WHERE PatientID=" . $others[0];
+                    $conReferrals->query($query);
+                    $query = "DELETE FROM Referrals.PatientData WHERE ID=" . $others[0];
+                    $conReferrals->query($query);
+
+                }
+            }
+
             $patientName = ($row[2] . " " . $row[1]);
             $first = $row[2];
             $last = $row[1];
@@ -62,6 +84,7 @@
             $query = 'SELECT * FROM Referrals.PatientData WHERE SW_ID=\'' . $SwID . '\'';
             $result = $conReferrals->query($query);
             $row = $result->fetch_row();
+
 
 
             if (sizeof($row) == 0){
@@ -104,12 +127,13 @@
 
         //yes is a temp patient
         $patientName = $row[1] . " " . $row[2];
-
+        $pipek = $row[4];
         $DOB = $row[3];
         $query = 'SELECT * FROM dbo.Gen_Demo WHERE last_name=\''. $last .'\' AND birthdate=\''. $date . '\'';
         $result = mssql_query($query);
         $row = mssql_fetch_array($result);
 
+//        echo sizeof($row);
         if (sizeof($row) == 1) {
 
             //not in sw yet
@@ -139,9 +163,15 @@
                 }
             }
         } else {
-
-            // in sw
-            header("location:/patientInfo/mergePatient.php?last=" . $last . "&date=" . $date );
+//            echo $pipek;
+            while ($row = mssql_fetch_array()){
+                echo var_dump($row) . " <br/><br/>";
+            }
+            if ($pipek == 1){
+                echo 'test';
+            } else {
+                header("location:/patientInfo/mergePatient.php?last=" . $last . "&date=" . $date);
+            }
             die();
         }
     }
@@ -157,6 +187,26 @@
 <html>
 <!--<meta http-equiv="refresh" content="10" />-->
 <head>
+    <script>
+        function convertDate(d) {
+            var p = d.split("/");
+            return +(p[2]+p[1]+p[0]);
+        }
+
+        function sortByDate() {
+            var tbody = document.querySelector("#results tbody");
+            // get trs as array for ease of use
+            var rows = [].slice.call(tbody.querySelectorAll("tr"));
+
+            rows.sort(function(a,b) {
+                return convertDate(a.cells[2].innerHTML) - convertDate(b.cells[2].innerHTML);
+            });
+
+            rows.forEach(function(v) {
+                tbody.appendChild(v); // note that .appendChild() *moves* elements
+            });
+        }
+    </script>
     <link rel="stylesheet" href="../Menu/menu.css">
     <style>
         .datatable table {

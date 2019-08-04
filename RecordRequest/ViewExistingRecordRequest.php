@@ -124,9 +124,12 @@ $patientInfo = new Patient();
 $patientInfo->SelectPatient($_SESSION['currentPatient']);
 $_SESSION['swID'] = $patientInfo->getSwId();
 
-$_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
+if ($_GET['goback']){
+    $_SESSION['previous'] = 'location:/Reports/FrontPage/Records.php?query=' . $_GET['goback'];
+} else {
+    $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
 //echo $_SESSION['previous'];
-
+}
 $conReferrals->close();
 ?>
 
@@ -296,7 +299,7 @@ $conReferrals->close();
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" value="Update referral">
+                                        <input type="submit" value="Update record request">
                                     </td>
                                 </tr>
                             </form>

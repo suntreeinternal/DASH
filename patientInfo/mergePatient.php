@@ -34,7 +34,7 @@
     $swDob = $row['birthdate'];
 
 
-    $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName=\''. $last . '\' AND BirthDate=\''. $date . '\'';
+    $query = 'SELECT * FROM Referrals.TempPatient WHERE LOWER(LastName)=\''. strtolower($last) . '\' AND BirthDate=\''. $date . '\'';
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
     $tempId = $row[0];

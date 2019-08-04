@@ -6,6 +6,9 @@
  * Time: 7:30 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {
@@ -164,11 +167,12 @@ if (!mssql_select_db('sw_charts', $con)) {
     </tr>
     <?php
     $query = $_GET['query'];
+    $queryString = str_replace("'", "", $query);
     if ($query != "temp"){
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
             $dob = null;
-            echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $row[0] . "&type=1';\"><td>";
+            echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $row[0] . "&type=1&goback=" . $queryString ."';\"><td>";
             $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[2] . '"';
             $temp = $conReferrals->query($query);
             $tr = $temp->fetch_row();
@@ -253,7 +257,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $tempResult = $conReferrals->query('SELECT * FROM Referrals.Referrals WHERE PatientID = "' . $temp[0] . '"');
             while ($referral = $tempResult->fetch_row()){
                 $dob = null;
-                echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $referral[0] . "&type=1';\"><td>";
+                echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $referral[0] . "&type=1&goback=" . $queryString ."';\"><td>";
                 $id = "" . $temp[1];
                 $_SESSION['currentPatient'] = $temp[0];
 

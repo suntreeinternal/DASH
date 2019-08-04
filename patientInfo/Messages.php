@@ -58,7 +58,7 @@ session_start();
                         break;
 
                     case 'MA':
-                        echo "<tr style=\"background-color: #45B39D\">";
+                        echo "<tr style=\"background-color: #45B39D; color: #FFFFFF\">";
                         break;
 
                 }

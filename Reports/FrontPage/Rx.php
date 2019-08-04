@@ -7,6 +7,9 @@
  * Time: 7:30 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {
@@ -70,6 +73,7 @@ if (!mssql_select_db('sw_charts', $con)) {
     </tr>
     <?php
     $query = $_GET['query'];
+    $queryString = str_replace("'", "", $query);
     if ($query != "temp"){
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
@@ -82,14 +86,15 @@ if (!mssql_select_db('sw_charts', $con)) {
             $_SESSION['currentPatient'] = $tr[0];
 
 
-            if (strpos($id, "-") == 8) {
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $tr[1] . '\'';
                 $temp = mssql_query($query);
                 $tr = mssql_fetch_array($temp);
                 $_SESSION['patientName'] = $tr[2] . " " . $tr[1];
                 $_SESSION['patientDOB'] = $tr[21];
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
+//                echo $_GET['query'];
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3&goback=" . $queryString ."';\"><td>";
 
 
                 echo $tr[2] . " " . $tr[1];
@@ -98,7 +103,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
                 $temp = $conReferrals->query($query);
                 $tr = $temp->fetch_row();
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3&goback=" . $queryString ."';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
                 $_SESSION['patientName'] = $tr[1] . " " . $tr[2];

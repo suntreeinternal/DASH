@@ -15,7 +15,8 @@ include "../fetchPatientData/patientInfo.php";
 echo var_dump($_SESSION);
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID) VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority'] . "', '" . str_replace("'", "\'",$_GET['Reason']) . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "')";
+$query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID, CreatedBy) VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority'] . "', '" . str_replace("'", "\'",$_GET['Reason']) . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "', '" . $_SESSION['name'] . "')";
+
 echo $query;
 
 $result = $conReferrals->query($query);

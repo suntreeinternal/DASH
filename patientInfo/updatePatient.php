@@ -21,5 +21,5 @@
         $query = "INSERT INTO Referrals.ChangeLog(UserID, ChangeSummery) VALUES ('" . $_SESSION['userID'] ."', 'Patient phone number Changed from " . $phoneOld . " to " . $phone . "')";
         $result = $con->query($query);
     }
-//    echo $_SESSION['currentPatient'];
+//    echo $_SESSION['previous'];
 header($_SESSION['previous']);

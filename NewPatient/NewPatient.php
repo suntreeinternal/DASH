@@ -59,7 +59,7 @@
                     <input type="text" name="first" placeholder="First Name">
                 </td>
                 <td>
-                    <input type="text" name="last" value="<?php echo $_GET['last']?>">
+                    <input type="text" name="last"  placeholder="Last Name">
                 </td>
                 <td>
                     <input type="date" name="birthDate" value="<?php echo $_GET['date']?>">

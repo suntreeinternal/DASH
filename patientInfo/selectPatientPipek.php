@@ -18,8 +18,15 @@ $query = 'SELECT * FROM Referrals.TempPatient WHERE LastName="' . $_GET['last'] 
 $resultMySql = $conReferrals->query($query);
 
 while ($rows = $resultMySql->fetch_row()){
+    $lastNameFixed = '';
+    if (strrpos($rows[2], ' ')){
+        echo $rows['last_name'];
+        $lastNameFixed = str_replace(" ", "%20", $rows[2]);
+    } else {
+        $lastNameFixed = $rows[2];
+    }
 //    echo var_dump($rows);
-    $toTable .= "<tr onclick=window.location='../patientInfo/Patient.php?last=" . $rows[2] . "&date=" . $rows[3] . "'>";
+    $toTable .= "<tr onclick=window.location='../patientInfo/Patient.php?last=" . $lastNameFixed . "&date=" . $rows[3] . "'>";
     $toTable .= "<td>" . $rows[1] . "</td>";
     $toTable .= "<td>" . $rows[2] . "</td>";
     $toTable .= "<td>" . date("m-d-Y", strtotime($rows[3])) . "</td>";

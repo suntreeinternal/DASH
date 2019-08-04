@@ -39,6 +39,7 @@ $DOB = date("m-d-Y", $date);
             echo '</br></br><h4 style="display: inline">PLAN:</h4>';
         } elseif ($row[2] == 104) {
             echo '</br></br><h4 style="display: inline">MEDICATION:</h4>';
+//            echo $row[3];
         } elseif ($row[2] == 105) {
             echo '</br></br><h4 style="display: inline">FOLLOW UP:</h4>';
         }
@@ -77,12 +78,15 @@ $DOB = date("m-d-Y", $date);
         $temp = str_ireplace('d\lang1033\f0\fs20 ', '', $temp);
 //        echo $temp;
         $count = substr_count($temp, 'LAST');
+
         if ($count != 0) {
+
             $tempCount = 0;
             $stringToReplace = '';
             $start = strrpos($temp, 'LAST');
 
             $str_arr = explode(' ', $temp);
+//            echo var_dump($str_arr);
             $max = sizeof($str_arr);
             $val = array_search('LAST', $str_arr);
 //        echo $val;
@@ -92,6 +96,7 @@ $DOB = date("m-d-Y", $date);
 
             if ($val != '') {
                 for ($x = $val; $x < $max; $x++) {
+//                    echo var_dump($str_arr);
                     if ($str_arr[$x] == 'LAST') {
                         if ($countLine == 0) {
                             $toPrint .= $str_arr[$x] . ' ';

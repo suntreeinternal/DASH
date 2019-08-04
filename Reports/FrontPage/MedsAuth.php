@@ -7,6 +7,9 @@
  * Time: 7:30 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {
@@ -161,9 +164,11 @@ if (!mssql_select_db('sw_charts', $con)) {
     </tr>
     <?php
     $query = $_GET['query'];
+//    echo $query;
     if ($query != "temp"){
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
+//            echo var_dump($row) . "<br/><br/>";
             $dob = null;
             $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[1] . '"';
             $temp = $conReferrals->query($query);

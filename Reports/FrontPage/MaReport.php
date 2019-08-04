@@ -6,6 +6,9 @@
  * Time: 7:30 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 if (!mssql_select_db('sw_charts', $con)) {
@@ -184,7 +187,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $_SESSION['currentPatient'] = $tr[0];
 
 
-            if (strpos($id, "-") == 8) {
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
                 $temp = mssql_query($query);
@@ -242,7 +245,7 @@ if (!mssql_select_db('sw_charts', $con)) {
             $_SESSION['currentPatient'] = $tr[0];
 
 
-            if (strpos($id, "-") == 8) {
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
                 $temp = mssql_query($query);
@@ -300,12 +303,12 @@ if (!mssql_select_db('sw_charts', $con)) {
             $_SESSION['currentPatient'] = $tr[0];
 
 
-            if (strpos($id, "-") == 8) {
+            if (strpos($id, "-")) {
                 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
                 $query = 'SELECT * FROM dbo.Gen_Demo WHERE Patient_ID=\'' . $id . '\'';
                 $temp = mssql_query($query);
                 $tr = mssql_fetch_array($temp);
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
 
                 echo $tr[2] . " " . $tr[1];
                 $dob = $tr[21];
@@ -313,7 +316,7 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $query = 'SELECT * FROM Referrals.TempPatient WHERE ID="' . $tr[1] . '"';
                 $temp = $conReferrals->query($query);
                 $tr = $temp->fetch_row();
-                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?RxId=" . $row[0] . "';\"><td>";
+                echo "<tr onclick=\"window.location='/Rx/PreviousRx.php?typeID=" . $row[0] . "&type=3';\"><td>";
                 echo $tr[1] . " " . $tr[2];
                 $dob = $tr[3];
             }

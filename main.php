@@ -35,17 +35,17 @@
     $ASAP = 0;
     $pendingSoapAndDemo = 0;
 
-
+//    echo var_dump($_SESSION);
 
     $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
 //
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=0 AND NOT Priority=1';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=0';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingSoap = $row[0];
 
-    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=2 AND NOT Priority=1';
+    $query = 'SELECT COUNT(*) FROM Referrals.Referrals WHERE Status=2';
     $result = $con->query($query);
     $row = $result->fetch_row();
     $pendingSoapAndDemo = $row[0];
@@ -82,6 +82,11 @@
     $result = $con->query($query);
     $row = $result->fetch_row();
     $voiceMail = $row[0];
+
+    $query = 'SELECT COUNT(*) FROM PatientPhoneMessages WHERE AlertToGroup=-1';
+    $result = $con->query($query);
+    $row = $result->fetch_row();
+    $medauthmessages = $row[0];
 
     $query = 'SELECT COUNT(*) FROM PatientData WHERE Message_alert_to_group=3';
     $result = $con->query($query);
@@ -235,6 +240,11 @@
 <html>
 <!--    <meta http-equiv="refresh" content="15" />-->
     <head>
+        <?php
+            if ($_SESSION['group'] == "Provider"){
+                echo "<meta http-equiv=\"refresh\" content=\"30\">";
+            }
+        ?>
         <link rel="stylesheet" href="Menu/menu.css">
         <title>DASH: <?php echo $_SESSION['name']?></title>
         <style>
@@ -275,7 +285,7 @@
 
         .notification {
             background-color: #2c8951;
-            color: #001b00;
+            color: #ffffff;
             text-decoration: none;
             padding: 15px 26px;
             position: relative;
@@ -375,7 +385,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='0' AND NOT Priority=1" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='0'" class="notification">
                                         <span>Pending Soap</span>
                                         <span class="badge"><?php echo $pendingSoap ?></span>
                                     </a>
@@ -383,7 +393,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='1' AND NOT Priority=1" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='1'" class="notification">
                                         <span>Pending Demo</span>
                                         <span class="badge"><?php echo $pendingDemo ?></span>
                                     </a>
@@ -391,7 +401,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='2' AND NOT Priority=1" class="notification">
+                                    <a href="../Reports/FrontPage/Report.php?query=SELECT * FROM Referrals.Referrals WHERE Status='2'" class="notification">
                                         <span>Pending Soap and Demo</span>
                                         <span class="badge"><?php echo $pendingSoapAndDemo ?></span>
                                     </a>
@@ -486,6 +496,14 @@
                                 <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=3" class="notification">
                                     <span>Voice Mail</span>
                                     <span class="badge"><?php echo $voiceMail?></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../Reports/FrontPage/PhoneReport.php?query=SELECT * FROM Referrals.PatientPhoneMessages where AlertToGroup=-1" class="notification">
+                                    <span>Medication Auth.</span>
+                                    <span class="badge"><?php echo $medauthmessages?></span>
                                 </a>
                             </td>
                         </tr>

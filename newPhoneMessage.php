@@ -18,7 +18,9 @@ $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['passwo
 $groupValue = 0;
 
 
-
+    $toSend = str_replace("'", "\'",$_GET['message']);
+    $toSend = str_replace("\"", "\\\"", $toSend);
+    echo $toSend;
 if ($_GET['message'] == ''){
     if ($_GET['dest'] == 3){
         $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'Left Voice Mail\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\', \'0\')';
@@ -30,10 +32,10 @@ if ($_GET['message'] == ''){
 } else {
     //TODO add to Change log
     if ($_GET['dest'] == '') {
-        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'",$_GET['message']) . '\',\'' . $_SESSION['group'] . '\', \'0\')';
+        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . $toSend . '\',\'' . $_SESSION['group'] . '\', \'0\')';
 
     }  else {
-        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . str_replace("'", "\'",$_GET['message']) . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\', \'0\')';
+        $query = 'INSERT INTO PatientPhoneMessages(PatientID, User_ID, Message, UserGroup, AlertToGroup, ParrentMessage) values (\'' . $_SESSION['currentPatient'] . '\', \'' . $_SESSION['name'] . '\', \'' . $toSend . '\',\'' . $_SESSION['group'] . '\', \'' . $_GET['dest'] . '\', \'0\')';
     }
 }
     echo $query;

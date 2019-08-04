@@ -7,7 +7,9 @@
  */
 
 session_start();
-
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $ReferralId = $_GET['typeID'];
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -40,4 +42,4 @@ if (strpos($row[1], '-') !== false){
     $_SESSION['patientDOB'] = $row[3];
 }
 //echo var_dump($_SESSION);
-header("location:../Referral/CurrentReferral.php?typeID=" . $ReferralId . "&type=1");
+header("location:../Referral/CurrentReferral.php?typeID=" . $ReferralId . "&type=1&goback=" . $_GET['goback']);

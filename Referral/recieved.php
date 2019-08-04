@@ -18,14 +18,14 @@ $getPatient = new Patient();
 
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "UPDATE Referrals.Referrals SET LastSent='" . date("Y-m-d H:i:s") . "' WHERE ID=" . $_GET['ReferralID'];
-$result = $conReferrals->query($query);
+//$query = "UPDATE Referrals.Referrals SET LastSent='" . date("Y-m-d H:i:s") . "' WHERE ID=" . $_GET['ReferralID'];
+//$result = $conReferrals->query($query);
 
 $query = "SELECT * FROM Referrals.Referrals WHERE ID=" . $_GET['ReferralID'];
 $result = $conReferrals->query($query);
 $row = $result->fetch_row();
 //
-$query = "INSERT INTO Referrals.Note (ReferralID, UserID, Note, UserGroup) VALUES (" . $_GET['ReferralID'] . ",'" . $_SESSION['name'] . "','Referral Sent','" . $_SESSION['group'] . "')";
+$query = "INSERT INTO Referrals.Note (ReferralID, UserID, Note, UserGroup) VALUES (" . $_GET['ReferralID'] . ",'" . $_SESSION['name'] . "','Referral Received','" . $_SESSION['group'] . "')";
 ////echo $query;
 $result = $conReferrals->query($query);
 echo $conReferrals->error;
@@ -33,7 +33,7 @@ echo $conReferrals->error;
 
 $getPatient->SelectPatient($row[2]);
 
-$String = 'Sent referral for ' . $getPatient->GetFullName();
+$String = 'Referral received for ' . $getPatient->GetFullName();
 
 $audit->SetChange($String);
 

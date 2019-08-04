@@ -165,6 +165,7 @@ while ($row = $result->fetch_row()){
                         <input type='radio' name='dest' value='1'>Reception</br>
                         <input type='radio' name='dest' value='2'>Referral</br>
                         <input type='radio' name='dest' value='3'>Left VM</br>
+                        <input type="radio" name="dest" value="-1">Med. Auth.<br/>
                         <input type='radio' name='dest' value=''>None</br>
                     </td>
                 </tr>

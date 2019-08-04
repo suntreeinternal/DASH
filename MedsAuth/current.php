@@ -22,6 +22,8 @@ $getMeds = $result->fetch_row();
 //var_dump($getMeds);
 $_SESSION['currentPatient'] = $getMeds[1];
 
+//var_dump($getMeds);
+
 
 $query = 'SELECT * FROM Referrals.Provider';
 
@@ -40,6 +42,7 @@ $date = $getMeds[3];
 $pharmacy = $getMeds[4];
 $pharmacyPhone = $getMeds[5];
 $status = $getMeds[6];
+$medication = $getMeds[7];
 
 $statusText = '';
 switch ($status){
@@ -50,6 +53,8 @@ switch ($status){
                         <option value="2">Denial</option>
                         <option value="3">Other</option>
                         <option value="4">Patient Notified</option>
+                                                <option value="5">Approved</option>
+
                     </select>';
         break;
     case 1:
@@ -59,6 +64,8 @@ switch ($status){
                         <option value="2">Denial</option>
                         <option value="3">Other</option>
                         <option value="4">Patient Notified</option>
+                                                <option value="5">Approved</option>
+
                     </select>';
         break;
     case 2:
@@ -67,7 +74,9 @@ switch ($status){
                         <option value="1">Pending</option>
                         <option selected="selected" value="2">Denial</option>
                         <option value="3">Other</option>
-                        <option value="4">Patient Notified</option>
+                        <option value="4">Patient Notified</option>       
+                                         <option value="5">Approved</option>
+
                     </select>';
         break;
     case 3:
@@ -77,6 +86,8 @@ switch ($status){
                         <option value="2">Denial</option>
                         <option selected="selected" value="3">Other</option>
                         <option value="4">Patient Notified</option>
+                                                <option value="5">Approved</option>
+
                     </select>';
         break;
     case 4:
@@ -86,6 +97,17 @@ switch ($status){
                         <option value="2">Denial</option>
                         <option value="3">Other</option>
                         <option selected="selected" value="4">Patient Notified</option>
+                        <option value="5">Approved</option>
+                    </select>';
+        break;
+    case 5:
+        $statusText = '<select name="status">
+                        <option value="0">New</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Denial</option>
+                        <option value="3">Other</option>
+                        <option value="4">Patient Notified</option>
+                        <option selected="selected" value="5">Approved</option>
                     </select>';
         break;
 }
@@ -93,10 +115,11 @@ switch ($status){
 $patientInfo = new Patient();
 $patientInfo->SelectPatient($_SESSION['currentPatient']);
 $_SESSION['swID'] = $patientInfo->getSwId();
+$_SESSION['patientDOB'] = $patientInfo->GetDOB();
+$DOB = $patientInfo->GetDOB();
 
 $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo->GetLastName() . "&date=" . $patientInfo->GetDOB();
 
-$dateTime = date("Y-m-d h:i:sa");
 ?>
 
 
@@ -260,12 +283,17 @@ $dateTime = date("Y-m-d h:i:sa");
                                 </tr>
                                 <tr>
                                     <td>
+                                        Medication: <input type="text" name="med" value="<?php echo $medication?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         Status: <?php echo $statusText?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" value="Submit new meds auth">
+                                        <input type="submit" value="Update meds auth">
                                     </td>
                                 </tr>
                             </form>

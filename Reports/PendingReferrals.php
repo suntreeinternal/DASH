@@ -6,6 +6,9 @@
  * Time: 8:05 AM
  */
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 
 ?>
 <style>

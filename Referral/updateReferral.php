@@ -11,6 +11,8 @@
 
 session_start();
 
+$update =  $_SESSION['name'] . " " . date("m/d/Y h:i:sa");
+
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
 
 $query = "SELECT * FROM Referrals.Referrals WHERE ID=" . $_GET['refID'];
@@ -24,16 +26,22 @@ echo $_GET['test'];
 
 if($strinNow == $_GET['test'])
 {
-    $query = "UPDATE Referrals.Referrals SET Reason='" . str_replace("'", "\'",$_GET['Reason']) . "', SpecalistID=" . $_GET['Specalist'] . ", SpecaltyID=" . $_GET['Specialty'] . ", ProviderID=" . $_GET['provider'] . ", Status=" . $_GET['status'] . ", Priority=" . $_GET['priority'] . " WHERE ID=" . $_GET['refID'];
+    $query = "UPDATE Referrals.Referrals SET updatedBy='" . $update . "', Reason='" . str_replace("'", "\'",$_GET['Reason']) . "', SpecalistID=" . $_GET['Specalist'] . ", SpecaltyID=" . $_GET['Specialty'] . ", ProviderID=" . $_GET['provider'] . ", Status=" . $_GET['status'] . ", Priority=" . $_GET['priority'] . " WHERE ID=" . $_GET['refID'];
 //echo $query;
 
     $result = $conReferrals->query($query);
 
-header($_SESSION['previous']);
+    if ($_GET['goback']){
+        header("location:/Reports/FrontPage/Report.php?query=" . $_GET['goback']);
+    } else {
+        header($_SESSION['previous']);
+    }
 } else {
     echo 'Strings do not match.';
 }
 $conReferrals->close();
 echo "<br/>";
+
+
 
 

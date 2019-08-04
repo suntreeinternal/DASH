@@ -41,7 +41,7 @@ if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
 }
 
 if (!$_GET['type']){
-    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] ."'";
+    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] ."' ORDER BY Id DESC";
     $result = $conReferrals->query($query);
     $files = "";
     while ($row = $result->fetch_row()){
@@ -49,7 +49,7 @@ if (!$_GET['type']){
     }
     $files .= '<a href="../patientInfo/uploadFile.php?typeID=' . $_GET['typeID'] . '&type=' . $_GET['type'] . '">Upload attachment</a>';
 } else {
-    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] . "' AND type=" . $_GET['type'] . " AND typeID=" . $_GET['typeID'];
+    $query = "SELECT * FROM Referrals.Uploads WHERE PatientID='" . $_SESSION['currentPatient'] . "' AND type=" . $_GET['type'] . " AND typeID=" . $_GET['typeID'] . " ORDER BY Id DESC";
     $result = $conReferrals->query($query);
     $files = "";
     while ($row = $result->fetch_row()) {

@@ -7,6 +7,9 @@
  */
 
 session_start();
+if (sizeof($_SESSION) == 0){
+    header('location:../index.html');
+}
 $request = $_GET['request'];
 
 $con = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');

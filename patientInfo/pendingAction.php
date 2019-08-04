@@ -34,6 +34,7 @@
                             </th>
                         </tr>
                         <?php
+
                         $query = 'SELECT * FROM Referrals.Referrals WHERE PatientID=\'' . $patientID . '\' AND Status <> \'4\'';
 
                         $result = $conReferrals->query($query);
@@ -118,6 +119,9 @@
                         }
 
                         ?>
+                        <script>
+                            sortByDate();
+                        </script>
                         </tbody>
                     </table>
                 </div>

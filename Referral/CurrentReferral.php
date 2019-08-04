@@ -27,6 +27,7 @@
 
     $dateTime =$row[7];
     $reason = $row[6];
+    $createdBy = $row[11];
     if ($row[10]){
         $ReferralSentDate = date_create($row[10]);
         $ReferralSentDate = date_format($ReferralSentDate, "m/d/Y H:i:s");
@@ -42,6 +43,7 @@
     $currentProvider = $row[1];
     $currentSpeacalist = $row[9];
     $currentSpecality = $row[8];
+    $updated = $row[12];
     if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
         $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
     } else {
@@ -84,6 +86,9 @@
     $query = 'SELECT * FROM Referrals.Specialty';
     $result = $conReferrals->query($query);
     $specalty = "";
+    if ($currentSpecality == -1){
+        $specalty = $specalty . '<option selected="selected" value="-1"></option>';
+    }
     while ($test = $result->fetch_row()){
         if($test[0] == $currentSpecality){
             $specalty = $specalty . '<option selected="selected" value="'. $test[0] .'">'. $test[1] .'</option>';
@@ -98,22 +103,30 @@
     $query = 'SELECT * FROM Referrals.Specialist WHERE SpecialtyID=' . $currentSpecality;
     $result = $conReferrals->query($query);
     $speacalist = "";
+    if ($currentSpeacalist == -1){
+        $speacalist = $speacalist . '<option selected="selected" value="-1"></option>';
+    } else {
+        $speacalist = $speacalist . '<option value="-1"></option>';
+    }
+$speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
     while ($row = $result->fetch_row()){
         if($row[0] == $currentSpeacalist){
             $test = "";
             $speacalist = $speacalist . '<option selected="selected" value="'. $row[0] .'">'. $row[2] . '</option>';
-            $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
+//            $speacalistTable = "<table id='specialistInfo' border='1' style='border-collapse: collapse' width='100%'><tbody><tr><th>Location</th><th>Fax</th><th>Phone</th><th>Notes</th></tr>";
             $speacalistTable .= "<tr><td>". $row[3] ."</td>";
             $speacalistTable .= "<td>". $row[5] ."</td>";
             $speacalistTable .= "<td>". $row[4] ."</td>";
             $speacalistTable .= "<td>". $row[6] ."</td></tr>";
-            $speacalistTable .= "</tbody></table>";
+//            $speacalistTable .= "</tbody></table>";
         } else {
             $speacalist = $speacalist . '<option value="' . $row[0] . '">' . $row[2] . ', ' . $row[3] . ', ' . $row[5] . '</option>';
         }
     }
+$speacalistTable .= "</tbody></table>";
 
-    $query = 'SELECT * FROM Referrals.Status';
+
+$query = 'SELECT * FROM Referrals.Status';
     $result = $conReferrals->query($query);
     $status = '<select name="status">';
 
@@ -324,6 +337,16 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        Created by: <?php echo $createdBy?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Updated by: <?php echo $updated?>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td width="50%">
                                         Provider <?php echo $providerList?>
                                     </td>
@@ -338,6 +361,8 @@
                                         Status: <?php echo $status?>
                                         <input type="hidden" name="dateTime" value="<?php echo $dateTime?>">
                                         <input type="hidden" name="test" value="<?php echo $currentReferral?>">
+                                        <input type="hidden" name="refID" value="<?php echo $_GET['typeID']?>" >
+                                        <input type="hidden" name="goback" value="<?php echo $_GET['goback']?>">
 
                                     </td>
                                 </tr>
@@ -351,7 +376,6 @@
                                         Specialty: <select name="Specialty" onchange="getData()">
                                             <?php echo $specalty?>
                                         </select>
-                                        <input type="hidden" name="refID" value="<?php echo $_GET['typeID']?>" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -380,8 +404,18 @@
                             </form>
                             </tbody>
                         </table>
-                        <a href="../Referral/SendReferral.php?ReferralID='<?php echo $referralID ?>'">
-                            <button> Referral Sent: <?php echo $ReferralSentDate ?></button>
+
+
+                        <?php
+                            if ($_SESSION['group'] == "Referrals"){
+                                echo "<a href=\"../Referral/SendReferral.php?ReferralID='" . $referralID . "'\">
+                                        <button> Referral Sent:". $ReferralSentDate . "</button>
+                                        </a><br/><br/>";
+                            }
+                        ?>
+
+                        <a href="../Referral/recieved.php?ReferralID='<?php echo $referralID ?>'">
+                            <button> Referral Received</button>
                         </a>
                     </tr>
                     <tr>
@@ -462,13 +496,14 @@
             xmlhttp.send();
         }
         return 0;
+
     }
 
     function updateData() {
         var name = document.forms['referral']['Specalist'].value;
         var xmlhttp = new XMLHttpRequest();
-        if (name != ""){
-            xmlhttp.onreadystatechange =function () {
+        if (name != "") {
+            xmlhttp.onreadystatechange = function () {
                 document.getElementById('specialistInfo').innerHTML = this.responseText;
             };
             xmlhttp.open("GET", "loadSpecalistData.php?id=" + name, true);
