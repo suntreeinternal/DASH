@@ -4,6 +4,8 @@ session_start();
 if (sizeof($_SESSION) == 0){
     header('location:../index.html');
 }
+$DOB = $_SESSION['patientDOB'];
+
 
 $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
@@ -13,6 +15,8 @@ if (!mssql_select_db('sw_charts', $con)) {
 $query = "SELECT * FROM Referrals.RecordRequest WHERE ID='" . $_GET['typeID'] ."'";
 $tempRE = $conReferrals->query($query);
 $row = $tempRE->fetch_row();
+
+//echo var_dump($_SESSION);
 //
 //$patientInfo->SelectPatient($row[1]);
 //$patientName = $patientInfo->GetFullName();
@@ -313,7 +317,7 @@ $conReferrals->close();
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -332,7 +336,7 @@ $conReferrals->close();
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -351,7 +355,7 @@ $conReferrals->close();
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                             <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
                                         </td>
                                     </tr>

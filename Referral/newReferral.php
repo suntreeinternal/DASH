@@ -12,10 +12,14 @@ session_start();
 include "../AuditLog.php";
 include "../fetchPatientData/patientInfo.php";
 
-echo var_dump($_SESSION);
+//echo var_dump($_SESSION);
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID, CreatedBy) VALUES ('" . $_GET['provider'] .  "', '" . $_SESSION['currentPatient'] ."', '" . $_GET['status'] ."', '" . $_GET['priority'] . "', '" . str_replace("'", "\'",$_GET['Reason']) . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "', '" . $_SESSION['name'] . "')";
+if ($_GET['Print']) {
+    $query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID, CreatedBy, PatientContacted) VALUES ('" . $_GET['provider'] . "', '" . $_SESSION['currentPatient'] . "', '" . $_GET['status'] . "', '" . $_GET['priority'] . "', '" . str_replace("'", "\'", $_GET['Reason']) . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "', '" . $_SESSION['name'] . "','1')";
+} else {
+    $query = "INSERT INTO Referrals.Referrals (ProviderID, PatientID, Status, Priority, Reason, SpecaltyID, SpecalistID, CreatedBy, PatientContacted) VALUES ('" . $_GET['provider'] . "', '" . $_SESSION['currentPatient'] . "', '" . $_GET['status'] . "', '" . $_GET['priority'] . "', '" . str_replace("'", "\'", $_GET['Reason']) . "', '" . $_GET['Specialty'] . "', '" . $_GET['Specalist'] . "', '" . $_SESSION['name'] . "','0')";
+}
 
 echo $query;
 
@@ -29,5 +33,15 @@ $patientInfo->SelectPatient($_SESSION['currentPatient']);
 $string = $_SESSION['name'] . " has created a new referral for " . $patientInfo->GetLastName() . " for the following reason " . $_GET['Reason'];
 $audit->SetChange($string);
 
-header($_SESSION['previous']);
 
+
+if($_GET['Print']){
+//    include ("/Referral/ReferralPrintOut.php");
+    echo "<script type=\"text/javascript\">
+        window.open('ReferralPrintOut.php?patient=" . $patientInfo->GetFullName() . "&specality=". $_GET['Specialty'] . "', '_blank');
+        window.open('../" . substr($_SESSION['previous'], 10) . "', '_self');
+    </script>";
+
+} else {
+    header($_SESSION['previous']);
+}

@@ -354,7 +354,7 @@
                     <tbody>
                     <tr>
                         <td colspan="5" >
-                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                            <textarea rows="6" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -373,7 +373,7 @@
                     <tbody>
                     <tr>
                         <td colspan="5" >
-                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                            <textarea rows="6" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                         </td>
                     </tr>
                     <tr>

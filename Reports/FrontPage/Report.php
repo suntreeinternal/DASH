@@ -155,14 +155,15 @@ if (!mssql_select_db('sw_charts', $con)) {
 <table id="All" width="100%">
     <tbody>
     <tr>
-        <th onclick="sortTable(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable(1)" width="10%">DOB</th>
+        <th onclick="sortTable(0)" width="14%">Patient Name</th>
+        <th onclick="sortTable(1)" width="8%">DOB</th>
         <th onclick="sortTable(2)" width="12%">Reason</th>
         <th onclick="sortTable(3)" width="14%">Specialist</th>
-        <th onclick="sortTable(4)" width="12%">Phone number</th>
+        <th onclick="sortTable(4)" width="10%">Phone number</th>
         <th onclick="sortTable(5)" width="12%">Specialty</th>
-        <th onclick="sortTable(6)" width="10%">Priority</th>
-        <th onclick="sortTable(7)" width="14%">Date Sent</th>
+        <th onclick="sortTable(6)" width="8%">Priority</th>
+        <th onclick="sortTable(7)" width="12%">Date Sent</th>
+        <th onclick="sortTable(8)" width="10%">Date Contacted</th>
 
     </tr>
     <?php
@@ -171,6 +172,7 @@ if (!mssql_select_db('sw_charts', $con)) {
     if ($query != "temp"){
         $result = $conReferrals->query($query);
         while ($row = $result->fetch_row()) {
+            $cateContacted = $row[14];
             $dob = null;
             echo "<tr onclick=\"window.location='/Reports/GetPatient.php?typeID=" . $row[0] . "&type=1&goback=" . $queryString ."';\"><td>";
             $query = 'SELECT * FROM Referrals.PatientData WHERE ID="' . $row[2] . '"';
@@ -247,6 +249,8 @@ if (!mssql_select_db('sw_charts', $con)) {
                 $date = date_create($row[10]);
                 echo date_format($date, "m/d/Y");
             }
+            echo "</td><td>";
+            echo $cateContacted;
             echo "</td></tr>";
         }
     } else {
@@ -296,6 +300,8 @@ if (!mssql_select_db('sw_charts', $con)) {
                 echo "</td><td>";
                 $date = date_create($referral[10]);
                 echo date_format($date, "m/d/Y");
+                echo "</td><td>";
+                echo $cateContacted;
                 echo "</td></tr>";
             }
         }

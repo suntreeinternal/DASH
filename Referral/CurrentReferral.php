@@ -23,6 +23,8 @@
     $result = $conReferrals->query($query);
     $row = $result->fetch_row();
 
+//    var_dump($row);
+
     $currentReferral = $row[1] . $row[2] . $row[3] . $row[4] . $row[5] . $row[6] . $row[7] . $row[8] . $row[9];
 
     $dateTime =$row[7];
@@ -44,6 +46,8 @@
     $currentSpeacalist = $row[9];
     $currentSpecality = $row[8];
     $updated = $row[12];
+    $contacted = $row[13];
+    $dateContacted = $row[14];
     if(ctype_digit($phoneNumber) && strlen($phoneNumber) == 10) {
         $phoneNumber = substr($phoneNumber, 0, 3) .'-'. substr($phoneNumber, 3, 3) .'-'. substr($phoneNumber, 6);
     } else {
@@ -347,6 +351,31 @@ $query = 'SELECT * FROM Referrals.Status';
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        Patient Notified: Office
+                                        <?php
+                                            if ($contacted == 1){
+                                                echo '<input type="checkbox" checked name="Contacted">';
+                                            } else {
+                                                echo '<input type="checkbox" name="Contacted">';
+                                            }
+                                        ?>
+                                        Phone
+                                        <?php
+                                        if ($contacted == 2){
+                                            echo '<input type="checkbox" checked name="phone">';
+                                        } else {
+                                            echo '<input type="checkbox" name="phone">';
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Date Notified: <input type="text" name="notifiedDate" value="<?php echo $dateContacted?>">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td width="50%">
                                         Provider <?php echo $providerList?>
                                     </td>
@@ -425,7 +454,7 @@ $query = 'SELECT * FROM Referrals.Status';
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -444,7 +473,7 @@ $query = 'SELECT * FROM Referrals.Status';
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -463,7 +492,7 @@ $query = 'SELECT * FROM Referrals.Status';
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                             <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
                                         </td>
                                     </tr>

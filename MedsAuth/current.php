@@ -307,7 +307,7 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -326,7 +326,7 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -345,7 +345,7 @@ $_SESSION['previous'] = "location:/patientInfo/Patient.php?last=" . $patientInfo
                                     <tbody>
                                     <tr>
                                         <td colspan="5" >
-                                            <textarea rows="2" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
+                                            <textarea rows="4" name="message" style="border-radius: 10px; resize: none; width: 100%; overflow: auto"></textarea>
                                             <input type="hidden" name="typeID" value="<?php echo $_GET['typeID']?>">
                                         </td>
                                     </tr>

@@ -244,6 +244,15 @@ $speacalistTable .= "</tbody></table>";
                                                                 <option selected="selected"value="3">Routine</option>
                                                             </select>
                                             </td>
+                                            <?php
+                                                if ($_SESSION['group'] == "Admin"){
+                                                    echo "
+                                                        <td>
+                                                    Print Referral: <input type='checkbox' id='Print' name='Print'>
+                                                    </td>";
+                                                }
+
+                                            ?>
                                         </tr>
                                         <tr>
                                             <td>
