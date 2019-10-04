@@ -31,7 +31,8 @@ $row = $result->fetch_row();
 $query = 'SELECT * FROM Referrals.Provider';
 $result = $conReferrals->query($query);
 $providerList .= "";
-
+$provider = $row[8];
+$MD = $row[9];
 switch ($row[2]){
 
     case 1:
@@ -299,6 +300,16 @@ $conReferrals->close();
                                 <tr>
                                     <td>
                                         Check required: <?php echo $auth?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Last Provider: <input type="text" name="provider" value="<?php echo $provider?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Last MD: <input type="text" name="MD" value="<?php echo $MD?>">
                                     </td>
                                 </tr>
                                 <tr>

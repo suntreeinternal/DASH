@@ -161,7 +161,9 @@ if (!mssql_select_db('sw_charts', $con)) {
         <th onclick="sortTable(2)" width="10%">Date Requested</th>
         <th onclick="sortTable(3)" width="10%">Phone number</th>
         <th onclick="sortTable(4)" width="18%">Requesting Party</th>
-        <th onclick="sortTable(5)" width="50%">Authorization</th>
+        <th onclick="sortTable(5)" width="10%">Check Required</th>
+        <th onclick="sortTable(6)" width="14%">Last Provider</th>
+        <th onclick="sortTable(7)" width="14%">Last MD</th>
     </tr>
     <?php
     $query = $_GET['query'];
@@ -263,7 +265,8 @@ if (!mssql_select_db('sw_charts', $con)) {
                         echo "Unknown";
                         break;
                 }
-
+            echo "</td><td>" . $row[8];
+            echo "</td><td>" . $row[9];
             echo "</td></tr>";
         }
     }

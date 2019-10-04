@@ -245,10 +245,20 @@ $speacalistTable .= "</tbody></table>";
                                                             </select>
                                             </td>
                                             <?php
-                                                if ($_SESSION['group'] == "Admin"){
+                                                if ($_SESSION['group'] == "Reception"){
                                                     echo "
                                                         <td>
-                                                    Print Referral: <input type='checkbox' id='Print' name='Print'>
+                                                    Print Referral: <input type='checkbox' checked id='Print' name='Print'>
+                                                    </td>";
+                                                } elseif ($_SESSION['group'] == "Referrals"){
+                                                    echo "
+                                                        <td>
+                                                    Print Referral: <input type='checkbox' checked id='Print' name='Print'>
+                                                    </td>";
+                                                } elseif ($_SESSION['group'] == "Admin"){
+                                                    echo "
+                                                        <td>
+                                                    Print Referral: <input type='checkbox' checked id='Print' name='Print'>
                                                     </td>";
                                                 }
 

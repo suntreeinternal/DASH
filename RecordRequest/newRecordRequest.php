@@ -10,8 +10,8 @@ include ("../AuditLog.php");
 session_start();
 
 $conReferrals = new mysqli('localhost', $_SESSION['username'], $_SESSION['password'], 'Referrals');
-$query = "INSERT INTO Referrals.RecordRequest (PatientID, Requester, Status, Auth, Reason) VALUES
-          ('" . $_SESSION['currentPatient'] . "', '" . $_GET['requester'] . "', '" . $_GET['status'] . "', '" . $_GET['authorization'] . "', '" . str_replace("'", "\'", $_GET['Reason']) . "')";
+$query = "INSERT INTO Referrals.RecordRequest (PatientID, Requester, Status, Auth, Reason, LastMD, LastProvider) VALUES
+          ('" . $_SESSION['currentPatient'] . "', '" . $_GET['requester'] . "', '" . $_GET['status'] . "', '" . $_GET['authorization'] . "', '" . str_replace("'", "\'", $_GET['Reason']) . "', '" . str_replace("'", "\'", $_GET['MD']) . "', '" . str_replace("'", "\'", $_GET['Reason']) . "')";
 
 $result = $conReferrals->query($query);
 echo $conReferrals->error;

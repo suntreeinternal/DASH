@@ -301,12 +301,7 @@ $query = 'SELECT * FROM Referrals.Status';
 </head>
 
 <?php
-//if ($viewingName == ""){
-//    echo '<body style="background:darkgray;" onbeforeunload="thisFunction()">';
-//} else {
     echo '<body style="background:darkgray;">';
-//}
-
 ?>
 <?php include "../Menu/menu.php"?>
 <table style="width: 100%" cellspacing="15" cellpadding="10">
@@ -368,6 +363,7 @@ $query = 'SELECT * FROM Referrals.Status';
                                             echo '<input type="checkbox" name="phone">';
                                         }
                                         ?>
+                                        <input type="button" onclick="f()" value="Print">
                                     </td>
                                 </tr>
                                 <tr>
@@ -513,6 +509,10 @@ $query = 'SELECT * FROM Referrals.Status';
     </tbody>
 </table>
 <script>
+    function f() {
+        // var val = document.getElementById("Specialty").value;
+        window.open('<?php echo "ReferralPrintOut.php?patient=" . $patientInfo->GetFullName() . "&specality=" . $currentSpecality . "', '_blank'"?>);
+    }
     function getData() {
         var name = document.forms['referral']['Specialty'].value;
         var xmlhttp = new XMLHttpRequest();

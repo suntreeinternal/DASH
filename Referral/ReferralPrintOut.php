@@ -194,7 +194,7 @@ $row2 = $result->fetch_row();
             <br/>
             A referral has been entered on your behalf by <strong><?php echo $row[4] . " " . substr($row[5], 0, 1) . ".";?></strong> on <strong><?php echo date("Y/m/d")?></strong>.<br/>
             <br/>
-            If you don’t hear from a /an <strong><?php echo $row2[1]?></strong> within the next 7 business days, please contact our referral department at 321-259-9500 x6.  At that time, we will be able to provide you with the status and the specific doctor you have been referred to.<br/>
+            If you don’t hear from a /an <strong><?php echo $row2[1]?></strong> specialist within the next 7 business days, please contact our referral department at 321-259-9500 x6.  At that time, we will be able to provide you with the status and the specific doctor you have been referred to.<br/>
             <br/>
             Of course, if you should need anything else in the meantime, please feel free to contact our office.<br/>
             <br/>
