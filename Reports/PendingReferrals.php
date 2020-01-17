@@ -39,14 +39,15 @@ if (sizeof($_SESSION) == 0){
 <table id="pending">
     <tbody>
     <tr>
-        <th onclick="sortTable1(0)" width="16%">Patient Name</th>
-        <th onclick="sortTable1(1)" width="14%">DOB</th>
-        <th onclick="sortTable1(2)" width="14%">Reason</th>
-        <th onclick="sortTable1(3)" width="12%">Specialist</th>
-        <th onclick="sortTable1(4)" width="12%">Specialist Phone number</th>
-        <th onclick="sortTable1(5)" width="12%">Specialty</th>
-        <th onclick="sortTable1(6)" width="12%">Date Sent</th>
-        <th onclick="sortTable1(7)" width="8%">Priority</th>
+        <th onclick="sortTable1(0)" width="13%">Patient Name</th>
+        <th onclick="sortTable1(1)" width="12%">DOB</th>
+        <th onclick="sortTable1(2)" width="12%">Referring Provider</th>
+        <th onclick="sortTable1(3)" width="12%">Reason</th>
+        <th onclick="sortTable1(4)" width="11%">Specialist</th>
+        <th onclick="sortTable1(5)" width="12%">Specialist Phone number</th>
+        <th onclick="sortTable1(6)" width="12%">Specialty</th>
+        <th onclick="sortTable1(7)" width="8%">Date Sent</th>
+        <th onclick="sortTable1(8)" width="8%">Priority</th>
 
     </tr>
     <?php
@@ -78,7 +79,12 @@ if (sizeof($_SESSION) == 0){
                 $date = date_create($dob);
                 echo date_format($date, "m/d/Y");
             echo "</td><td>";
-                echo $row[6];
+                $query = "SELECT * FROM Referrals.Provider WHERE Provider.ID='" . $row[1] . "'";
+                $temp = $conReferrals->query($query);
+                $tr = $temp->fetch_row();
+                echo $tr[1];
+            echo "</td><td>";
+            echo $row[6];
             echo "</td><td>";
                 $query = 'SELECT * FROM Referrals.Specialist WHERE ID="' . $row[9] . '"';
                 $temp = $conReferrals->query($query);

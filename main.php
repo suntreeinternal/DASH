@@ -188,7 +188,7 @@
 
 
     $phoneStats = '';
-    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1 ORDER BY FrontPageOrder';
     $result = $con->query($query);
     while ($row = $result->fetch_row()){
         $val = $row[0]+4;
@@ -205,7 +205,7 @@
     }
 
     $providerMaPhone = '';
-    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1 ORDER BY FrontPageOrder';
     $result = $con->query($query);
     while ($row = $result->fetch_row()){
         $val = $row[0]+104;
@@ -222,7 +222,7 @@
     }
 
     $RxStats = '';
-    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1';
+    $query = 'SELECT * FROM Referrals.Provider WHERE Active=1 ORDER BY FrontPageOrder';
     $result = $con->query($query);
     while ($row = $result->fetch_row()){
         $val = $row[0]+4;

@@ -1,7 +1,7 @@
 <?php
     session_start();
     include_once "../fetchPatientData/patientInfo.php";
-//    echo var_dump(get_included_files());
+//    echo var_dump();
     $patientInfo = new Patient();
 
     if (sizeof($_SESSION) == 0){
@@ -25,11 +25,18 @@
 
 //    var_dump($row);
 
-    $currentReferral = $row[1] . $row[2] . $row[3] . $row[4] . $row[5] . $row[6] . $row[7] . $row[8] . $row[9];
-
+//    $currentReferral = $row[1] . $row[2] . $row[3] . $row[4] . $row[5] . $row[6] . $row[7] . $row[8] . $row[9];
+//    echo $currentReferral;
+//    echo $row[6];
     $dateTime =$row[7];
     $reason = $row[6];
-    $createdBy = $row[11];
+    $reason = str_replace("\"", "&quot;", $reason);
+//    echo $reason;
+
+$currentReferral = $row[1] . $row[2] . $row[3] . $row[4] . $row[5] . $reason . $row[7] . $row[8] . $row[9];
+//$currentReferral = "TESTTESTTEST";
+
+$createdBy = $row[11];
     if ($row[10]){
         $ReferralSentDate = date_create($row[10]);
         $ReferralSentDate = date_format($ReferralSentDate, "m/d/Y H:i:s");

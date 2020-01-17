@@ -1,83 +1,89 @@
 <?php
 session_start();
-    $ID = $_GET['ID'];
+$ID = $_GET['ID'];
 
-    $con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
-    if (!mssql_select_db('sw_charts', $con)) {
-       die('Unable to select database!');
-    }
-    $first = $_GET['first'];
-    $first = strtolower($first);
-    $first = ucfirst($first);
+$con = mssql_connect('sunserver', 'siminternal', 'Watergate2015');
+if (!mssql_select_db('sw_charts', $con)) {
+    die('Unable to select database!');
+}
+$first = $_GET['first'];
+$first = strtolower($first);
+$first = ucfirst($first);
 
-    $last = $_GET['last'];
-    $last = strtolower($last);
-    $last = ucfirst($last);
+$last = $_GET['last'];
+$last = strtolower($last);
+$last = ucfirst($last);
 
-    $patientName = $last . ', ' . $first;
+$patientName = $last . ', ' . $first;
 
-    //Converting DOS to good format
+//Converting DOS to good format
 
-    $date = strtotime($_GET['dos']);
-    $DOS = date('m-d-Y', $date);
-    $date = strtotime($_SESSION['patientDOB']);
+$date = strtotime($_GET['dos']);
+$DOS = date('m-d-Y', $date);
+$date = strtotime($_SESSION['patientDOB']);
 
 $DOB = date("m-d-Y", $date);
-    $query = 'SELECT * FROM dbo.Encounter_Data WHERE EncountID=\''. $ID . '\'';
+$query = 'SELECT * FROM dbo.Encounter_Data WHERE EncountID=\''. $ID . '\'';
 
-    $result = mssql_query($query);
-    echo '<table width="100%"><tbody><tr><th width="33%" align="left">' . $patientName . '</th><th width="33%">DOS: ' . $DOS . '</th><th width="34%" align="right">DOB: ' . $DOB .'</th> </tr></tbody></table>';
-    while ($row = mssql_fetch_array($result)){
+$result = mssql_query($query);
+echo '<table width="100%"><tbody><tr><th width="33%" align="left">' . $patientName . '</th><th width="33%">DOS: ' . $DOS . '</th><th width="34%" align="right">DOB: ' . $DOB .'</th> </tr></tbody></table>';
+while ($row = mssql_fetch_array($result)){
 
-        if ($row[2] == 100){
-            echo '</br></br><h4 style="display: inline">SUBJECTIVE:</h4>';
-        } elseif ($row[2] == 101) {
-            echo '</br></br><h4 style="display: inline">OBJECTIVE:</h4>';
-        } elseif ($row[2] == 102) {
-            echo '</br></br><h4 style="display: inline">ASSESSMENT:</h4>';
-        } elseif ($row[2] == 103) {
-            echo '</br></br><h4 style="display: inline">PLAN:</h4>';
-        } elseif ($row[2] == 104) {
-            echo '</br></br><h4 style="display: inline">MEDICATION:</h4>';
+    if ($row[2] == 100){
+        echo '</br></br><h4 style="display: inline">SUBJECTIVE:</h4>';
+    } elseif ($row[2] == 101) {
+        echo '</br></br><h4 style="display: inline">OBJECTIVE:</h4>';
+    } elseif ($row[2] == 102) {
+        echo '</br></br><h4 style="display: inline">ASSESSMENT:</h4>';
+    } elseif ($row[2] == 103) {
+        echo '</br></br><h4 style="display: inline">PLAN:</h4>';
+    } elseif ($row[2] == 104) {
+        echo '</br></br><h4 style="display: inline">MEDICATION:</h4>';
 //            echo $row[3];
-        } elseif ($row[2] == 105) {
-            echo '</br></br><h4 style="display: inline">FOLLOW UP:</h4>';
-        }
+    } elseif ($row[2] == 105) {
+        echo '</br></br><h4 style="display: inline">FOLLOW UP:</h4>';
+    }
 
-        $temp = $row[3];
-        $countLine = 0;
-        $countL = 0;
-        $index = 0;
+    $temp = $row[3];
+    $countLine = 0;
+    $countL = 0;
+    $index = 0;
 
-        echo "<a style=\"font-family: 'Courier New'; font-size: 10pt\">";
-        $temp = str_ireplace('\rtf1\ansi\ansicpg1252\deff0',"", $temp);
-        $temp = str_ireplace('\rtf1\ansi\deff0',"",$temp);
-        $temp = str_ireplace('\fonttbl', '', $temp);
-        $temp = str_ireplace('\f0\fnil\fcharset0 ', '', $temp);
-        $temp = str_ireplace('{\colortbl ;\red0\green0\blue0;\red255\green0\blue0;}', '', $temp);
-        $temp = str_ireplace('{\colortbl ;\red255\green0\blue0;\red0\green0\blue0;}', '', $temp);
-        $temp = str_ireplace('}', '', $temp);
-        $temp = str_ireplace('{', '', $temp);
-        $temp = str_ireplace('\viewkind4\uc1', "", $temp);
+    echo "<a style=\"font-family: 'Courier New'; font-size: 10pt\">";
+    $temp = str_ireplace('\rtf1\ansi\ansicpg1252\deff0',"", $temp);
+    $temp = str_ireplace('\rtf1\ansi\deff0',"",$temp);
+    $temp = str_ireplace('\fonttbl', '', $temp);
+    $temp = str_ireplace('\f0\fnil\fcharset0 ', '', $temp);
+    $temp = str_ireplace('{\colortbl ;\red0\green0\blue0;\red255\green0\blue0;}', '', $temp);
+    $temp = str_ireplace('{\colortbl ;\red255\green0\blue0;\red0\green0\blue0;}', '', $temp);
+    $temp = str_ireplace('}', '', $temp);
+    $temp = str_ireplace('{', '', $temp);
+    $temp = str_ireplace('\viewkind4\uc1', "", $temp);
 //        $temp = str_ireplace('\par', '<br/>', $temp);
-        $temp = str_ireplace('\colortbl ;\red0\green0\blue0;', '', $temp);
-        $temp = str_ireplace('\f1\fnil\fcharset0', "", $temp);
-        $temp = str_ireplace('\f1\fs16', "", $temp);
-        $temp = str_ireplace(' \f0\fs20', "", $temp);
-        $temp = str_ireplace('\f0\fs20  ', "", $temp);
+    $temp = str_ireplace('\colortbl ;\red0\green0\blue0;', '', $temp);
+    $temp = str_ireplace('\f1\fnil\fcharset0', "", $temp);
+    $temp = str_ireplace('\f1\fs16', "", $temp);
+    $temp = str_ireplace(' \f0\fs20', "", $temp);
+    $temp = str_ireplace('\f0\fs20  ', "", $temp);
+    $temp = str_ireplace('\fs20  ', "", $temp);
+    $temp = str_ireplace('\f2 ', "", $temp);
+    $temp = str_ireplace('\f1  ', "", $temp);
 
-        $temp = str_ireplace('Arial;', "", $temp);
+    $temp = str_ireplace('Arial;', "", $temp);
 
-        $temp = str_ireplace('\tab', '', $temp);
-        $temp = str_ireplace('\b0', '</b>', $temp);
-        $temp = str_ireplace('\b', '<b>', $temp);
-        $temp = str_ireplace('\cf2', '', $temp);
-        $temp = str_ireplace('\cf1', '', $temp);
-        $temp = str_ireplace('Courier New;','', $temp);
+    $temp = str_ireplace('\tab', '', $temp);
+    $temp = str_ireplace('\b0', '</b>', $temp);
+    $temp = str_ireplace('\b', '<b>', $temp);
+    $temp = str_ireplace('\cf2', '', $temp);
+    $temp = str_ireplace('\cf1', '', $temp);
+    $temp = str_ireplace('Courier New;','', $temp);
 //        $temp = str_ireplace('\f0\fs20', '', $temp);
-        $temp = str_ireplace('d\lang1033\f0\fs20 ', '', $temp);
+    $temp = str_ireplace('d\lang1033\f0\fs20 ', '', $temp);
 //        echo $temp;
-        $count = substr_count($temp, 'LAST');
+    $count = substr_count($temp, 'LAST');
+
+    if ($row[2] == 100) {
+
 
         if ($count != 0) {
 
@@ -149,6 +155,9 @@ $DOB = date("m-d-Y", $date);
         } else {
             $temp = str_ireplace('\par', '<br/>', $temp);
         }
-
-        echo $temp;
+    } else {
+        $temp = str_ireplace('\par', '<br/>', $temp);
     }
+
+    echo $temp;
+}

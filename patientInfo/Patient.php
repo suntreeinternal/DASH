@@ -134,6 +134,9 @@
         $row = mssql_fetch_array($result);
 
 //        echo sizeof($row);
+
+//        var_dump($row);
+
         if (sizeof($row) == 1) {
 
             //not in sw yet
@@ -141,8 +144,7 @@
             $result = $conReferrals->query($query);
             $row = $result->fetch_row();
             $patientID = $row[0];
-
-
+//            var_dump($patientID);
 
             if (sizeof($row) == 0){
                 //TODO add to Change log
@@ -163,13 +165,15 @@
                 }
             }
         } else {
-//            echo $pipek;
+
             while ($row = mssql_fetch_array()){
                 echo var_dump($row) . " <br/><br/>";
             }
             if ($pipek == 1){
-                echo 'test';
+                echo '<br/>test';
+
             } else {
+
                 header("location:/patientInfo/mergePatient.php?last=" . $last . "&date=" . $date);
             }
             die();
@@ -180,6 +184,8 @@
     $_SESSION['patientName'] = $patientName;
     $_SESSION['patientDOB'] = $DOB;
     $_SESSION['swID'] = $SwID;
+//    echo $_SESSION['swID'];
+
 
 ?>
 
